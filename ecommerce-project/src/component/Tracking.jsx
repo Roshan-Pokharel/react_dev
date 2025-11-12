@@ -24,12 +24,12 @@ export function Tracking(){
       </div>
 
       <div className="right-section">
-        <a className="orders-link header-link" href="orders.html">
+        <a className="orders-link header-link" href="orders">
 
           <span className="orders-text">Orders</span>
         </a>
 
-        <a className="cart-link header-link" href="checkout.html">
+        <a className="cart-link header-link" href="checkout">
           <img className="cart-icon" src="images/icons/cart-icon.png" />
           <div className="cart-quantity">3</div>
           <div className="cart-text">Cart</div>
@@ -39,7 +39,7 @@ export function Tracking(){
 
     <div className="tracking-page">
       <div className="order-tracking">
-        <a className="back-to-orders-link link-primary" href="orders.html">
+        <a className="back-to-orders-link link-primary" href="orders">
           View all orders
         </a>
 
