@@ -1,14 +1,12 @@
-import {useEffect, useState} from 'react';
 import PriceCents from '../utils/priceCents'
-import axios from 'axios';
 import {Header} from '../component/Shared/Header.jsx'
 import './Shared/General.css';
 import './Shared/Header.css';
 import './Home.css';
 
- function Body(){
+ function Body({products}){
 
-   const [products, setProducts] = useState([]);
+   //const [products, setProducts] = useState([]);
 
       // useEffect(()=>{
       //   fetch("http://localhost:3000/api/products").then((response)=>{
@@ -19,11 +17,11 @@ import './Home.css';
       // }, []);
 
       
-      useEffect(()=>{
-        axios.get("http://localhost:3000/api/products").then((response)=>{
-       return setProducts(response.data);
-      })  
-      }, []);
+      // useEffect(()=>{
+      //   axios.get("http://localhost:3000/api/products").then((response)=>{
+      //  return setProducts(response.data);
+      // })  
+      // }, []);
 
   
 
