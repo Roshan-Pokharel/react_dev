@@ -22,7 +22,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Body products={products} />} />
         <Route path="orders" element={<OrdersList products={products}/>} />
-        <Route path="checkout" element={<Checkout />} />
+        <Route path="checkout" element={<Checkout products={products} />} />
         <Route path="tracking" element={<Tracking />} />
       </Routes>
     </Router>

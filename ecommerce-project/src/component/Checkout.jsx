@@ -1,12 +1,27 @@
-
+import axios from 'axios';
+import {useEffect, useState} from 'react';
+import dataFetch from '../utils/dataFetch';
 import './Shared/General.css';
 import './Checkout-css/Checkout-header.css';
 import './Checkout-css/Checkout.css';
 
 
- function Checkout(){
+ function Checkout({products}){
+    const [checkoutItem , setCheckoutItem]= useState([]);
+  useEffect(()=>{
+     axios.get("http://localhost:3000/api/cart-items").then((response)=>{
+    setCheckoutItem(response.data);
+  })
+  }, []);
+
+  let checkoutItems = 0;
   return(
     <>
+    {checkoutItem.map((checkoutItem)=>{
+        checkoutItems = checkoutItems + checkoutItem.quantity;
+        const product = dataFetch(checkoutItems, products);
+        return(
+           <>
         <div className="checkout-header">
       <div className="header-content">
         <div className="checkout-header-left-section">
@@ -18,7 +33,7 @@ import './Checkout-css/Checkout.css';
 
         <div className="checkout-header-middle-section">
           Checkout (<a className="return-to-home-link"
-            href="/">3 items</a>)
+            href="/">{`${checkoutItems} Items`}</a>)
         </div>
 
         <div className="checkout-header-right-section">
@@ -220,7 +235,10 @@ import './Checkout-css/Checkout.css';
       </div>
     </div>
     </>
+        )
+          }
   )
 }
-
+</>
+  )}
 export default Checkout;
