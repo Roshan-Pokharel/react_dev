@@ -1,6 +1,8 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 import dataFetch from '../utils/dataFetch';
+import PriceCents from '../utils/priceCents';
+import dayjs from 'dayjs';
 import './Shared/General.css';
 import './Checkout-css/Checkout-header.css';
 import './Checkout-css/Checkout.css';
@@ -19,7 +21,8 @@ import './Checkout-css/Checkout.css';
     <>
     {checkoutItem.map((checkoutItem)=>{
         checkoutItems = checkoutItems + checkoutItem.quantity;
-        const product = dataFetch(checkoutItems, products);
+        const product = dataFetch(checkoutItem, products);
+        
         return(
            <>
         <div className="checkout-header">
@@ -49,23 +52,23 @@ import './Checkout-css/Checkout.css';
         <div className="order-summary">
           <div className="cart-item-container">
             <div className="delivery-date">
-              Delivery date: Tuesday, June 21
+              Delivery date: {dayjs(checkoutItem.createdAt).format('dddd, MMMM D')}
             </div>
 
             <div className="cart-item-details-grid">
               <img className="product-image"
-                src="images/products/athletic-cotton-socks-6-pairs.jpg" />
+                src={product?.image} />
 
               <div className="cart-item-details">
                 <div className="product-name">
-                  Black and Gray Athletic Cotton Socks - 6 Pairs
+                  {product?.name}
                 </div>
                 <div className="product-price">
-                  $10.90
+                  {PriceCents(product?.priceCents)}
                 </div>
                 <div className="product-quantity">
                   <span>
-                    Quantity: <span className="quantity-label">2</span>
+                    Quantity: <span className="quantity-label">{checkoutItem.quantity}</span>
                   </span>
                   <span className="update-quantity-link link-primary">
                     Update
