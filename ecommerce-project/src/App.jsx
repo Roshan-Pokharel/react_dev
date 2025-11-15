@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Body from './component/Body.jsx';
 import { OrdersList } from './component/OrdersList.jsx';
-import Checkout from './component/Checkout.jsx';
+import {Checkout} from './component/Checkout.jsx';
 import Tracking from './component/Tracking.jsx';
 import './App.css';
 

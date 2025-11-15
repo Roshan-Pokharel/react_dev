@@ -1,15 +1,25 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 import dataFetch from '../utils/dataFetch';
+import React from 'react';
 import PriceCents from '../utils/priceCents';
 import dayjs from 'dayjs';
+import { optionFirstDate, optionSecondDate, optionThirdDate } from '../utils/date';
 import './Shared/General.css';
 import './Checkout-css/Checkout-header.css';
 import './Checkout-css/Checkout.css';
 
 
- function Checkout({products}){
+//---> main function of this components <-----//
+ export function Checkout({products}){
+  
     const [checkoutItem , setCheckoutItem]= useState([]);
+    const [selectedOption , setSelectedOption]= useState(['free'])
+    const handelOptionChange = (event)=>{
+      setSelectedOption(event.target.value)
+    }
+    
+    //-----> fetching the checkout data from the backend <------//
   useEffect(()=>{
      axios.get("http://localhost:3000/api/cart-items").then((response)=>{
     setCheckoutItem(response.data);
@@ -17,14 +27,30 @@ import './Checkout-css/Checkout.css';
   }, []);
 
   let checkoutItems = 0;
+
+//------> function to find the radio checked date from the user <-----//
+   function deliveryDate(){
+    if(selectedOption === 'free'){
+      let date = dayjs(optionFirstDate()).format('dddd, MMMM D');
+      return(
+        date
+      )
+    }
+    else if(selectedOption === '499'){
+      let date = dayjs(optionSecondDate()).format('dddd, MMMM D');
+      return(
+        date
+      )  
+    }
+    else{
+       let date = dayjs(optionThirdDate()).format('dddd, MMMM D');
+      return(
+        date
+      ) 
+    }
+   }
   return(
     <>
-    {checkoutItem.map((checkoutItem)=>{
-        checkoutItems = checkoutItems + checkoutItem.quantity;
-        const product = dataFetch(checkoutItem, products);
-        
-        return(
-           <>
         <div className="checkout-header">
       <div className="header-content">
         <div className="checkout-header-left-section">
@@ -50,9 +76,14 @@ import './Checkout-css/Checkout.css';
 
       <div className="checkout-grid">
         <div className="order-summary">
-          <div className="cart-item-container">
+        {checkoutItem.map((checkoutItem)=>{
+        checkoutItems = checkoutItems + checkoutItem.quantity;
+        const product = dataFetch(checkoutItem, products);
+        return(
+           <>
+          <div key={checkoutItem.id} className="cart-item-container">
             <div className="delivery-date">
-              Delivery date: {dayjs(checkoutItem.createdAt).format('dddd, MMMM D')}
+              Delivery date: {deliveryDate()}
             </div>
 
             <div className="cart-item-details-grid">
@@ -84,12 +115,17 @@ import './Checkout-css/Checkout.css';
                   Choose a delivery option:
                 </div>
                 <div className="delivery-option">
-                  <input type="radio" checked
+                  <input type="radio"
                     className="delivery-option-input"
-                    name="delivery-option-1" />
+                    name={checkoutItem.productId}
+                    value="free"
+                    checked={selectedOption === 'free'} 
+                    onChange={handelOptionChange}
+                    />
+                   
                   <div>
                     <div className="delivery-option-date">
-                      Tuesday, June 21
+                      {dayjs(optionFirstDate()).format('dddd, MMMM D')}
                     </div>
                     <div className="delivery-option-price">
                       FREE Shipping
@@ -99,10 +135,14 @@ import './Checkout-css/Checkout.css';
                 <div className="delivery-option">
                   <input type="radio"
                     className="delivery-option-input"
-                    name="delivery-option-1" />
+                   name={checkoutItem.productId}
+                    value="499"
+                    checked={selectedOption === '499'} 
+                    onChange={handelOptionChange}
+                    />
                   <div>
                     <div className="delivery-option-date">
-                      Wednesday, June 15
+                      {dayjs(optionSecondDate()).format('dddd, MMMM D')}
                     </div>
                     <div className="delivery-option-price">
                       $4.99 - Shipping
@@ -112,96 +152,28 @@ import './Checkout-css/Checkout.css';
                 <div className="delivery-option">
                   <input type="radio"
                     className="delivery-option-input"
-                    name="delivery-option-1" />
+                     name={checkoutItem.productId}
+                    value="999"
+                    checked={selectedOption === '999'} 
+                    onChange={handelOptionChange}
+                    />
                   <div>
                     <div className="delivery-option-date">
-                      Monday, June 13
+                       {dayjs(optionThirdDate()).format('dddd, MMMM D')}
                     </div>
                     <div className="delivery-option-price">
                       $9.99 - Shipping
                     </div>
                   </div>
                 </div>
+             
+              
               </div>
             </div>
           </div>
-
-          <div className="cart-item-container">
-            <div className="delivery-date">
-              Delivery date: Wednesday, June 15
-            </div>
-
-            <div className="cart-item-details-grid">
-              <img className="product-image"
-                src="images/products/intermediate-composite-basketball.jpg" />
-
-              <div className="cart-item-details">
-                <div className="product-name">
-                  Intermediate Size Basketball
-                </div>
-                <div className="product-price">
-                  $20.95
-                </div>
-                <div className="product-quantity">
-                  <span>
-                    Quantity: <span className="quantity-label">1</span>
-                  </span>
-                  <span className="update-quantity-link link-primary">
-                    Update
-                  </span>
-                  <span className="delete-quantity-link link-primary">
-                    Delete
-                  </span>
-                </div>
-              </div>
-
-              <div className="delivery-options">
-                <div className="delivery-options-title">
-                  Choose a delivery option:
-                </div>
-
-                <div className="delivery-option">
-                  <input type="radio" className="delivery-option-input"
-                    name="delivery-option-2" />
-                  <div>
-                    <div className="delivery-option-date">
-                      Tuesday, June 21
-                    </div>
-                    <div className="delivery-option-price">
-                      FREE Shipping
-                    </div>
-                  </div>
-                </div>
-                <div className="delivery-option">
-                  <input type="radio" checked className="delivery-option-input"
-                    name="delivery-option-2" />
-                  <div>
-                    <div className="delivery-option-date">
-                      Wednesday, June 15
-                    </div>
-                    <div className="delivery-option-price">
-                      $4.99 - Shipping
-                    </div>
-                  </div>
-                </div>
-                <div className="delivery-option">
-                  <input type="radio" className="delivery-option-input"
-                    name="delivery-option-2" />
-                  <div>
-                    <div className="delivery-option-date">
-                      Monday, June 13
-                    </div>
-                    <div className="delivery-option-price">
-                      $9.99 - Shipping
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="payment-summary">
+          </>
+        )})}
+               <div className="payment-summary">
             <div className="payment-summary-title">
               Payment Summary
             </div>
@@ -237,11 +209,9 @@ import './Checkout-css/Checkout.css';
         </div>
       </div>
     </div>
-    </>
-        )
-          }
-  )
-}
-</>
-  )}
-export default Checkout;
+          
+    </div>
+   </>
+ )}
+
+           
