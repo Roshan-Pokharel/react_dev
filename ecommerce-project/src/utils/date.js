@@ -9,7 +9,7 @@ export function optionFirstDate(){
 
 export function optionSecondDate(){
   const today = new Date();
-  const optionSecond = (today.setDate(today.getDate()+5))
+  const optionSecond = (today.setDate(today.getDate()+4))
   return optionSecond;
 }
 
@@ -18,3 +18,4 @@ export function optionThirdDate(){
   const optionThird = (today.setDate(today.getDate()+1))
   return optionThird;
 }
+
