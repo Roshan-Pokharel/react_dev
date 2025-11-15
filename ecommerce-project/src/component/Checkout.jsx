@@ -34,21 +34,12 @@ function getOptionValueFromId(optionId) {
   }
 }
 
-// NEW: Gets the shipping cost in cents from the component value
-function getShippingCostCents(optionValue) {
-  switch (optionValue) {
-    case 'free': return 0;
-    case '499': return 499;
-    case '999': return 999;
-    default: return 0;
-  }
-}
-
 
 //---> main function of this components <-----//
 export function Checkout({ products }) {
   const [checkoutItem, setCheckoutItem] = useState([]);
   const [selectedOption, setSelectedOption] = useState({});
+  const [paymentSummary, setPaymentSummary] = useState({});
 
   //-----> fetching the checkout data from the backend <------//
   useEffect(() => {
@@ -64,37 +55,12 @@ export function Checkout({ products }) {
       
       setSelectedOption(initialSelectedOptions);
     });
-  }, [products]); // Added products as a dependency, in case it loads async
 
-  //--- Dynamic Calculation Logic ---//
-
-  const totalItems = checkoutItem.reduce((total, item) => {
-    return total + item.quantity;
-  }, 0);
-
-  // NEW: Calculate all totals dynamically
-  let itemsTotalCents = 0;
-  let shippingTotalCents = 0;
-
-  checkoutItem.forEach((cartItem) => {
-    // Find the full product details
-    const product = dataFetch(cartItem, products);
-    if (product) {
-      // Add item price * quantity
-      itemsTotalCents += product.priceCents * cartItem.quantity;
-    }
-
-    // Find the selected shipping option value (e.g., 'free', '499')
-    const shippingOptionValue = selectedOption[cartItem.productId];
-    
-    // Add its cost
-    shippingTotalCents += getShippingCostCents(shippingOptionValue);
-  });
-
-  const subtotalCents = itemsTotalCents + shippingTotalCents;
-  const taxCents = subtotalCents * 0.1; // 10% tax
-  const orderTotalCents = subtotalCents + taxCents;
-
+    axios.get('http://localhost:3000/api/payment-summary').then((response)=>
+    {
+      setPaymentSummary(response.data);
+    });
+  }, [products]); 
 
   return (
     <>
@@ -109,7 +75,7 @@ export function Checkout({ products }) {
           </div>
           <div className="checkout-header-middle-section">
             Checkout (<a className="return-to-home-link"
-              href="/">{`${totalItems} Items`}</a>)
+              href="/">{`${paymentSummary.totalItems} Items`}</a>)
           </div>
           <div className="checkout-header-right-section">
             <img src="images/icons/checkout-lock-icon.png" />
@@ -241,28 +207,28 @@ export function Checkout({ products }) {
             </div>
 
             <div className="payment-summary-row">
-              <div>Items ({totalItems}):</div>
-              <div className="payment-summary-money">{PriceCents(itemsTotalCents)}</div>
+              <div>Items ({paymentSummary.totalItems}):</div>
+              <div className="payment-summary-money">{PriceCents(paymentSummary.productCostCents)}</div>
             </div>
 
             <div className="payment-summary-row">
               <div>Shipping &amp; handling:</div>
-              <div className="payment-summary-money">{PriceCents(shippingTotalCents)}</div>
+              <div className="payment-summary-money">{PriceCents(paymentSummary.shippingCostCents)}</div>
             </div>
 
             <div className="payment-summary-row subtotal-row">
               <div>Total before tax:</div>
-              <div className="payment-summary-money">{PriceCents(subtotalCents)}</div>
+              <div className="payment-summary-money">{PriceCents(paymentSummary.totalCostBeforeTaxCents)}</div>
             </div>
 
             <div className="payment-summary-row">
               <div>Estimated tax (10%):</div>
-              <div className="payment-summary-money">{PriceCents(taxCents)}</div>
+              <div className="payment-summary-money">{PriceCents(paymentSummary.taxCents)}</div>
             </div>
 
             <div className="payment-summary-row total-row">
               <div>Order total:</div>
-              <div className="payment-summary-money">{PriceCents(orderTotalCents)}</div>
+              <div className="payment-summary-money">{PriceCents(paymentSummary.totalCostCents)}</div>
             </div>
 
             <button className="place-order-button button-primary">
