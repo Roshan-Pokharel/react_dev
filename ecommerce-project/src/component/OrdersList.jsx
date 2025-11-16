@@ -13,7 +13,7 @@ export function OrdersList({products, loadCart})
     const [orders, setOrders] = useState([]);
     
       useEffect(()=>{
-         axios.get("http://localhost:3000/api/orders").then((response)=>{
+         axios.get("/api/orders").then((response)=>{
          setOrders(response.data)
         }
       );
@@ -84,7 +84,7 @@ export function OrdersList({products, loadCart})
 
                 <span className="buy-again-message" 
                 onClick={async()=>{
-                await axios.post('http://localhost:3000/api/cart-items', {
+                await axios.post('/api/cart-items', {
                     productId: product.productId,
                     quantity: 1
                   });

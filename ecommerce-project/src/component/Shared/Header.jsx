@@ -5,7 +5,7 @@
  export function Header({ products , loadCart}){
    const [paymentSummary, setPaymentSummary] = useState({});
     useEffect(() => {
-    axios.get("http://localhost:3000/api/payment-summary").then((response)=>{
+    axios.get("/api/payment-summary").then((response)=>{
      setPaymentSummary(response.data);
     })
   }, [products, loadCart]);

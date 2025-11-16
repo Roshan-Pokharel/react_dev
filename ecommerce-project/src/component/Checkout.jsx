@@ -32,9 +32,9 @@ export function Checkout({ products, cartItem }) {
   useEffect(() => {
     // Use Promise.all to fetch all data in parallel
     Promise.all([
-      axios.get("http://localhost:3000/api/cart-items"),
-      axios.get('http://localhost:3000/api/payment-summary'),
-      axios.get('http://localhost:3000/api/delivery-options') // <-- STEP 1
+      axios.get("/api/cart-items"),
+      axios.get('/api/payment-summary'),
+      axios.get('/api/delivery-options') // <-- STEP 1
     ]).then(([cartResponse, summaryResponse, optionsResponse]) => {
       
       setCheckoutItem(cartResponse.data);
@@ -69,12 +69,12 @@ export function Checkout({ products, cartItem }) {
 
     try {
       // 2. Send PUT request to the backend
-      await axios.put(`http://localhost:3000/api/cart-items/${productId}`, {
+      await axios.put(`/api/cart-items/${productId}`, {
         deliveryOptionId: newDeliveryOptionId
       });
 
       // 3. Refetch payment summary (shipping cost has changed)
-      const response = await axios.get('http://localhost:3000/api/payment-summary');
+      const response = await axios.get('/api/payment-summary');
       setPaymentSummary(response.data);
 
     } catch (error) {
@@ -86,7 +86,7 @@ export function Checkout({ products, cartItem }) {
   const handleDelete = async (productId) => {
     try {
       // 1. Delete item from backend
-      await axios.delete(`http://localhost:3000/api/cart-items/${productId}`);
+      await axios.delete(`/api/cart-items/${productId}`);
 
       // 2. Update local state to remove the item from the list
       setCheckoutItem(prevItems =>
@@ -94,7 +94,7 @@ export function Checkout({ products, cartItem }) {
       );
 
       // 3. Refetch payment summary (totals have changed)
-      const response = await axios.get('http://localhost:3000/api/payment-summary');
+      const response = await axios.get('/api/payment-summary');
       setPaymentSummary(response.data);
 
     } catch (error) {
@@ -126,7 +126,7 @@ export function Checkout({ products, cartItem }) {
 
     try {
       // 1. Send PUT request to the backend with the new quantity
-      await axios.put(`http://localhost:3000/api/cart-items/${editingProductId}`, {
+      await axios.put(`/api/cart-items/${editingProductId}`, {
         quantity: newQuantity
       });
 
@@ -140,7 +140,7 @@ export function Checkout({ products, cartItem }) {
       );
 
       // 3. Refetch payment summary (totals have changed)
-      const response = await axios.get('http://localhost:3000/api/payment-summary');
+      const response = await axios.get('/api/payment-summary');
       setPaymentSummary(response.data);
 
       // 4. Exit "editing" mode
@@ -153,7 +153,7 @@ export function Checkout({ products, cartItem }) {
   };
     const navigate = useNavigate();
    const createOrder = async ()=>{
-     await axios.post('http://localhost:3000/api/orders');
+     await axios.post('/api/orders');
     navigate('/orders')
    }
 

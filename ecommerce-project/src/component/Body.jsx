@@ -20,7 +20,7 @@ import './Home.css';
    //const [products, setProducts] = useState([]);
 
       // useEffect(()=>{
-      //   fetch("http://localhost:3000/api/products").then((response)=>{
+      //   fetch("/api/products").then((response)=>{
       //   return response.json().then((data)=>{
       //   console.log(data);
       // })
@@ -29,7 +29,7 @@ import './Home.css';
 
       
       // useEffect(()=>{
-      //   axios.get("http://localhost:3000/api/products").then((response)=>{
+      //   axios.get("/api/products").then((response)=>{
       //  return setProducts(response.data);
       // })  
       // }, []);
