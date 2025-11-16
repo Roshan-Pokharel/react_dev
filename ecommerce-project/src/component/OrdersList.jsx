@@ -35,7 +35,7 @@ export function OrdersList({products, loadCart})
     
   return(
     <>
-    {<Header />}
+  {<Header loadCart={loadCart} />}
     <div className="orders-page">
       <div className="page-title">Your Orders</div>
 

@@ -2,13 +2,13 @@
  import { useEffect,useState } from 'react';
  import './Header.css';
 
- export function Header({ products }){
+ export function Header({ products , loadCart}){
    const [paymentSummary, setPaymentSummary] = useState({});
     useEffect(() => {
     axios.get("http://localhost:3000/api/payment-summary").then((response)=>{
      setPaymentSummary(response.data);
     })
-  }, [products]);
+  }, [products, loadCart]);
 
   return(
       <div className="header">
