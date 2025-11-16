@@ -8,7 +8,7 @@ import './Shared/General.css';
 import './Shared/Header.css';
 import './Order.css';
 
-export function OrdersList({products})
+export function OrdersList({products, loadCart})
 { 
     const [orders, setOrders] = useState([]);
     
@@ -31,6 +31,7 @@ export function OrdersList({products})
 
       
     //}
+   
     
   return(
     <>
@@ -80,7 +81,16 @@ export function OrdersList({products})
               </div>
               <button className="buy-again-button button-primary">
                 <img className="buy-again-icon" src="images/icons/buy-again.png" />
-                <span className="buy-again-message">Add to Cart</span>
+
+                <span className="buy-again-message" 
+                onClick={async()=>{
+                await axios.post('http://localhost:3000/api/cart-items', {
+                    productId: product.productId,
+                    quantity: 1
+                  });
+                  await loadCart();
+                }}
+                >Add to Cart</span>
               </button>
             </div>
 

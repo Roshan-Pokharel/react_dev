@@ -12,7 +12,7 @@ import './App.css';
 
 export function App() {
       const [products, setProducts] = useState([]);
-     
+      
       const loadCart = async()=>{
         const response = await axios.get("http://localhost:3000/api/products");
         setProducts(response.data);
@@ -22,13 +22,15 @@ export function App() {
         loadCart(); 
       }, []);
 
+    
+
 
   return (
     <>
       <Router>
       <Routes>
         <Route path="/" element={<Body products={products} loadCart = {loadCart}/>} />
-        <Route path="orders" element={<OrdersList products={products}/>} />
+        <Route path="orders" element={<OrdersList products={products} loadCart = {loadCart}/>} />
         <Route path="checkout" element={<Checkout products={products} />} />
         <Route path="tracking" element={<Tracking />} />
       </Routes>
