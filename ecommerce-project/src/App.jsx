@@ -8,8 +8,11 @@ import Tracking from './component/Tracking.jsx';
 import './App.css';
 
 
+
+
 export function App() {
       const [products, setProducts] = useState([]);
+     
       const loadCart = async()=>{
         const response = await axios.get("http://localhost:3000/api/products");
         setProducts(response.data);
@@ -18,6 +21,7 @@ export function App() {
        useEffect(()=>{
         loadCart(); 
       }, []);
+
 
   return (
     <>
