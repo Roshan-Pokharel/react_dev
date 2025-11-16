@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import './Shared/General.css';
 import './Checkout-css/Checkout-header.css';
 import './Checkout-css/Checkout.css';
+import { useNavigate } from 'react-router-dom';
 
 //--- NEW Helper Function ---//
 // This function takes the delivery days (e.g., 7) and formats it
@@ -150,6 +151,11 @@ export function Checkout({ products, cartItem }) {
       alert('Failed to update. Please try again.');
     }
   };
+    const navigate = useNavigate();
+   const createOrder = async ()=>{
+     await axios.post('http://localhost:3000/api/orders');
+    navigate('/orders')
+   }
 
   return (
     <>
@@ -315,7 +321,7 @@ export function Checkout({ products, cartItem }) {
               <div className="payment-summary-money">{PriceCents(paymentSummary.totalCostCents)}</div>
             </div>
 
-            <button className="place-order-button button-primary">
+            <button className="place-order-button button-primary" onClick={createOrder}>
               Place your order
             </button>
           </div>
