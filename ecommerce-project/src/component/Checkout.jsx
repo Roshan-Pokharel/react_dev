@@ -81,6 +81,25 @@ export function Checkout({ products, cartItem }) {
     }
   };
 
+  const handleDelete = async (productId) => {
+    try {
+      // 1. Delete item from backend
+      await axios.delete(`http://localhost:3000/api/cart-items/${productId}`);
+
+      // 2. Update local state to remove the item from the list
+      setCheckoutItem(prevItems =>
+        prevItems.filter(item => item.productId !== productId)
+      );
+
+      // 3. Refetch payment summary (totals have changed)
+      const response = await axios.get('http://localhost:3000/api/payment-summary');
+      setPaymentSummary(response.data);
+
+    } catch (error) {
+      console.error('Failed to delete item:', error);
+    }
+  };
+
   return (
     <>
       <div className="checkout-header">
@@ -140,11 +159,7 @@ export function Checkout({ products, cartItem }) {
                           <span className="update-quantity-link link-primary">
                             Update
                           </span>
-                          <span className="delete-quantity-link link-primary" onClick={async()=>{
-                             await axios.delete(`http://localhost:3000/api/cart-items/${cartItem.productId}`)
-
-                          } 
-                          }>
+                          <span className="delete-quantity-link link-primary" onClick={() => handleDelete(cartItem.productId)}>
                             Delete
                           </span>
                         </div>
