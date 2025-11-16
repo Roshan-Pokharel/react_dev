@@ -36,7 +36,7 @@ function getOptionValueFromId(optionId) {
 
 
 //---> main function of this components <-----//
-export function Checkout({ products }) {
+export function Checkout({ products  }) {
   const [checkoutItem, setCheckoutItem] = useState([]);
   const [selectedOption, setSelectedOption] = useState({});
   const [paymentSummary, setPaymentSummary] = useState({});
@@ -61,6 +61,7 @@ export function Checkout({ products }) {
       setPaymentSummary(response.data);
     });
   }, [products]); 
+  
 
   return (
     <>

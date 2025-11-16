@@ -1,10 +1,23 @@
 import PriceCents from '../utils/priceCents'
 import {Header} from '../component/Shared/Header.jsx'
+import axios from 'axios';  
+import {useState} from 'react';
 import './Shared/General.css';
 import './Shared/Header.css';
 import './Home.css';
 
- function Body({products}){
+// function selectQuantity(){
+//   (event)=>{
+//               const quantitySelected = Number(event.target.value);
+//               setQuantity(quantitySelected)
+//               console.log(quantitySelected);
+//             }}
+//}
+
+ function Body({products, loadCart}){
+
+ const [quantity , setQuantity] = useState(1);
+  
 
    //const [products, setProducts] = useState([]);
 
@@ -27,12 +40,14 @@ import './Home.css';
 
   return(
     <>
-      {<Header />}
+      {<Header products={products} loadCart={loadCart}/>}
 
     <div className="home-page">
       <div className="products-grid">
 
-        {products.map((product) => (
+        {products.map((product) => {
+         
+         return(
           <div key={product.id} className="product-container">
           <div className="product-image-container">
             <img className="product-image"
@@ -55,8 +70,14 @@ import './Home.css';
            {PriceCents(product.priceCents)}
           </div>
 
-          <div className="product-quantity-container">
-            <select>
+          <div className="product-quantity-container"
+          >
+            <select value={quantity} onChange={(event)=>{
+              const quantitySelected = Number(event.target.value);
+              setQuantity(quantitySelected)
+              console.log(quantitySelected);
+            }}
+            >
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -77,11 +98,18 @@ import './Home.css';
             Added
           </div>
 
-          <button className="add-to-cart-button button-primary">
+          <button className="add-to-cart-button button-primary" 
+          onClick={async()=>{
+           await axios.post('http://localhost:3000/api/cart-items', {
+              productId: product.id,
+              quantity:1
+            });
+            await loadCart();
+          }}>
             Add to Cart
           </button>
         </div>
-        ))}
+ )})}
         
     
       </div>

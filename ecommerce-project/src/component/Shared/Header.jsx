@@ -1,6 +1,15 @@
+ import axios from 'axios';
+ import { useEffect,useState } from 'react';
  import './Header.css';
 
- export function Header(){
+ export function Header({ products }){
+   const [paymentSummary, setPaymentSummary] = useState({});
+    useEffect(() => {
+    axios.get("http://localhost:3000/api/payment-summary").then((response)=>{
+     setPaymentSummary(response.data);
+    })
+  }, [products]);
+
   return(
       <div className="header">
       <div className="left-section">
@@ -28,7 +37,7 @@
 
         <a className="cart-link header-link" href="checkout">
           <img className="cart-icon" src="images/icons/cart-icon.png" />
-          <div className="cart-quantity">3</div>
+          <div className="cart-quantity">{paymentSummary.totalItems}</div>
           <div className="cart-text">Cart</div>
         </a>
       </div>
