@@ -3,13 +3,13 @@
 
 export function optionFirstDate(){
   const today = new Date() ;
-  const optionFirst = today.setDate(today.getDate()+10)
+  const optionFirst = today.setDate(today.getDate()+1)
   return optionFirst;
 }
 
 export function optionSecondDate(){
   const today = new Date();
-  const optionSecond = (today.setDate(today.getDate()+4))
+  const optionSecond = (today.setDate(today.getDate()))
   return optionSecond;
 }
 

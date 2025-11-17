@@ -1,464 +1,278 @@
 export const defaultProducts = [
   {
     "id": "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    "image": "images/products/athletic-cotton-socks-6-pairs.jpg",
-    "name": "Black and Gray Athletic Cotton Socks - 6 Pairs",
+    "image": "images/products/waiwai.png",
+    "name": "Wai Wai Instant Noodles (Brown) - Chicken Flavor",
     "rating": {
-      "stars": 4.5,
-      "count": 87
+      "stars": 5,
+      "count": 245
     },
-    "priceCents": 1090,
-    "keywords": ["socks", "sports", "apparel"]
+    "priceCents": 2000,
+    "keywords": ["noodles", "snacks", "chowchow", "lunch"]
   },
   {
     "id": "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    "image": "images/products/intermediate-composite-basketball.jpg",
-    "name": "Intermediate Size Basketball",
-    "rating": {
-      "stars": 4,
-      "count": 127
-    },
-    "priceCents": 2095,
-    "keywords": ["sports", "basketballs"]
-  },
-  {
-    "id": "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
-    "image": "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-    "name": "Adults Plain Cotton T-Shirt - 2 Pack",
-    "rating": {
-      "stars": 4.5,
-      "count": 56
-    },
-    "priceCents": 799,
-    "keywords": ["tshirts", "apparel", "mens"]
-  },
-  {
-    "id": "54e0eccd-8f36-462b-b68a-8182611d9add",
-    "image": "images/products/2-slot-toaster-white.jpg",
-    "name": "2 Slot Toaster - White",
+    "image": "images/products/nun.png",
+    "name": "Aayo Noon (Iodized Salt) - 1kg",
     "rating": {
       "stars": 5,
-      "count": 2197
+      "count": 500
     },
-    "priceCents": 1899,
-    "keywords": ["toaster", "kitchen", "appliances"]
+    "priceCents": 3000,
+    "keywords": ["salt", "grocery", "essentials", "cooking"]
   },
   {
-    "id": "3ebe75dc-64d2-4137-8860-1f5a963e534b",
-    "image": "images/products/elegant-white-dinner-plate-set.jpg",
-    "name": "2 Piece White Dinner Plate Set",
+    "id": "8a9d3e45-6c1b-4f92-a28d-b3e18fc789f3",
+    "image": "images/products/maya_oil.jpg",
+    "name": "maya sunflower oil - half Liter",
+    "rating": {
+      "stars": 4.5,
+      "count": 310
+    },
+    "priceCents": 13000,
+    "keywords": ["oil", "cooking", "mustard", "kitchen"]
+  },
+  {
+    "id": "8a9d3e45-6c1b-4f92-a28d-b3e18fc789f2",
+    "image": "images/products/ambe_oil.png",
+    "name": "Ambe sunflower oil - half Liter",
+    "rating": {
+      "stars": 4.5,
+      "count": 310
+    },
+    "priceCents": 12000,
+    "keywords": ["oil", "cooking", "mustard", "kitchen"]
+  },
+  {
+    "id": "9b2f5e67-8d4a-4c53-b19e-c4f29ad890a3", 
+    "image": "images/products/current_noodles.png",
+    "name": "Current Hot & Spicy Noodles",
+    "rating": {
+      "stars": 4.5,
+      "count": 150
+    },
+    "priceCents": 5000,
+    "keywords": ["noodles", "spicy", "snacks", "current"]
+  },
+  {
+    "id": "2c2d1e56-9f5b-4e64-c20f-d5a30be901b4",
+    "image": "images/products/sai_krip_chai.jpg",
+    "name": "Sai Kripa gold Tea - 200g",
+    "rating": {
+      "stars": 4.5,
+      "count": 95
+    },
+    "priceCents": 14000,
+    "keywords": ["tea", "chiya", "beverage", "morning"]
+  },
+  {
+    "id": "2c3d4e56-9f5b-4e64-c20f-d5a30be901b4",
+    "image": "images/products/sai_krip_chai.jpg",
+    "name": "Sai Kripa gold Tea - 50g and 200g",
+    "rating": {
+      "stars": 4.5,
+      "count": 95
+    },
+    "priceCents": 4000,
+    "keywords": ["tea", "chiya", "beverage", "morning"]
+  },
+  {
+    "id": "7e6f5d43-1a2b-3c4d-e5f6-a7b89cc012d5",
+    "image": "images/products/meat_masala.png",
+    "name": "Century Chicken Masala - 50g",
     "rating": {
       "stars": 4,
-      "count": 37
+      "count": 60
     },
-    "priceCents": 2067,
-    "keywords": ["plates", "kitchen", "dining"]
+    "priceCents": 500,
+    "keywords": ["spices", "masala", "meat", "cooking"]
   },
   {
-    "id": "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
-    "image": "images/products/3-piece-cooking-set.jpg",
-    "name": "3 Piece Non-Stick, Black Cooking Pot Set",
-    "rating": {
-      "stars": 4.5,
-      "count": 175
-    },
-    "priceCents": 3499,
-    "keywords": ["kitchen", "cookware"]
-  },
-  {
-    "id": "dd82ca78-a18b-4e2a-9250-31e67412f98d",
-    "image": "images/products/women-plain-cotton-oversized-sweater-gray.jpg",
-    "name": "Cotton Oversized Sweater - Gray",
-    "rating": {
-      "stars": 4.5,
-      "count": 317
-    },
-    "priceCents": 2400,
-    "keywords": ["sweaters", "apparel"]
-  },
-  {
-    "id": "77919bbe-0e56-475b-adde-4f24dfed3a04",
-    "image": "images/products/luxury-towel-set.jpg",
-    "name": "2 Piece Luxury Towel Set - White",
-    "rating": {
-      "stars": 4.5,
-      "count": 144
-    },
-    "priceCents": 3599,
-    "keywords": ["bathroom", "washroom", "restroom", "towels", "bath towels"]
-  },
-  {
-    "id": "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
-    "image": "images/products/facial-tissue-2-ply-8-boxes.jpg",
-    "name": "Ultra Soft Tissue 2-Ply - 8 Boxes",
+    "id": "4a5b6c7d-8e9f-0a1b-c2d3-e4f56aa789b6",
+    "image": "images/products/NG-White-Beaten-Rice-Seto-Taichin-Chiura.webp",
+    "name": "Taichin Chiura (Beaten Rice) - 1kg",
     "rating": {
       "stars": 4,
-      "count": 99
+      "count": 40
     },
-    "priceCents": 2374,
-    "keywords": ["kleenex", "tissues", "kitchen", "napkins"]
+    "priceCents": 12000,
+    "keywords": ["rice", "chiura", "snacks", "local"]
   },
   {
-    "id": "5968897c-4d27-4872-89f6-5bcb052746d7",
-    "image": "images/products/women-striped-beach-dress.jpg",
-    "name": "Women's Striped Beach Dress",
+    "id": "1a2b3c4d-5e6f-7a8b-9c0d-e1f23aa456b7",
+    "image": "images/products/rio_fruit_drink.jpg",
+    "name": "Rio Fruit Juice (Mango) - 250ml",
     "rating": {
       "stars": 4.5,
-      "count": 235
+      "count": 200
     },
-    "priceCents": 2970,
-    "keywords": ["robe", "swimsuit", "swimming", "bathing", "apparel"]
+    "priceCents": 2500,
+    "keywords": ["juice", "drinks", "mango", "summer"]
   },
   {
-    "id": "b86ddc8b-3501-4b17-9889-a3bad6fb585f",
-    "image": "images/products/women-sandal-heels-white-pink.jpg",
-    "name": "Women's Sandal Heels - Pink",
-    "rating": {
-      "stars": 4.5,
-      "count": 2286
-    },
-    "priceCents": 5300,
-    "keywords": ["womens", "shoes", "heels", "sandals"]
-  },
-  {
-    "id": "aad29d11-ea98-41ee-9285-b916638cac4a",
-    "image": "images/products/round-sunglasses-gold.jpg",
-    "name": "Round Sunglasses",
-    "rating": {
-      "stars": 4.5,
-      "count": 30
-    },
-    "priceCents": 3560,
-    "keywords": ["accessories", "shades"]
-  },
-  {
-    "id": "901eb2ca-386d-432e-82f0-6fb1ee7bf969",
-    "image": "images/products/blackout-curtain-set-beige.jpg",
-    "name": "Blackout Curtains Set - Beige",
-    "rating": {
-      "stars": 4.5,
-      "count": 232
-    },
-    "priceCents": 4599,
-    "keywords": ["bedroom", "curtains", "home"]
-  },
-  {
-    "id": "82bb68d7-ebc9-476a-989c-c78a40ee5cd9",
-    "image": "images/products/women-summer-jean-shorts.jpg",
-    "name": "Women's Summer Jean Shorts",
-    "rating": {
-      "stars": 4,
-      "count": 160
-    },
-    "priceCents": 1699,
-    "keywords": ["shorts", "apparel", "womens"]
-  },
-  {
-    "id": "c2a82c5e-aff4-435f-9975-517cfaba2ece",
-    "image": "images/products/electric-steel-hot-water-kettle-white.jpg",
-    "name": "Electric Hot Water Kettle - White",
-    "rating": {
-      "stars": 5,
-      "count": 846
-    },
-    "priceCents": 5074,
-    "keywords": ["water kettle", "appliances", "kitchen"]
-  },
-  {
-    "id": "58b4fc92-e98c-42aa-8c55-b6b79996769a",
-    "image": "images/products/knit-athletic-sneakers-gray.jpg",
-    "name": "Waterproof Knit Athletic Sneakers - Gray",
+    "id": "a9b8c7d6-e5f4-a3b2-c1d0-e9f87aa654b3",
+    "image": "images/products/masuro_dal.webp",
+    "name": "Local Masoor Dal (Red Lentil) - 1kg",
     "rating": {
       "stars": 4,
       "count": 89
     },
-    "priceCents": 5390,
-    "keywords": ["shoes", "running shoes", "footwear"]
+    "priceCents": 16000,
+    "keywords": ["dal", "pulses", "grains", "lunch"]
   },
   {
-    "id": "a82c6bac-3067-4e68-a5ba-d827ac0be010",
-    "image": "images/products/straw-sunhat.jpg",
-    "name": "Straw Wide Brim Sun Hat",
-    "rating": {
-      "stars": 4,
-      "count": 215
-    },
-    "priceCents": 2200,
-    "keywords": ["hats", "straw hats", "summer", "apparel"]
-  },
-  {
-    "id": "1c079479-8586-494f-ab53-219325432536",
-    "image": "images/products/men-athletic-shoes-white.jpg",
-    "name": "Men's Athletic Sneaker - White",
-    "rating": {
-      "stars": 4,
-      "count": 229
-    },
-    "priceCents": 4590,
-    "keywords": ["shoes", "running shoes", "footwear", "mens"]
-  },
-  {
-    "id": "b0f17cc5-8b40-4ca5-9142-b61fe3d98c85",
-    "image": "images/products/men-stretch-wool-sweater-black.jpg",
-    "name": "Men's Wool Sweater - Black",
+    "id": "c1d2e3f4-a5b6-c7d8-e9f0-a1b23cc456d7",
+    "image": "images/products/lifeBuoy_shop.png",
+    "name": "Lifebuoy Soap (Total 10) - 125g",
     "rating": {
       "stars": 4.5,
-      "count": 2465
+      "count": 340
     },
-    "priceCents": 3374,
-    "keywords": ["sweaters", "apparel"]
+    "priceCents": 5000,
+    "keywords": ["soap", "hygiene", "bathroom", "cleaning"]
   },
   {
-    "id": "a93a101d-79ef-4cf3-a6cf-6dbe532a1b4a",
-    "image": "images/products/bathroom-mat.jpg",
-    "name": "Bathroom Bath Mat 16 x 32 Inch - Grey",
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "image": "images/products/coconut_biscuits.webp",
+    "name": "Nebico Coconut Biscuits",
     "rating": {
       "stars": 4.5,
-      "count": 119
+      "count": 320
     },
-    "priceCents": 1850,
-    "keywords": ["bathmat", "bathroom", "home"]
+    "priceCents": 2000,
+    "keywords": ["biscuits", "tea time", "nebico", "snacks"]
   },
   {
-    "id": "4f4fbcc2-4e72-45cc-935c-9e13d79cc57f",
-    "image": "images/products/women-knit-ballet-flat-white.jpg",
-    "name": "Women's Ballet Flat - White",
-    "rating": {
-      "stars": 4,
-      "count": 326
-    },
-    "priceCents": 2640,
-    "keywords": ["shoes", "flats", "womens", "footwear"]
-  },
-  {
-    "id": "8b5a2ee1-6055-422a-a666-b34ba28b76d4",
-    "image": "images/products/men-golf-polo-t-shirt-gray.jpg",
-    "name": "Men's Golf Polo Shirt - Gray",
-    "rating": {
-      "stars": 4.5,
-      "count": 2556
-    },
-    "priceCents": 1599,
-    "keywords": ["tshirts", "shirts", "apparel", "mens"]
-  },
-  {
-    "id": "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
-    "image": "images/products/laundry-detergent-tabs.jpg",
-    "name": "Laundry Detergent Tabs, 50 Loads",
-    "rating": {
-      "stars": 4.5,
-      "count": 305
-    },
-    "priceCents": 2899,
-    "keywords": ["bathroom", "cleaning"]
-  },
-  {
-    "id": "e4f64a65-1377-42bc-89a5-e572d19252e2",
-    "image": "images/products/sky-leaf-branch-earrings.jpg",
-    "name": "Sterling Silver Leaf Branch Earrings",
-    "rating": {
-      "stars": 4.5,
-      "count": 52
-    },
-    "priceCents": 6799,
-    "keywords": ["jewelry", "accessories", "womens"]
-  },
-  {
-    "id": "19c6a64a-5463-4d45-9af8-e41140a4100c",
-    "image": "images/products/duvet-cover-set-gray-queen.jpg",
-    "name": "Duvet Cover Set, Diamond Pattern",
-    "rating": {
-      "stars": 4,
-      "count": 456
-    },
-    "priceCents": 4399,
-    "keywords": ["bedroom", "bed sheets", "sheets", "covers", "home"]
-  },
-  {
-    "id": "d2785924-743d-49b3-8f03-ec258e640503",
-    "image": "images/products/women-knit-beanie-pom-pom-blue.jpg",
-    "name": "Women's Knit Winter Beanie - Blue",
+    "id": "b2c3d4e5-f6a7-8901-2345-678901bcdef1",
+    "image": "images/products/Coca-cola.png",
+    "name": "Coca-Cola - 1.5 Liter",
     "rating": {
       "stars": 5,
-      "count": 83
+      "count": 500
     },
-    "priceCents": 1950,
-    "keywords": ["hats", "winter hats", "beanies", "apparel", "womens"]
+    "priceCents": 19000,
+    "keywords": ["drinks", "soda", "coke", "party"]
   },
   {
-    "id": "ee1f7c56-f977-40a4-9642-12ba5072e2b0",
-    "image": "images/products/men-chino-pants-beige.jpg",
-    "name": "Men's Chino Pants - Beige",
-    "rating": {
-      "stars": 4.5,
-      "count": 9017
-    },
-    "priceCents": 2290,
-    "keywords": ["pants", "apparel", "mens"]
-  },
-  {
-    "id": "4df68c27-fd59-4a6a-bbd1-e754ddb6d53c",
-    "image": "images/products/men-navigator-sunglasses-black.jpg",
-    "name": "Men's Navigator Sunglasses",
-    "rating": {
-      "stars": 3.5,
-      "count": 42
-    },
-    "priceCents": 3690,
-    "keywords": ["sunglasses", "glasses", "accessories", "shades"]
-  },
-  {
-    "id": "04701903-bc79-49c6-bc11-1af7e3651358",
-    "image": "images/products/men-brown-flat-sneakers.jpg",
-    "name": "Men's Brown Flat Sneakers",
-    "rating": {
-      "stars": 4.5,
-      "count": 562
-    },
-    "priceCents": 2499,
-    "keywords": ["footwear", "men", "sneakers"]
-  },
-  {
-    "id": "4e37dd03-3b23-4bc6-9ff8-44e112a92c64",
-    "image": "images/products/non-stick-cooking-set-4-pieces.jpg",
-    "name": "Non-Stick Cook Set With Lids - 4 Pieces",
-    "rating": {
-      "stars": 4.5,
-      "count": 511
-    },
-    "priceCents": 6797,
-    "keywords": ["cooking set", "kitchen"]
-  },
-  {
-    "id": "a434b69f-1bc1-482d-9ce7-cd7f4a66ce8d",
-    "image": "images/products/vanity-mirror-pink.jpg",
-    "name": "Vanity Mirror with LED Lights - Pink",
-    "rating": {
-      "stars": 4.5,
-      "count": 130
-    },
-    "priceCents": 2549,
-    "keywords": ["bathroom", "washroom", "mirrors", "home"]
-  },
-  {
-    "id": "a45cfa0a-66d6-4dc7-9475-e2b01595f7d7",
-    "image": "images/products/women-relaxed-lounge-pants-pink.jpg",
-    "name": "Women's Relaxed Lounge Pants - Pink",
-    "rating": {
-      "stars": 4.5,
-      "count": 248
-    },
-    "priceCents": 3400,
-    "keywords": ["pants", "apparel", "womens"]
-  },
-  {
-    "id": "d339adf3-e004-4c20-a120-40e8874c66cb",
-    "image": "images/products/crystal-zirconia-stud-earrings-pink.jpg",
-    "name": "Crystal Zirconia Stud Earrings - Pink",
-    "rating": {
-      "stars": 4.5,
-      "count": 117
-    },
-    "priceCents": 3467,
-    "keywords": ["accessories", "womens"]
-  },
-  {
-    "id": "d37a651a-d501-483b-aae6-a9659b0757a0",
-    "image": "images/products/glass-screw-lid-food-containers.jpg",
-    "name": "Glass Screw Lid Containers - 3 Pieces",
+    "id": "c3d4e5f6-a7b8-9012-3456-789012cdef23",
+    "image": "images/products/sugar.webp",
+    "name": "Sugar (Chini) - 1kg",
     "rating": {
       "stars": 4,
-      "count": 126
+      "count": 150
     },
-    "priceCents": 2899,
-    "keywords": ["food containers", "kitchen"]
+    "priceCents": 9000,
+    "keywords": ["grocery", "sugar", "baking", "sweet"]
   },
   {
-    "id": "0d7f9afa-2efe-4fd9-b0fd-ba5663e0a524",
-    "image": "images/products/black-and-silver-espresso-maker.jpg",
-    "name": "Black and Silver Espresso Maker",
+    "id": "d4e5f6a7-b8c9-0123-4567-890123def345",
+    "image": "images/products/xpert_dishwash_shop.png",
+    "name": "Xpert Dishwash Bar - 76g",
     "rating": {
       "stars": 4.5,
-      "count": 1211
+      "count": 210
     },
-    "priceCents": 8250,
-    "keywords": ["espresso makers", "kitchen", "appliances"]
+    "priceCents": 1000,
+    "keywords": ["cleaning", "dishwash", "kitchen", "soap"]
   },
   {
-    "id": "02e3a47e-dd68-467e-9f71-8bf6f723fdae",
-    "image": "images/products/blackout-curtains-set-teal.jpg",
-    "name": "Blackout Curtains Set 42 x 84-Inch - Teal",
+    "id": "e5f6a7b8-c9d0-1234-5678-901234ef4567",
+    "image": "images/products/sunsilk_stuning_black_shine_shampoo.png",
+    "name": "Sunsilk Black Shine Shampoo X2 piece - 4.5ml",
     "rating": {
       "stars": 4.5,
-      "count": 363
+      "count": 180
     },
-    "priceCents": 3099,
-    "keywords": ["bedroom", "home", "curtains"]
+    "priceCents": 500,
+    "keywords": ["shampoo", "hair care", "beauty", "sunsilk"]
   },
   {
-    "id": "8a53b080-6d40-4a65-ab26-b24ecf700bce",
-    "image": "images/products/bath-towel-set-gray-rosewood.jpg",
-    "name": "Bath Towels 2 Pack - Gray, Rosewood",
-    "rating": {
-      "stars": 4.5,
-      "count": 93
-    },
-    "priceCents": 2990,
-    "keywords": ["bathroom", "home", "towels"]
-  },
-  {
-    "id": "10ed8504-57db-433c-b0a3-fc71a35c88a1",
-    "image": "images/products/athletic-skateboard-shoes-gray.jpg",
-    "name": "Athletic Skateboard Shoes - Gray",
-    "rating": {
-      "stars": 4,
-      "count": 89
-    },
-    "priceCents": 3390,
-    "keywords": ["shoes", "running shoes", "footwear"]
-  },
-  {
-    "id": "77a845b1-16ed-4eac-bdf9-5b591882113d",
-    "image": "images/products/countertop-push-blender-black.jpg",
-    "name": "Countertop Push Blender - Black",
-    "rating": {
-      "stars": 4,
-      "count": 3
-    },
-    "priceCents": 10747,
-    "keywords": ["food blenders", "kitchen", "appliances"]
-  },
-  {
-    "id": "bc2847e9-5323-403f-b7cf-57fde044a955",
-    "image": "images/products/men-cozy-fleece-hoodie-light-teal.jpg",
-    "name": "Men's Fleece Hoodie - Light Teal",
-    "rating": {
-      "stars": 4.5,
-      "count": 3157
-    },
-    "priceCents": 3800,
-    "keywords": ["sweaters", "hoodies", "apparel", "mens"]
-  },
-  {
-    "id": "36c64692-677f-4f58-b5ec-0dc2cf109e27",
-    "image": "images/products/artistic-bowl-set-6-piece.jpg",
-    "name": "Artistic Bowl and Plate Set - 6 Pieces",
+    "id": "89012345-6789-0abc-def1-234567890abc",
+    "image": "images/products/gai_chhap.png",
+    "name": "Gai chhap Detergent Powder - 500g and 1kg",
     "rating": {
       "stars": 5,
-      "count": 679
+      "count": 280
     },
-    "priceCents": 3899,
-    "keywords": ["bowls set", "kitchen"]
+    "priceCents": 5000,
+    "keywords": ["washing", "laundry", "detergent", "cleaning"]
   },
   {
-    "id": "aaa65ef3-8d6f-4eb3-bc9b-a6ea49047d8f",
-    "image": "images/products/kitchen-paper-towels-8-pack.jpg",
-    "name": "2-Ply Kitchen Paper Towels - 8 Pack",
+    "id": "89021345-6789-0abc-def1-234567890abc",
+    "image": "images/products/gai_chhap.png",
+    "name": "Gai chhap Detergent Powder - 1kg",
+    "rating": {
+      "stars": 5,
+      "count": 280
+    },
+    "priceCents": 10000,
+    "keywords": ["washing", "laundry", "detergent", "cleaning"]
+  },
+  {
+    "id": "90123456-7890-abcd-ef12-34567890abcd",
+    "image": "images/products/brown-poultry-eggs.jpg",
+    "name": "Fresh Eggs (Krat) - 30 Pcs",
+    "rating": {
+      "stars": 4,
+      "count": 60
+    },
+    "priceCents": 55000,
+    "keywords": ["eggs", "protein", "breakfast", "fresh"]
+  },
+  {
+    "id": "12345678-90ab-cdef-1234-567890abcdef",
+    "image": "images/products/devdaha_masala.png",
+    "name": "Devdaha masala Powder - 100g",
+    "rating": {
+      "stars": 5,
+      "count": 110
+    },
+    "priceCents": 3000,
+    "keywords": ["spices", "chili", "bassar","khursani", "haldi","tumeric", "cooking","tarkari" ,"vegetable","hot","masala"]
+  },
+  {
+    "id": "23456789-0abc-def1-2345-67890abcdef1",
+    "image": "images/products/colgate-removebg-preview.png",
+    "name": "Colgate Strong Teeth Toothpaste - 100g",
     "rating": {
       "stars": 4.5,
-      "count": 1045
+      "count": 400
     },
-    "priceCents": 1899,
-    "keywords": ["kitchen", "kitchen towels", "tissues"]
+    "priceCents": 7500,
+    "keywords": ["toothpaste", "hygiene", "dental", "colgate"]
+  },
+  {
+    "id": "34567890-abcd-ef12-3456-7890abcdef12",
+    "image": "images/products/chana.webp",
+    "name": "Big Mart Chana (Whole Chickpeas) - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 75
+    },
+    "priceCents": 17000,
+    "keywords": ["pulses", "chana", "grains", "vegetable"]
+  },
+  {
+    "id": "67890abc-def1-2345-6789-0abcdef12345",
+    "image": "images/products/digestive_biscuits.png",
+    "name": "Digestive Biscuits (Britannia)",
+    "rating": {
+      "stars": 4.5,
+      "count": 180
+    },
+    "priceCents": 2000,
+    "keywords": ["biscuits", "healthy", "snacks", "fiber"]
+  },
+  {
+    "id": "7890abcd-ef12-3456-7890-abcdef123456",
+    "image": "images/products/Champa-Incense-Sticks-Pouch-130g-2-1.webp",
+    "name": "Champa Agarbatti (Incense Sticks)",
+    "rating": {
+      "stars": 5,
+      "count": 300
+    },
+    "priceCents": 10000,
+    "keywords": ["pooja", "incense", "fragrance", "spiritual"]
   }
 ];
+ 

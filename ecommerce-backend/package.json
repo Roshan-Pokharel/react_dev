@@ -21,8 +21,8 @@
     "patch-package": "8.0.0",
     "pg": "^8.16.0",
     "sequelize": "^6.6.5",
-    "sql.js": "1.10.3",
-    "sql.js-as-sqlite3": "0.2.1"
+    "sql.js-as-sqlite3": "^0.2.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "archiver": "^7.0.1",

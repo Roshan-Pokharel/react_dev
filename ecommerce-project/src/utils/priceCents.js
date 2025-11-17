@@ -1,5 +1,5 @@
 function PriceCents(cents)
 {
-  return `$${((cents)/100).toFixed(2)}`;
+  return `Rs ${((cents)/100).toFixed(2)}`;
 }
 export default PriceCents;
