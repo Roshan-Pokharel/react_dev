@@ -147,3 +147,40 @@
   width: 26px;
   text-align: center;
 }
+
+.middle-section {
+  position: relative;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 40px; 
+  left: 0;
+ 
+  width: calc(100% - 50px); 
+  
+  background-color:rgba(255, 255, 255, 0.75);
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100; 
+
+  /* Reset list styles */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 300px; 
+  overflow-y: auto; 
+}
+
+.search-suggestions li {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.search-suggestions li:hover {
+  background-color: #f0f0f0;
+}

@@ -155,3 +155,12 @@
   height: 34px;
   margin-top: 1px;
 }
+/* In Home.css */
+.no-products-found {
+  /* This makes the message span the entire grid area */
+  grid-column: 1 / -1; 
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin-top: 40px;
+}
