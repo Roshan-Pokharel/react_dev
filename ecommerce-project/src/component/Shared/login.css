@@ -1,0 +1,28 @@
+.signin-button{
+  background: none;
+    font-size: 15px;
+    font-weight: 700;
+   
+}
+/* Container to help with alignment */
+.user-profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* The circular profile image */
+.user-avatar {
+  width: 40px;  /* Adjust size to match your header */
+  height: 40px;
+  border-radius: 50%; /* Makes it a perfect circle */
+  object-fit: cover;
+  border: 2px solid #ddd; /* Optional: slight border */
+  transition: transform 0.2s;
+}
+
+.user-avatar:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+  border-color: #ff9900; /* Amazon-ish color, or your brand color */
+}

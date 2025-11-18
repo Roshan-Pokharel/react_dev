@@ -19,6 +19,14 @@ export const Order = sequelize.define('Order', {
     type: DataTypes.JSON,
     allowNull: false
   },
+  UserId: {
+    type: DataTypes.INTEGER,
+    allowNull: false, 
+    references: {
+      model: 'Users', // The table name defined in User.js
+      key: 'id',
+    }
+  },
   createdAt: {
     type: DataTypes.DATE(3)
   },

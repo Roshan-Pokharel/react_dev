@@ -1,3 +1,10 @@
+.orders-page .no-orders-message {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  padding: 50px;
+}
+
 .orders-page {
   max-width: 850px;
   margin-top: 90px;

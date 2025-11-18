@@ -16,7 +16,10 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^4.21.2",
+    "google-auth-library": "^10.5.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",
     "patch-package": "8.0.0",
     "pg": "^8.16.0",
@@ -25,6 +28,8 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
     "archiver": "^7.0.1",
     "eslint": "^8.0.0",
     "nodemon": "^3.1.9"

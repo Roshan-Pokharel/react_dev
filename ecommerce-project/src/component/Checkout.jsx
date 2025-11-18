@@ -1,161 +1,146 @@
-import axios from 'axios';
 import { useEffect, useState, Fragment } from 'react';
-import dataFetch from '../utils/dataFetch';
-import React from 'react';
-import PriceCents from '../utils/priceCents'; 
-import dayjs from 'dayjs';
-// Removed unused date utils
-import './Shared/General.css';
-import './Checkout-css/Checkout-header.css';
-import './Checkout-css/Checkout.css';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import PriceCents from '../utils/priceCents'; // Utility function
+import apiClient from '../api'; // *** CORRECTED: Using apiClient for Authorization ***
 
-//--- NEW Helper Function ---//
-// This function takes the delivery days (e.g., 7) and formats it
+import './Shared/General.css';
+import './Checkout-css/Checkout-header.css'
+import './Checkout-css/Checkout.css';
+
+//--- Helper Function ---//
 function formatDeliveryDate(deliveryDays) {
   if (deliveryDays === undefined) {
     return 'Select an option';
   }
+  // deliveryDays is a number (e.g., 7)
   return dayjs().add(deliveryDays, 'day').format('dddd, MMMM D');
 }
 
 //---> main function of this components <-----//
-export function Checkout({ products, cartItem }) {
+export function Checkout() {
   const [checkoutItem, setCheckoutItem] = useState([]);
-  const [selectedOption, setSelectedOption] = useState({});
+  const [selectedOption,setSelectedOption] = useState({}); 
+  // {productId: deliveryOptionId}
   const [paymentSummary, setPaymentSummary] = useState({});
   const [deliveryOptions, setDeliveryOptions] = useState([]); 
   const [editingProductId, setEditingProductId] = useState(null); 
   const [currentEditQuantity, setCurrentEditQuantity] = useState(1); 
+  const navigate = useNavigate();
+
+  // Helper to re-fetch all data after any change (cart update, option change)
+  const fetchAllData = async () => {
+    try {
+      // Fetch cart items with product details
+      const cartResponse = await apiClient.get('/cart-items?expand=product');
+      setCheckoutItem(cartResponse.data);
+
+      // Fetch all available delivery options
+      const deliveryResponse = await apiClient.get('/delivery-options');
+      setDeliveryOptions(deliveryResponse.data);
+      
+      // Fetch the updated payment summary
+      const summaryResponse = await apiClient.get('/payment-summary');
+      setPaymentSummary(summaryResponse.data);
+
+      // Initialize selected options if they haven't been set
+      if (cartResponse.data.length > 0) {
+        const initialOptions = cartResponse.data.reduce((acc, item) => {
+          acc[item.productId] = item.deliveryOptionId;
+          return acc;
+        }, {});
+        setSelectedOption(initialOptions);
+      } else {
+        // If the cart is empty, navigate back to the home page
+        navigate('/');
+      }
+    } catch (error) {
+      console.error("Failed to fetch checkout data:", error);
+      // Handle 401/403 errors (e.g., redirect to login)
+    }
+  };
 
   //-----> fetching the checkout data from the backend <------//
   useEffect(() => {
-    // Use Promise.all to fetch all data in parallel
-    Promise.all([
-      axios.get("/api/cart-items"),
-      axios.get('/api/payment-summary'),
-      axios.get('/api/delivery-options') // <-- STEP 1
-    ]).then(([cartResponse, summaryResponse, optionsResponse]) => {
-      
-      setCheckoutItem(cartResponse.data);
-      setPaymentSummary(summaryResponse.data);
-      setDeliveryOptions(optionsResponse.data); // <-- Set options state
+    fetchAllData();
+  }, []); // Run only on initial mount
 
-      // UPDATED: Use the *actual* deliveryOptionId from the API
-      // This will store state like: { productId: '1', otherProductId: '3' }
-      const initialSelectedOptions = cartResponse.data.reduce((acc, item) => {
-        // Use the ID from the backend, or default to '1' (which is usually free)
-        acc[item.productId] = item.deliveryOptionId || '1'; 
-        return acc;
-      }, {});
-      
-      setSelectedOption(initialSelectedOptions);
-
-    }).catch(error => {
-        console.error("Error fetching data:", error);
-    });
-  // Note: 'products' dependency might not be needed if this page fetches all its own data
-  }, [products, cartItem]); 
- 
-  //-----> Handler to update backend <-----//
-  const handleOptionChange = async (e, productId) => { // <-- STEP 3
-    const newDeliveryOptionId = e.target.value;
-
-    // 1. Update local state optimistically so the UI is fast
-    setSelectedOption(prevOptions => ({
-      ...prevOptions,
-      [productId]: newDeliveryOptionId
-    }));
-
+  // Handler for changing delivery options
+  const updateCartItemDeliveryOption = async (productId, newDeliveryOptionId) => {
+    // Optimistic UI update
+    setSelectedOption(prev => ({ ...prev, [productId]: newDeliveryOptionId }));
+    
     try {
-      // 2. Send PUT request to the backend
-      await axios.put(`/api/cart-items/${productId}`, {
-        deliveryOptionId: newDeliveryOptionId
+      // API call to update the delivery option
+      await apiClient.put(`/cart-items/${productId}`, {
+        deliveryOptionId: newDeliveryOptionId,
       });
 
-      // 3. Refetch payment summary (shipping cost has changed)
-      const response = await axios.get('/api/payment-summary');
-      setPaymentSummary(response.data);
-
+      // Re-fetch all data to update payment summary
+      fetchAllData();
     } catch (error) {
       console.error('Failed to update delivery option:', error);
-      // Optional: You could revert the state here if the API call fails
+      // Revert optimistic update if necessary
+      // For now, simply log the error.
     }
   };
 
-  const handleDelete = async (productId) => {
+  // Handler for removing an item from the cart
+  const removeItem = async (productId) => {
     try {
-      // 1. Delete item from backend
-      await axios.delete(`/api/cart-items/${productId}`);
-
-      // 2. Update local state to remove the item from the list
-      setCheckoutItem(prevItems =>
-        prevItems.filter(item => item.productId !== productId)
-      );
-
-      // 3. Refetch payment summary (totals have changed)
-      const response = await axios.get('/api/payment-summary');
-      setPaymentSummary(response.data);
-
+      await apiClient.delete(`/cart-items/${productId}`);
+      // Re-fetch all data
+      fetchAllData();
     } catch (error) {
-      console.error('Failed to delete item:', error);
+      console.error('Failed to remove item:', error);
     }
   };
 
-  //-----> Handler to enter "Update" mode <-----//
-  const handleUpdateClick = (productId, currentQuantity) => {
-    setEditingProductId(productId); // Set this item to "editing"
-    setCurrentEditQuantity(currentQuantity); // Pre-fill the input with the current quantity
+  // Handler for opening quantity edit mode
+  const handleEditClick = (productId, currentQuantity) => {
+    setEditingProductId(productId);
+    setCurrentEditQuantity(currentQuantity);
   };
 
-  //-----> Handler to "Cancel" an update <-----//
-  const handleCancelClick = () => {
-    setEditingProductId(null); // Exit "editing" mode
-    setCurrentEditQuantity(1); // Reset the temporary quantity
+  // Handler for changing quantity in edit mode
+  const handleQuantityChange = (event) => {
+    setCurrentEditQuantity(Number(event.target.value));
   };
 
-  //-----> Handler to "Save" an update <-----//
-  const handleSaveClick = async () => {
-    const newQuantity = parseInt(currentEditQuantity, 10);
-
-    // Basic validation (based on API docs)
-    if (isNaN(newQuantity) || newQuantity < 1) {
-      alert('Quantity must be at least 1.');
+  // Handler for saving the new quantity
+  const saveQuantity = async (productId) => {
+    if (currentEditQuantity < 1 || currentEditQuantity > 10) {
+      alert("Quantity must be between 1 and 10.");
       return;
     }
-
+    
     try {
-      // 1. Send PUT request to the backend with the new quantity
-      await axios.put(`/api/cart-items/${editingProductId}`, {
-        quantity: newQuantity
+      await apiClient.put(`/cart-items/${productId}`, {
+        quantity: currentEditQuantity,
       });
-
-      // 2. Update local state to show the new quantity immediately
-      setCheckoutItem(prevItems =>
-        prevItems.map(item =>
-          item.productId === editingProductId
-            ? { ...item, quantity: newQuantity }
-            : item
-        )
-      );
-
-      // 3. Refetch payment summary (totals have changed)
-      const response = await axios.get('/api/payment-summary');
-      setPaymentSummary(response.data);
-
-      // 4. Exit "editing" mode
       setEditingProductId(null);
-
+      // Re-fetch all data
+      fetchAllData();
     } catch (error) {
       console.error('Failed to update quantity:', error);
-      alert('Failed to update. Please try again.');
     }
   };
-    const navigate = useNavigate();
-   const createOrder = async ()=>{
-     await axios.post('/api/orders');
-    navigate('/orders')
-   }
+
+
+  // Handler for creating the final order
+  const createOrder = async () => {
+    try {
+      // POST request to create the order
+      await apiClient.post('/orders');
+      
+      // Navigate to the orders page after success
+      navigate('/orders');
+    } catch (error) {
+      console.error('Failed to place order:', error);
+      alert('Failed to place order. Please check your cart items.');
+    }
+  };
+
 
   return (
     <>
@@ -163,134 +148,128 @@ export function Checkout({ products, cartItem }) {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <a href="/">
-              <img className="logo" src="images/logo.png" />
-              <img className="mobile-logo" src="images/mobile-logo.png" />
+              {/* --- CORRECTION 1: Changed "amazon-logo" to "logo" --- */}
+              <img className="logo" src="images/logo.png" alt="Amazon Logo" />
             </a>
           </div>
+
           <div className="checkout-header-middle-section">
-            Checkout (<a className="return-to-home-link"
-              href="/">{`${paymentSummary.totalItems || 0} Items`}</a>)
+            Checkout ({paymentSummary.totalItems || 0} items)
           </div>
+
           <div className="checkout-header-right-section">
-            <img src="images/icons/checkout-lock-icon.png" />
+            <img src="images/icons/checkout-lock-icon.png" alt="Lock Icon" />
           </div>
         </div>
       </div>
 
-      <div className="checkout-page">
+      {/* --- CORRECTION 2: Added "checkout-page" class --- */}
+      <div className="main checkout-page">
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
           <div className="order-summary">
-            {checkoutItem.map((cartItem) => {
-              const product = dataFetch(cartItem, products);
 
-              // Find the full delivery option object that is currently selected
+            {/* --- Cart Items List --- */}
+            {checkoutItem.map((item) => {
+              const product = item.product;
+              // Find the selected delivery option details
               const currentDeliveryOption = deliveryOptions.find(
-                option => option.id === selectedOption[cartItem.productId]
+                (option) => option.id === item.deliveryOptionId
               );
 
               return (
-                <Fragment key={cartItem.productId}> {/* Use productId as key */}
-                  <div className="cart-item-container">
-                    <div className="delivery-date">
-                      {/* Use the new helper and data */}
-                      Delivery date: {formatDeliveryDate(currentDeliveryOption?.deliveryDays)}
-                    </div>
-
-                    <div className="cart-item-details-grid">
-                      <img className="product-image"
-                        src={product?.image} />
-
-                      
-
-                  <div className="cart-item-details">
-                    <div className="product-name">
-                      {product?.name}
-                    </div>
-                    <div className="product-price">
-                      {PriceCents(product?.priceCents)}
-                    </div>
-
-            
-                    <div className="product-quantity">
-                      {editingProductId === cartItem.productId ? (
-                        // --- EDITING VIEW ---
-                        <>
-                          <span>
-                            Quantity: 
-                            <input 
-                              type="number" 
-                              min="1"
-                              className="quantity-input" 
-                              value={currentEditQuantity}
-                              onChange={(e) => setCurrentEditQuantity(e.target.value)}
-                            />
-                          </span>
-                          <span className="save-quantity-link link-primary" onClick={handleSaveClick}>
-                            Save
-                          </span>
-                          <span className="cancel-quantity-link link-primary" onClick={handleCancelClick}>
-                            Cancel
-                          </span>
-                        </>
-                      ) : (
-                        // --- DISPLAY VIEW ---
-                        <>
-                          <span>
-                            Quantity: <span className="quantity-label">{cartItem.quantity}</span>
-                          </span>
-                          <span className="update-quantity-link link-primary" 
-                            onClick={() => handleUpdateClick(cartItem.productId, cartItem.quantity)}>
-                            Update
-                          </span>
-                          <span className="delete-quantity-link link-primary" 
-                            onClick={() => handleDelete(cartItem.productId)}>
-                            Delete
-                          </span>
-                        </>
-                      )}
-                    </div>
-                    
-                    
+                <div key={item.productId} className="cart-item-container">
+                  <div className="delivery-date">
+                    Estimated delivery: {formatDeliveryDate(currentDeliveryOption?.deliveryDays)}
                   </div>
 
-                      {/* --- STEP 4: DYNAMICALLY RENDER OPTIONS --- */}
-                      <div className="delivery-options">
-                        <div className="delivery-options-title">
-                          Choose a delivery option:
-                        </div>
-                        {deliveryOptions.map(option => (
-                          <div className="delivery-option" key={option.id}>
-                            <input type="radio"
+                  <div className="cart-item-details-grid">
+                    <img className="product-image" src={product?.image} alt={product?.name} />
+
+                    <div className="cart-item-details">
+                      <div className="product-name">{product?.name}</div>
+                      <div className="product-price">{PriceCents(product?.priceCents)}</div>
+                      <div className="product-quantity">
+                        Quantity: 
+                        {editingProductId === product.id ? (
+                          <span className="edit-quantity">
+                            <input
+                              type="number"
+                              min="1"
+                              max="10"
+                              value={currentEditQuantity}
+                              onChange={handleQuantityChange}
+                              /* --- CORRECTION 3: Added className --- */
+                              className="quantity-input"
+                            />
+                            <span 
+                              /* --- CORRECTION 4: Changed className --- */
+                              className="save-quantity-link" 
+                              onClick={() => saveQuantity(product.id)}
+                            >
+                              Save
+                            </span>
+                            <span 
+                              /* --- CORRECTION 5: Changed className --- */
+                              className="cancel-quantity-link" 
+                              onClick={() => setEditingProductId(null)}
+                            >
+                              Cancel
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="quantity-label">
+                            {item.quantity}
+                            <span 
+                              className="update-quantity-link" 
+                              onClick={() => handleEditClick(product.id, item.quantity)}
+                            >
+                              Update
+                            </span>
+                          </span>
+                        )}
+                        
+                        <span className="delete-quantity-link" onClick={() => removeItem(product.id)}>
+                          Delete
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="delivery-options">
+                      <div className="delivery-options-title">
+                        Choose a delivery option:
+                      </div>
+                      {deliveryOptions.map((option) => {
+                        const isChecked = option.id === item.deliveryOptionId;
+                        return (
+                          <div key={option.id} className="delivery-option">
+                            <input
+                              type="radio"
+                              checked={isChecked}
+                              name={`delivery-option-${product.id}`}
                               className="delivery-option-input"
-                              name={cartItem.productId} // Group by product ID
-                              value={option.id} // The value is the backend ID
-                              checked={selectedOption[cartItem.productId] === option.id}
-                              onChange={(e) => handleOptionChange(e, cartItem.productId)}
+                              onChange={() => updateCartItemDeliveryOption(product.id, option.id)}
                             />
                             <div>
                               <div className="delivery-option-date">
                                 {formatDeliveryDate(option.deliveryDays)}
                               </div>
                               <div className="delivery-option-price">
-                                {option.priceCents === 0
-                                  ? 'FREE Shipping'
-                                  : `${PriceCents(option.priceCents)} - Shipping`
-                                }
+                                {option.priceCents === 0 ? 'FREE' : PriceCents(option.priceCents)} Shipping
                               </div>
                             </div>
                           </div>
-                        ))}
-                      </div>
+                        );
+                      })}
                     </div>
                   </div>
-                </Fragment>
-              )
+                </div>
+              );
             })}
-          </div> {/* .order-summary */}
+          </div>
 
-          {/* --- PAYMENT SUMMARY --- */}
+          {/* --- Payment Summary --- */}
           <div className="payment-summary">
             <div className="payment-summary-title">
               Payment Summary

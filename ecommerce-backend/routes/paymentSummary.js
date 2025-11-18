@@ -2,11 +2,13 @@ import express from 'express';
 import { CartItem } from '../models/CartItem.js';
 import { Product } from '../models/Product.js';
 import { DeliveryOption } from '../models/DeliveryOption.js';
+import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const cartItems = await CartItem.findAll();
+router.get('/', protect, async (req, res) => {
+  const userId = req.userId;
+  const cartItems = await CartItem.findAll({ where: { UserId: userId } });
   let totalItems = 0;
   let productCostCents = 0;
   let shippingCostCents = 0;

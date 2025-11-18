@@ -1,8 +1,7 @@
 .header {
   background-color: rgb(8, 79, 45);
   color: white;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 0 10px;
 
   display: flex;
   align-items: center;
@@ -13,71 +12,67 @@
   left: 0;
   right: 0;
   height: 60px;
+  z-index: 1000;
 }
 
+/* LEFT SECTION */
 .header .left-section {
-  width: 208px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
-@media (max-width: 800px) {
-  .header .left-section {
-    width: unset;
+.header .left-section .logo {
+  height: 40px;
+}
+
+.header .left-section .mobile-logo {
+  display: none;
+}
+
+@media (max-width: 675px) {
+  .header .left-section .logo {
+    display: none;
+  }
+
+  .header .left-section .mobile-logo {
+    display: block;
+    height: 26px;
   }
 }
 
+/* HEADER LINKS */
 .header .header-link {
-  display: inline-block;
   padding: 6px 9.5px;
   border-radius: 2px;
   cursor: pointer;
   text-decoration: none;
-  border: 1px solid rgba(0, 0, 0, 0);
+  color: white;
+  border: 1px solid transparent;
 }
 
 .header .header-link:hover {
   border: 1px solid white;
 }
 
-.header .logo {
-  height: 40px;
-  margin-top: 1px;
-}
-
-.header .mobile-logo {
-  display: none;
-}
-
-@media (max-width: 675px) {
-  .header .logo {
-    display: none;
-  }
-
-  .header .mobile-logo {
-    display: block;
-    height: 26px;
-    margin-top: 1px;
-  }
-}
-
+/* MIDDLE SECTION — SEARCH BAR */
 .header .middle-section {
   flex: 1;
   max-width: 850px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0 10px;
   display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .header .search-bar {
   flex: 1;
-  width: 0;
-  font-size: 16px;
   height: 38px;
   padding-left: 15px;
+  font-size: 16px;
   border: none;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 5px 0 0 5px;
 }
 
 .header .search-button {
@@ -85,39 +80,36 @@
   border: none;
   width: 45px;
   height: 40px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 0 5px 5px 0;
   flex-shrink: 0;
 }
 
 .header .search-icon {
   height: 20px;
-  margin-left: 0px;
-  margin-top: 3px;
 }
 
+/* RIGHT SECTION - FIXED */
 .header .right-section {
-  width: 180px;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: end;
-}
-
-.header .orders-link {
-  color: white;
-
   display: flex;
   align-items: center;
-  padding-left: 13px;
-  padding-right: 13px;
+  gap: 15px;   /* space between SignIn / Orders / Cart */
+  white-space: nowrap; 
+  flex-shrink: 0;
+}
+
+/* ORDERS */
+.header .orders-link {
+  display: flex;
+  align-items: center;
+  color: white;
 }
 
 .header .orders-text {
-  display: block;
   font-size: 15px;
   font-weight: 700;
 }
 
+/* CART */
 .header .cart-link {
   color: white;
   display: flex;
@@ -136,42 +128,37 @@
 }
 
 .header .cart-quantity {
-  color: rgb(8, 79, 45);
-  font-size: 14px;
-  font-weight: 700;
-
   position: absolute;
   top: 8.5px;
   right: 46px;
-
   width: 26px;
+
+  color: rgb(8,79,45);
+  font-size: 14px;
+  font-weight: 700;
   text-align: center;
 }
 
-.middle-section {
-  position: relative;
-}
-
+/* SEARCH SUGGESTIONS DROPDOWN */
 .search-suggestions {
   position: absolute;
-  top: 40px; 
+  top: 40px;
   left: 0;
- 
-  width: calc(100% - 50px); 
-  
-  background-color:rgba(255, 255, 255, 0.75);
+
+  width: calc(100% - 50px);
+  background-color: rgba(255, 255, 255, 0.75);
+
   border: 1px solid #ddd;
   border-top: none;
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 100; 
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 
-  /* Reset list styles */
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 300px; 
-  overflow-y: auto; 
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 2000;
 }
 
 .search-suggestions li {
@@ -184,3 +171,4 @@
 .search-suggestions li:hover {
   background-color: #f0f0f0;
 }
+

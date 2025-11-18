@@ -1,119 +1,139 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, Fragment} from 'react'; // <-- 1. IMPORT FRAGMENT
 import {Header} from '../component/Shared/Header.jsx';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import PriceCents from '../utils/priceCents.js';
-import dataFetch from '../utils/dataFetch.js';
+import apiClient from '../api'; // *** CORRECTED: Using apiClient for Authorization ***
+
 import './Shared/General.css';
 import './Shared/Header.css';
 import './Order.css';
 
-export function OrdersList({products, loadCart})
-{ 
+export function OrdersList({ loadCart }) { 
     const [orders, setOrders] = useState([]);
     
-      useEffect(()=>{
-         axios.get("/api/orders").then((response)=>{
-         setOrders(response.data)
+    // Function to fetch orders
+    const fetchOrders = async () => {
+        try {
+            // Fetch orders, including product details (via expand=products)
+            const response = await apiClient.get("/orders?expand=products");
+            setOrders(response.data);
+        } catch (error) {
+            console.error("Failed to fetch orders:", error);
+            // Handle errors (e.g., if token is expired)
         }
-      );
-      }, []);
+    };
 
-      // function imageFetch(order){
-      //   products.find((product)=>{
-      //   if(product.id===order.productId){
-      //     return(
-      //      {}
-      //     )
-      //   }
-      // });
-      // }
+    // Fetch orders on initial load
+    useEffect(() => {
+        fetchOrders();
+    }, []);
 
-      
-    //}
+    // Handler for the "Add to Cart" (Buy Again) button
+    const buyAgain = async (productId) => {
+        try {
+            // POST request to add the item back to the cart
+            await apiClient.post('/cart-items', {
+                productId: productId,
+                quantity: 1
+            });
+            // Reload the cart count in the Header
+            loadCart();
+            alert('Item added to cart!');
+        } catch (error) {
+            console.error('Failed to add item to cart:', error);
+            alert('Failed to add item to cart. Please ensure you are logged in.');
+        }
+    };
    
-    
   return(
     <>
-  {<Header loadCart={loadCart} />}
-    <div className="orders-page">
-      <div className="page-title">Your Orders</div>
+      <Header loadCart={loadCart} /> 
+      <div className="orders-page">
+        <div className="page-title">Your Orders</div>
 
-      <div className="orders-grid">
-        {orders.map((order)=>{ 
-          return(
-          <div key={order?.id} className="order-container">
+        <div className="orders-grid">
+          {orders.length === 0 ? (
+            <div className="no-orders-message">You have no past orders.</div>
+          ) : (
+            orders.map((order) => { 
+                // orderTimeMs is a BIGINT (number) in the database
+                const orderDate = dayjs(Number(order.orderTimeMs)).format('MMMM D');
+                const orderTotal = PriceCents(order.totalCostCents);
 
-          <div className="order-header">
-            <div className="order-header-left-section">
-              <div className="order-date">
-                <div className="order-header-label">Order Placed:</div>
-                <div>{dayjs(order?.orderTimeMs).format(' dddd, MMMM D')}</div>
-              </div>
-              <div className="order-total">
-                <div className="order-header-label">Total:</div>
-                <div>{PriceCents(order?.totalCostCents)}</div>
-              </div>
-            </div>
+                return(
+                <div key={order?.id} className="order-container">
 
-            <div className="order-header-right-section">
-              <div className="order-header-label">Order ID:</div>
-              <div>{order?.id}</div>
-            </div>
-          </div>
-          {order.products.map((product)=>{
-            const Product = dataFetch(product, products );
-            return(
-              <div  key={`${order.id}- ${product.productId}`} className="order-details-grid">
-            <div className="product-image-container">
-            <img src = {Product?.image}
-           />
-            </div>
-            <div className="product-details">
-              <div className="product-name">
-                {Product?.name}
-              </div>
-              <div className="product-delivery-date">
-                Arriving on: {dayjs(product?.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
-              </div>
-              <div className="product-quantity">
-                Quantity: {product?.quantity}
-              </div>
-              <button className="buy-again-button button-primary">
-                <img className="buy-again-icon" src="images/icons/buy-again.png" />
+                <div className="order-header">
+                    <div className="order-header-left-section">
+                    <div className="order-date">
+                        Order Placed:
+                        <span className="order-header-label">{orderDate}</span>
+                    </div>
+                    <div className="order-total">
+                        Total:
+                        <span className="order-header-label">{orderTotal}</span>
+                    </div>
+                    </div>
 
-                <span className="buy-again-message" 
-                onClick={async()=>{
-                await axios.post('/api/cart-items', {
-                    productId: product.productId,
-                    quantity: 1
-                  });
-                  await loadCart();
-                }}
-                >Add to Cart</span>
-              </button>
-            </div>
+                    <div className="order-header-right-section">
+                    <div className="order-header-label">Order ID: {order?.id}</div>
+                    </div>
+                </div>
 
-            <div className="product-actions">
-              <a href="tracking">
-                <button className="track-package-button button-secondary">
-                  Track package
-                </button>
-              </a>
-            </div>
+                <div className="order-details-grid">
+                    {/* Map through the products array stored in the order object */}
+                    {order.products.map((product) => {
+                        const Product = product.product; // The expanded product details
+                        
+                        // --- CORRECTION ---
+                        // We return a Fragment so that the 3 elements below
+                        // become direct children of "order-details-grid",
+                        // matching the 3-column layout in the CSS.
+                        return(
+                        <Fragment key={product.productId}>
+                            {/* Column 1: Image */}
+                            <div className="product-image-container">
+                                <img src = {Product?.image} alt={Product?.name} />
+                            </div>
 
-          
-          </div>
+                            {/* Column 2: Details */}
+                            <div>
+                                <div className="product-name">
+                                    {Product?.name}
+                                </div>
+                                <div className="product-delivery-date">
+                                    Arriving on: {dayjs(product?.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
+                                </div>
+                                <div className="product-quantity">
+                                    Quantity: {product?.quantity}
+                                </div>
+                                <button className="buy-again-button button-primary" onClick={() => buyAgain(product.productId)}>
+                                    <img className="buy-again-icon" src="images/icons/buy-again.png" />
+                                    <span>Add to Cart</span>
+                                </button>
+                            </div>
+
+                            {/* Column 3: Actions */}
+                            <div className="product-actions">
+                                <a href={`/tracking?orderId=${order.id}&productId=${product.productId}`}>
+                                    <button className="track-package-button button-secondary">
+                                    Track package
+                                    </button>
+                                </a>
+                            </div>
+                        </Fragment>
+                        )
+                    }
+                    )}
+                </div>
+                </div>
             )
-          }
+        })
           )}
-           </div>
-        )})}
        
       </div>
     </div>
     </>
   )
-
       
 }

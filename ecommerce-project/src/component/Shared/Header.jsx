@@ -1,5 +1,7 @@
-import axios from 'axios';
+import apiClient from '../../api';
+import React from 'react'
 import { useEffect, useState } from 'react';
+import  GoogleLoginButton from './login';
 import './Header.css';
 
 // Accept new props: suggestions and onSuggestionClick
@@ -16,7 +18,7 @@ export function Header({
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   useEffect(() => {
-    axios.get("/api/payment-summary").then((response) => {
+    apiClient.get("/payment-summary").then((response) => {
       setPaymentSummary(response.data);
     });
   }, [loadCart]);
@@ -80,6 +82,11 @@ export function Header({
           <div className="cart-quantity">{paymentSummary.totalItems}</div>
           <div className="cart-text">Cart</div>
         </a>
+        
+         <React.Fragment >
+          {<GoogleLoginButton />}
+          </React.Fragment>
+       
       </div>
     </div>
   );
