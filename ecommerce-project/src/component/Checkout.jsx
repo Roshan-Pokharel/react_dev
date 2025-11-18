@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import PriceCents from '../utils/priceCents'; 
 import apiClient from '../api'; 
-
 import './Shared/General.css';
 import './Checkout-css/Checkout-header.css'
 import './Checkout-css/Checkout.css';
@@ -366,7 +365,7 @@ export function Checkout() {
               <div className="payment-summary-money">{PriceCents(paymentSummary.totalCostBeforeTaxCents)}</div>
             </div>
             <div className="payment-summary-row">
-              <div>Estimated tax (10%):</div>
+              <div>Estimated tax (0%):</div>
               <div className="payment-summary-money">{PriceCents(paymentSummary.taxCents)}</div>
             </div>
             <div className="payment-summary-row total-row">
