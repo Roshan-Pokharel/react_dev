@@ -1,48 +1,36 @@
+// models/index.js
 import { Sequelize } from 'sequelize';
-import sqlJsAsSqlite3 from 'sql.js-as-sqlite3';
-import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Helper to get current directory in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const isUsingRDS = process.env.RDS_HOSTNAME && process.env.RDS_USERNAME && process.env.RDS_PASSWORD;
 const dbType = process.env.DB_TYPE || 'mysql';
-const defaultPorts = {
-  mysql: 3306,
-  postgres: 5432,
-};
-const defaultPort = defaultPorts[dbType];
 
 export let sequelize;
 
 if (isUsingRDS) {
+  // Remote Database Configuration (e.g., for production)
   sequelize = new Sequelize({
     database: process.env.RDS_DB_NAME,
     username: process.env.RDS_USERNAME,
     password: process.env.RDS_PASSWORD,
     host: process.env.RDS_HOSTNAME,
-    port: process.env.RDS_PORT || defaultPort,
+    port: process.env.RDS_PORT || 3306,
     dialect: dbType,
     logging: false
   });
 } else {
+  // Local Database Configuration (SQLite)
+  // This defines the physical path to your database file
+  const dbPath = path.join(__dirname, '../database.sqlite');
+
   sequelize = new Sequelize({
     dialect: 'sqlite',
-    dialectModule: sqlJsAsSqlite3,
-    logging: false
+    storage: dbPath, // <--- CRITICAL: This ensures data persists to this file
+    logging: false 
   });
-
-  // Save database to file after write operations.
-  sequelize.addHook('afterCreate', saveDatabaseToFile);
-  sequelize.addHook('afterDestroy', saveDatabaseToFile);
-  sequelize.addHook('afterUpdate', saveDatabaseToFile);
-  sequelize.addHook('afterSave', saveDatabaseToFile);
-  sequelize.addHook('afterUpsert', saveDatabaseToFile);
-  sequelize.addHook('afterBulkCreate', saveDatabaseToFile);
-  sequelize.addHook('afterBulkDestroy', saveDatabaseToFile);
-  sequelize.addHook('afterBulkUpdate', saveDatabaseToFile);
-}
-
-export async function saveDatabaseToFile() {
-  const dbInstance = await sequelize.connectionManager.getConnection();
-  const binaryArray = dbInstance.database.export();
-  const buffer = Buffer.from(binaryArray);
-  fs.writeFileSync('database.sqlite', buffer);
 }

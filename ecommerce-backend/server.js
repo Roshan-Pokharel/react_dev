@@ -3,6 +3,8 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './models/index.js';
+import session from 'express-session'; 
+import SequelizeStore from 'connect-session-sequelize';
 import productRoutes from './routes/products.js';
 import deliveryOptionRoutes from './routes/deliveryOptions.js';
 import cartItemRoutes from './routes/cartItems.js';
@@ -29,9 +31,33 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const SessionStore = SequelizeStore(session.Store);
+const mySessionStore = new SessionStore({
+  db: sequelize,
+  tableName: 'Sessions', // Optional: Defines the table name
+});
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+
+app.use(express.json());
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(session({
+  secret: process.env.JWT_SECRET || 'keyboard_cat_secret', // Use your .env secret
+  store: mySessionStore, // Tells express to save to Database, not RAM
+  resave: false, 
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 1 Week (in milliseconds)
+    httpOnly: true, // Prevents JavaScript from reading the cookie (Security)
+    secure: false, // Set to true if using HTTPS
+    sameSite: 'lax' // standardized cookie protection
+  }
+}));
 
 // Serve images from the images folder
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -121,7 +147,8 @@ if (productCount === 0) {
   await CartItem.bulkCreate(cartItemsWithTimestamps);
   await Order.bulkCreate(ordersWithTimestamps);
   await sequelize.sync();
-
+  mySessionStore.sync(); 
+  await sequelize.sync();
   console.log('Default data added to the database.');
 }
 

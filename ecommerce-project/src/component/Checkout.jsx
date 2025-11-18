@@ -142,7 +142,7 @@ export function Checkout() {
   };
 
 
-  return (
+  return ( 
     <>
       <div className="checkout-header">
         <div className="header-content">
