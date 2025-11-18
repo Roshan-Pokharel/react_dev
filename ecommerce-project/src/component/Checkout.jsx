@@ -1,49 +1,72 @@
 import { useEffect, useState, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import PriceCents from '../utils/priceCents'; // Utility function
-import apiClient from '../api'; // *** CORRECTED: Using apiClient for Authorization ***
+import PriceCents from '../utils/priceCents'; 
+import apiClient from '../api'; 
 
 import './Shared/General.css';
 import './Checkout-css/Checkout-header.css'
 import './Checkout-css/Checkout.css';
+// You might need to add some CSS for the form inputs
+import './Checkout-css/AddressForm.css'; // Create this file or add styles to Checkout.css
 
 //--- Helper Function ---//
 function formatDeliveryDate(deliveryDays) {
   if (deliveryDays === undefined) {
     return 'Select an option';
   }
-  // deliveryDays is a number (e.g., 7)
   return dayjs().add(deliveryDays, 'day').format('dddd, MMMM D');
 }
 
-//---> main function of this components <-----//
 export function Checkout() {
   const [checkoutItem, setCheckoutItem] = useState([]);
-  const [selectedOption,setSelectedOption] = useState({}); 
-  // {productId: deliveryOptionId}
+  const [selectedOption, setSelectedOption] = useState({}); 
   const [paymentSummary, setPaymentSummary] = useState({});
   const [deliveryOptions, setDeliveryOptions] = useState([]); 
   const [editingProductId, setEditingProductId] = useState(null); 
-  const [currentEditQuantity, setCurrentEditQuantity] = useState(1); 
+  const [currentEditQuantity, setCurrentEditQuantity] = useState(1);
+  
+  // --- NEW STATE FOR ADDRESS ---
+  const [shippingInfo, setShippingInfo] = useState({
+    name: '',
+    phone: '',
+    addressLine1: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: ''
+  });
+  // ---------------------------
+
   const navigate = useNavigate();
 
-  // Helper to re-fetch all data after any change (cart update, option change)
   const fetchAllData = async () => {
     try {
-      // Fetch cart items with product details
       const cartResponse = await apiClient.get('/cart-items?expand=product');
       setCheckoutItem(cartResponse.data);
 
-      // Fetch all available delivery options
       const deliveryResponse = await apiClient.get('/delivery-options');
       setDeliveryOptions(deliveryResponse.data);
       
-      // Fetch the updated payment summary
       const summaryResponse = await apiClient.get('/payment-summary');
       setPaymentSummary(summaryResponse.data);
 
-      // Initialize selected options if they haven't been set
+      // --- NEW: Fetch User Info to Prefill Address ---
+      const userResponse = await apiClient.get('/auth/me');
+      if (userResponse.data.user) {
+        const u = userResponse.data.user;
+        setShippingInfo({
+          name: u.name || '',
+          phone: u.phone || '',
+          addressLine1: u.addressLine1 || '',
+          city: u.city || '',
+          state: u.state || '',
+          postalCode: u.postalCode || '',
+          country: u.country || ''
+        });
+      }
+      // -----------------------------------------------
+
       if (cartResponse.data.length > 0) {
         const initialOptions = cartResponse.data.reduce((acc, item) => {
           acc[item.productId] = item.deliveryOptionId;
@@ -51,96 +74,93 @@ export function Checkout() {
         }, {});
         setSelectedOption(initialOptions);
       } else {
-        // If the cart is empty, navigate back to the home page
         navigate('/');
       }
     } catch (error) {
       console.error("Failed to fetch checkout data:", error);
-      // Handle 401/403 errors (e.g., redirect to login)
     }
   };
 
-  //-----> fetching the checkout data from the backend <------//
   useEffect(() => {
     fetchAllData();
-  }, []); // Run only on initial mount
+  }, []);
 
-  // Handler for changing delivery options
   const updateCartItemDeliveryOption = async (productId, newDeliveryOptionId) => {
-    // Optimistic UI update
     setSelectedOption(prev => ({ ...prev, [productId]: newDeliveryOptionId }));
-    
     try {
-      // API call to update the delivery option
       await apiClient.put(`/cart-items/${productId}`, {
         deliveryOptionId: newDeliveryOptionId,
       });
-
-      // Re-fetch all data to update payment summary
       fetchAllData();
     } catch (error) {
       console.error('Failed to update delivery option:', error);
-      // Revert optimistic update if necessary
-      // For now, simply log the error.
     }
   };
 
-  // Handler for removing an item from the cart
   const removeItem = async (productId) => {
     try {
       await apiClient.delete(`/cart-items/${productId}`);
-      // Re-fetch all data
       fetchAllData();
     } catch (error) {
       console.error('Failed to remove item:', error);
     }
   };
 
-  // Handler for opening quantity edit mode
   const handleEditClick = (productId, currentQuantity) => {
     setEditingProductId(productId);
     setCurrentEditQuantity(currentQuantity);
   };
 
-  // Handler for changing quantity in edit mode
   const handleQuantityChange = (event) => {
     setCurrentEditQuantity(Number(event.target.value));
   };
 
-  // Handler for saving the new quantity
   const saveQuantity = async (productId) => {
     if (currentEditQuantity < 1 || currentEditQuantity > 10) {
       alert("Quantity must be between 1 and 10.");
       return;
     }
-    
     try {
       await apiClient.put(`/cart-items/${productId}`, {
         quantity: currentEditQuantity,
       });
       setEditingProductId(null);
-      // Re-fetch all data
       fetchAllData();
     } catch (error) {
       console.error('Failed to update quantity:', error);
     }
   };
 
+  // --- NEW: Handle Form Input Changes ---
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setShippingInfo(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-  // Handler for creating the final order
+  // --- UPDATED: Create Order Logic ---
   const createOrder = async () => {
+    // 1. Basic Validation
+    if (!shippingInfo.addressLine1 || !shippingInfo.phone || !shippingInfo.city) {
+      alert("Please fill in your shipping details (Address, Phone, City).");
+      return;
+    }
+
     try {
-      // POST request to create the order
+      // 2. Save the address to the user profile FIRST
+      await apiClient.put('/auth/profile', shippingInfo);
+
+      // 3. Create the order
       await apiClient.post('/orders');
       
-      // Navigate to the orders page after success
       navigate('/orders');
     } catch (error) {
       console.error('Failed to place order:', error);
-      alert('Failed to place order. Please check your cart items.');
+      alert('Failed to place order. Please check your network.');
     }
   };
-
 
   return ( 
     <>
@@ -148,32 +168,119 @@ export function Checkout() {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <a href="/">
-              {/* --- CORRECTION 1: Changed "amazon-logo" to "logo" --- */}
-              <img className="logo" src="images/logo.png" alt="Amazon Logo" />
+              <img className="logo " src="images/logo.png" alt="Amazon Logo" />
+               <img className="mobile-logo " src="images/mobile-logo.png" alt="Amazon Logo" />
             </a>
           </div>
-
           <div className="checkout-header-middle-section">
             Checkout ({paymentSummary.totalItems || 0} items)
           </div>
-
           <div className="checkout-header-right-section">
             <img src="images/icons/checkout-lock-icon.png" alt="Lock Icon" />
           </div>
         </div>
       </div>
 
-      {/* --- CORRECTION 2: Added "checkout-page" class --- */}
       <div className="main checkout-page">
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
           <div className="order-summary">
 
-            {/* --- Cart Items List --- */}
+            {/* --- NEW: Shipping Address Form --- */}
+            <div className="shipping-section-container" style={{marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '4px', background: 'white'}}>
+              <h3 style={{marginBottom: '10px'}}>Shipping Address</h3>
+              <div className="address-form-grid" style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
+                
+                <div style={{gridColumn: 'span 2'}}>
+                  <label>Full Name</label>
+                  <input 
+                    className="address-input" 
+                    type="text" 
+                    name="name" 
+                    value={shippingInfo.name} 
+                    onChange={handleAddressChange} 
+                    style={{width: '100%', padding: '5px'}}
+                  />
+                </div>
+
+                <div>
+                  <label>Phone Number</label>
+                  <input 
+                    className="address-input" 
+                    type="text" 
+                    name="phone" 
+                    value={shippingInfo.phone} 
+                    onChange={handleAddressChange} 
+                    style={{width: '95%', padding: '5px'}}
+                  />
+                </div>
+
+                <div>
+                  <label>Country</label>
+                  <input 
+                    className="address-input" 
+                    type="text" 
+                    name="country" 
+                    value={shippingInfo.country} 
+                    onChange={handleAddressChange} 
+                    style={{width: '100%', padding: '5px'}}
+                  />
+                </div>
+
+                <div style={{gridColumn: 'span 2'}}>
+                  <label>Address Line 1</label>
+                  <input 
+                    className="address-input" 
+                    type="text" 
+                    name="addressLine1" 
+                    value={shippingInfo.addressLine1} 
+                    onChange={handleAddressChange} 
+                    style={{width: '100%', padding: '5px'}}
+                  />
+                </div>
+
+                <div>
+                  <label>City</label>
+                  <input 
+                    className="address-input" 
+                    type="text" 
+                    name="city" 
+                    value={shippingInfo.city} 
+                    onChange={handleAddressChange} 
+                    style={{width: '95%', padding: '5px'}}
+                  />
+                </div>
+
+                <div>
+                  <label>State</label>
+                  <input 
+                    className="address-input" 
+                    type="text" 
+                    name="state" 
+                    value={shippingInfo.state} 
+                    onChange={handleAddressChange} 
+                    style={{width: '100%', padding: '5px'}}
+                  />
+                </div>
+
+                <div>
+                  <label>Postal Code</label>
+                  <input 
+                    className="address-input" 
+                    type="text" 
+                    name="postalCode" 
+                    value={shippingInfo.postalCode} 
+                    onChange={handleAddressChange} 
+                    style={{width: '95%', padding: '5px'}}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* ---------------------------------- */}
+
             {checkoutItem.map((item) => {
               const product = item.product;
-              // Find the selected delivery option details
               const currentDeliveryOption = deliveryOptions.find(
                 (option) => option.id === item.deliveryOptionId
               );
@@ -200,46 +307,23 @@ export function Checkout() {
                               max="10"
                               value={currentEditQuantity}
                               onChange={handleQuantityChange}
-                              /* --- CORRECTION 3: Added className --- */
                               className="quantity-input"
                             />
-                            <span 
-                              /* --- CORRECTION 4: Changed className --- */
-                              className="save-quantity-link" 
-                              onClick={() => saveQuantity(product.id)}
-                            >
-                              Save
-                            </span>
-                            <span 
-                              /* --- CORRECTION 5: Changed className --- */
-                              className="cancel-quantity-link" 
-                              onClick={() => setEditingProductId(null)}
-                            >
-                              Cancel
-                            </span>
+                            <span className="save-quantity-link" onClick={() => saveQuantity(product.id)}>Save</span>
+                            <span className="cancel-quantity-link" onClick={() => setEditingProductId(null)}>Cancel</span>
                           </span>
                         ) : (
                           <span className="quantity-label">
                             {item.quantity}
-                            <span 
-                              className="update-quantity-link" 
-                              onClick={() => handleEditClick(product.id, item.quantity)}
-                            >
-                              Update
-                            </span>
+                            <span className="update-quantity-link" onClick={() => handleEditClick(product.id, item.quantity)}>Update</span>
                           </span>
                         )}
-                        
-                        <span className="delete-quantity-link" onClick={() => removeItem(product.id)}>
-                          Delete
-                        </span>
+                        <span className="delete-quantity-link" onClick={() => removeItem(product.id)}>Delete</span>
                       </div>
                     </div>
 
                     <div className="delivery-options">
-                      <div className="delivery-options-title">
-                        Choose a delivery option:
-                      </div>
+                      <div className="delivery-options-title">Choose a delivery option:</div>
                       {deliveryOptions.map((option) => {
                         const isChecked = option.id === item.deliveryOptionId;
                         return (
@@ -252,9 +336,7 @@ export function Checkout() {
                               onChange={() => updateCartItemDeliveryOption(product.id, option.id)}
                             />
                             <div>
-                              <div className="delivery-option-date">
-                                {formatDeliveryDate(option.deliveryDays)}
-                              </div>
+                              <div className="delivery-option-date">{formatDeliveryDate(option.deliveryDays)}</div>
                               <div className="delivery-option-price">
                                 {option.priceCents === 0 ? 'FREE' : PriceCents(option.priceCents)} Shipping
                               </div>
@@ -269,37 +351,30 @@ export function Checkout() {
             })}
           </div>
 
-          {/* --- Payment Summary --- */}
           <div className="payment-summary">
-            <div className="payment-summary-title">
-              Payment Summary
-            </div>
-
+            <div className="payment-summary-title">Payment Summary</div>
             <div className="payment-summary-row">
               <div>Items ({paymentSummary.totalItems || 0}):</div>
               <div className="payment-summary-money">{PriceCents(paymentSummary.productCostCents)}</div>
             </div>
-
             <div className="payment-summary-row">
               <div>Shipping &amp; handling:</div>
               <div className="payment-summary-money">{PriceCents(paymentSummary.shippingCostCents)}</div>
             </div>
-
             <div className="payment-summary-row subtotal-row">
               <div>Total before tax:</div>
               <div className="payment-summary-money">{PriceCents(paymentSummary.totalCostBeforeTaxCents)}</div>
             </div>
-
             <div className="payment-summary-row">
               <div>Estimated tax (10%):</div>
               <div className="payment-summary-money">{PriceCents(paymentSummary.taxCents)}</div>
             </div>
-
             <div className="payment-summary-row total-row">
               <div>Order total:</div>
               <div className="payment-summary-money">{PriceCents(paymentSummary.totalCostCents)}</div>
             </div>
 
+            {/* Call updated createOrder function */}
             <button className="place-order-button button-primary" onClick={createOrder}>
               Place your order
             </button>

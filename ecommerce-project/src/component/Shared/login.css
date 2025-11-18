@@ -14,11 +14,11 @@
 
 /* The circular profile image */
 .user-avatar {
-  width: 40px;  /* Adjust size to match your header */
-  height: 40px;
+  width: 35px;  /* Adjust size to match your header */
+  height: 35px;
   border-radius: 50%; /* Makes it a perfect circle */
   object-fit: cover;
-  border: 2px solid #ddd; /* Optional: slight border */
+ /* Optional: slight border */
   transition: transform 0.2s;
 }
 

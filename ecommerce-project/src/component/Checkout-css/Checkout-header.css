@@ -35,6 +35,15 @@
   display: none;
 }
 
+.update-quantity-link {
+  margin:10px;
+  cursor: pointer;
+}
+.delete-quantity-link{
+  margin:10px;
+  cursor: pointer;
+}
+
 /* @media is used to create responsive design (making the
    website look good on any screen size). This @media
    means when the screen width is 575px or less, different
@@ -50,7 +59,8 @@
 
   .checkout-header .mobile-logo {
     display: inline-block;
-    height: 26px;
+    height: 35px;
+    
   }
 }
 

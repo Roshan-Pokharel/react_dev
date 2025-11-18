@@ -1,0 +1,91 @@
+/* Container for the whole shipping form */
+.shipping-section-container {
+  background-color: #f7f7f7; /* Light grey background for a modern feel */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px; /* More rounded corners */
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Soft, modern shadow */
+}
+
+/* The "Shipping Address" title */
+.shipping-section-container h3 {
+  font-size: 20px;
+  font-weight: 600; /* Slightly lighter weight */
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #333;
+  border-bottom: 2px solid #eee; /* Subtle separator */
+  padding-bottom: 10px;
+}
+
+/* Grid layout for the inputs */
+.address-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 20px 20px; /* Consistent spacing */
+}
+
+/* Individual field container */
+.address-form-grid > div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.address-form-grid label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #555;
+  transition: color 0.2s;
+}
+
+/* The input boxes */
+.address-input {
+  height: 40px; /* Slightly taller for better touch targets */
+  padding: 8px 12px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Rounded pill shape */
+  font-size: 14px;
+  color: #333;
+  line-height: normal;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 50%; /* Ensure full width inside grid column */
+}
+
+/* Focus effect (A clean, primary color border) */
+.address-input:focus {
+  border-color: #007bff; /* A clean blue focus color */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Subtle ring effect */
+  background-color: #ffffff;
+}
+
+/* Utility class to span full width */
+.span-two {
+  grid-column: span 2;
+}
+
+/* Responsive: Stack everything on mobile */
+@media (max-width: 600px) {
+  .shipping-section-container {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .address-form-grid {
+    grid-template-columns: 1fr; /* Single column layout */
+    gap: 15px;
+  }
+  
+  .span-two {
+    grid-column: auto;
+  }
+}
+
+/* Optional: Add a smooth animation when a label is focused/active */
+.address-input:focus + label {
+    color: #007bff;
+}

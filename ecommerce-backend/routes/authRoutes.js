@@ -117,8 +117,36 @@ router.post('/logout', (req, res) => {
   });
 });
 
-// CHECK STATUS ROUTE (Optional but recommended)
-// Use this on your frontend to check if the user is logged in on page load
+// --- NEW ROUTE: Update Profile (Address) ---
+router.put('/profile', protect, async (req, res) => {
+  try {
+    const { phone, addressLine1, city, state, postalCode, country, name } = req.body;
+    
+    const user = await User.findByPk(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Update fields if provided, otherwise keep existing
+    user.phone = phone || user.phone;
+    user.addressLine1 = addressLine1 || user.addressLine1;
+    user.city = city || user.city;
+    user.state = state || user.state;
+    user.postalCode = postalCode || user.postalCode;
+    user.country = country || user.country;
+    user.name = name || user.name;
+
+    await user.save();
+
+    res.json({ message: 'Profile updated successfully', user });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ error: 'Failed to update profile' });
+  }
+});
+
+// CHECK STATUS ROUTE (Updated to return address info)
 router.get('/me', protect, async (req, res) => {
   const user = await User.findByPk(req.userId);
   if (user) {
@@ -128,7 +156,14 @@ router.get('/me', protect, async (req, res) => {
         id: user.id,
         email: user.email,
         name: user.name,
-        picture: user.picture
+        picture: user.picture,
+        // Return address info so frontend can pre-fill
+        phone: user.phone,
+        addressLine1: user.addressLine1,
+        city: user.city,
+        state: user.state,
+        postalCode: user.postalCode,
+        country: user.country
       }
     });
   } else {

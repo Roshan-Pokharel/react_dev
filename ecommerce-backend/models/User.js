@@ -25,6 +25,32 @@ export const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  // --- NEW FIELDS FOR SHIPPING ---
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  addressLine1: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  city: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  state: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  postalCode: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
+  // -------------------------------
   // We don't store passwords here since we use Google OAuth
 }, {
   // Sequelize options
