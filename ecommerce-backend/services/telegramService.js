@@ -1,56 +1,80 @@
-// services/telegramService.js
 import TelegramBot from 'node-telegram-bot-api';
 import 'dotenv/config';
 
-// 1. Initialize Bot
+// Initialize the Bot
+// Make sure TELEGRAM_BOT_TOKEN and TELEGRAM_ADMIN_CHAT_ID are in your .env file
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const adminChatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
+
+// Create a bot that uses 'polling' to fetch new updates (polling: false means it only sends messages)
 const bot = new TelegramBot(token, { polling: false });
 
-// 2. Define the notification function
 export const sendOrderNotification = async (order, user, productsList) => {
   try {
-    // Format cost (Cents -> Dollars)
+    // 1. Format Total Cost (Cents -> Dollars)
     const total = (order.totalCostCents / 100).toFixed(2);
     
-    // Format date
-    const date = new Date(order.orderTimeMs).toLocaleString('en-US', { 
-      timeZone: 'Asia/Kathmandu' // Set to your timezone (e.g., Nepal)
+    // 2. Format Order Time
+    // You can change 'Asia/Kathmandu' to your preferred timezone
+    const orderDate = new Date(order.orderTimeMs).toLocaleString('en-US', { 
+      timeZone: 'Asia/Kathmandu',
+      month: 'short', 
+      day: 'numeric', 
+      hour: '2-digit', 
+      minute: '2-digit'
     });
 
-    // Format product list string
+    // 3. Format Product List with Delivery Dates
     let productString = '';
+    
     productsList.forEach(p => {
-      productString += `• ${p.name} (x${p.quantity})\n`;
+      // Format delivery date (e.g., "Fri, Nov 24")
+      let deliveryString = 'N/A';
+      
+      if (p.deliveryDate) {
+        deliveryString = new Date(p.deliveryDate).toLocaleDateString('en-US', {
+          weekday: 'short', 
+          month: 'short', 
+          day: 'numeric'
+        });
+      }
+
+      productString += `
+**${p.name}**
+Qty: ${p.quantity}
+Arrives: ${deliveryString}
+`;
     });
 
-    // Construct the message
+    // 4. Construct the Final Message
     const message = `
  **NEW ORDER RECEIVED!**
 
- **Total:** $${total}
- **Time:** ${date}
+**Total:** $${total}
+**Placed:** ${orderDate}
 
- **Customer:**
-${user.name || 'No Name'}
-${user.email}
- ${user.phone || 'No Phone'}
+**Customer:**
+Name: ${user.name || 'Guest'}
+Email: ${user.email}
+Phone: ${user.phone || 'N/A'}
 
- **Delivery Address:**
-${user.addressLine1 || ''}
+**Delivery Address:**
+${user.addressLine1 || 'No Street info'}
 ${user.city || ''}, ${user.state || ''}
+${user.postalCode || ''}
 ${user.country || ''}
 
- **Items:**
+**Items Ordered:**
 ${productString}
     `;
 
-    // Send to your phone
+    // 5. Send the message
     await bot.sendMessage(adminChatId, message, { parse_mode: 'Markdown' });
-    console.log('Telegram notification sent!');
+    console.log('Telegram notification sent successfully!');
 
   } catch (error) {
-    console.error('Telegram Error:', error.message);
-    // We do not throw the error here to prevent crashing the actual order process
+    console.error('Failed to send Telegram notification:', error.message);
+    // We intentionally do not throw the error so the user's order doesn't fail 
+    // just because the notification failed.
   }
 };

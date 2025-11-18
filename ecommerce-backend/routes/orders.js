@@ -1,15 +1,15 @@
-// routes/orders.js
 import express from 'express';
 import { Order } from '../models/Order.js';
 import { Product } from '../models/Product.js';
 import { DeliveryOption } from '../models/DeliveryOption.js';
 import { CartItem } from '../models/CartItem.js';
-import { User } from '../models/User.js'; // <--- NEW: Needed for Address info
+import { User } from '../models/User.js'; // Import User model
 import { protect } from '../middleware/auth.js';
-import { sendOrderNotification } from '../services/telegramService.js'; // <--- NEW: Import Service
+import { sendOrderNotification } from '../services/telegramService.js'; // Import the service
 
 const router = express.Router();
 
+// --- GET ALL ORDERS ---
 router.get('/', protect, async (req, res) => { 
   const expand = req.query.expand;
   const userId = req.userId;
@@ -38,69 +38,89 @@ router.get('/', protect, async (req, res) => {
   res.json(orders);
 });
 
+// --- CREATE ORDER (POST) ---
 router.post('/', protect, async (req, res) => {
-  const userId = req.userId;
-  
-  // 1. Get User details (Address/Phone) for the notification
-  const user = await User.findByPk(userId); // <--- NEW
-
-  const cartItems = await CartItem.findAll({ where: { UserId: userId } });
-
-  if (cartItems.length === 0) {
-    return res.status(400).json({ error: 'Cart is empty' });
-  }
-
-  let totalCostCents = 0;
-  const productsDetailsForBot = []; // <--- NEW: Array to hold names for Telegram
-
-  const products = await Promise.all(cartItems.map(async (item) => {
-    const product = await Product.findByPk(item.productId);
-    if (!product) {
-      throw new Error(`Product not found: ${item.productId}`);
-    }
-    const deliveryOption = await DeliveryOption.findByPk(item.deliveryOptionId);
-    if (!deliveryOption) {
-      throw new Error(`Invalid delivery option: ${item.deliveryOptionId}`);
-    }
+  try {
+    const userId = req.userId;
     
-    // <--- NEW: Save name and quantity for the Telegram Message
-    productsDetailsForBot.push({
-        name: product.name,
-        quantity: item.quantity
+    // 1. Fetch User Details (for Address/Phone in notification)
+    const user = await User.findByPk(userId);
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    // 2. Fetch Cart Items
+    const cartItems = await CartItem.findAll({ where: { UserId: userId } });
+
+    if (cartItems.length === 0) {
+      return res.status(400).json({ error: 'Cart is empty' });
+    }
+
+    let totalCostCents = 0;
+    
+    // This array will store detailed info specifically for the Telegram bot
+    const productsDetailsForBot = []; 
+
+    // 3. Process Items (Calculate costs and delivery dates)
+    const products = await Promise.all(cartItems.map(async (item) => {
+      const product = await Product.findByPk(item.productId);
+      if (!product) {
+        throw new Error(`Product not found: ${item.productId}`);
+      }
+      const deliveryOption = await DeliveryOption.findByPk(item.deliveryOptionId);
+      if (!deliveryOption) {
+        throw new Error(`Invalid delivery option: ${item.deliveryOptionId}`);
+      }
+
+      // Calculate Delivery Date
+      const estimatedDeliveryTimeMs = Date.now() + deliveryOption.deliveryDays * 24 * 60 * 60 * 1000;
+
+      // Add to Bot List (Name + Quantity + Date)
+      productsDetailsForBot.push({
+          name: product.name,
+          quantity: item.quantity,
+          deliveryDate: estimatedDeliveryTimeMs
+      });
+
+      // Calculate Costs
+      const productCost = product.priceCents * item.quantity;
+      const shippingCost = deliveryOption.priceCents;
+      totalCostCents += productCost + shippingCost;
+      
+      // Return data structure for Database
+      return {
+        productId: item.productId,
+        quantity: item.quantity,
+        estimatedDeliveryTimeMs
+      };
+    }));
+
+    // Apply Tax
+    totalCostCents = Math.round(totalCostCents * 1.1);
+
+    // 4. Create Order in Database
+    const order = await Order.create({
+      orderTimeMs: Date.now(),
+      totalCostCents,
+      products,
+      UserId: userId 
     });
-    // ---------------------------------------------------------
 
-    const productCost = product.priceCents * item.quantity;
-    const shippingCost = deliveryOption.priceCents;
-    totalCostCents += productCost + shippingCost;
-    const estimatedDeliveryTimeMs = Date.now() + deliveryOption.deliveryDays * 24 * 60 * 60 * 1000;
-    
-    return {
-      productId: item.productId,
-      quantity: item.quantity,
-      estimatedDeliveryTimeMs
-    };
-  }));
+    // 5. Clear User's Cart
+    await CartItem.destroy({ where: { UserId: userId } });
 
-  totalCostCents = Math.round(totalCostCents * 1.1);
+    // 6. Send Telegram Notification (Running in background)
+    sendOrderNotification(order, user, productsDetailsForBot); 
 
-  const order = await Order.create({
-    orderTimeMs: Date.now(),
-    totalCostCents,
-    products,
-    UserId: userId 
-  });
+    res.status(201).json(order);
 
-  await CartItem.destroy({ where: { UserId: userId } });
-
-  // <--- NEW: Send Notification to your Phone
-  // We don't await this, so it runs in the background and doesn't slow down the user app
-  sendOrderNotification(order, user, productsDetailsForBot); 
-  // ------------------------------------------
-
-  res.status(201).json(order);
+  } catch (error) {
+    console.error('Order creation failed:', error);
+    res.status(500).json({ error: 'Failed to place order' });
+  }
 });
 
+// --- GET SINGLE ORDER ---
 router.get('/:orderId', protect, async (req, res) => { 
   const { orderId } = req.params;
   const expand = req.query.expand;
