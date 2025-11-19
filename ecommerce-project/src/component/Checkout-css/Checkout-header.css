@@ -1,56 +1,89 @@
 .checkout-header {
   height: 60px;
-  padding-left: 30px;
-  padding-right: 30px;
+  /* Reduced padding for mobile compatibility */
+  padding-left: 15px;
+  padding-right: 15px;
   background-color: white;
-
   display: flex;
   justify-content: center;
-
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  border-bottom: 1px solid #ddd; /* Added border for separation */
 }
 
 .checkout-header .header-content {
   width: 100%;
   max-width: 1100px;
-
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Ensure space between sections */
 }
 
 .checkout-header .checkout-header-left-section {
-  width: 200px;
+  width: 150px; /* Fixed width to help center the middle section */
 }
 
 .checkout-header .logo {
-  height: 40px;
-  margin-top: 0px;
+  height: 35px; /* Slightly smaller logo */
+  margin-top: 5px;
 }
 
 .checkout-header .mobile-logo {
   display: none;
 }
 
-.update-quantity-link {
-  margin:10px;
-  cursor: pointer;
+/* MIDDLE SECTION: "Checkout (x items)" */
+.checkout-header .checkout-header-middle-section {
+  flex: 1;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
 }
-.delete-quantity-link{
-  margin:10px;
+
+.checkout-header .return-to-home-link {
+  color: rgb(25, 135, 84);
+  text-decoration: none;
   cursor: pointer;
 }
 
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 575px or less, different
-   styles (inside the {...}) will be applied. */
+/* RIGHT SECTION: Secure Icon */
+.checkout-header .checkout-header-right-section {
+  text-align: right;
+  width: 150px; /* Match left section width */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.checkout-header .checkout-header-right-section img {
+  height: 28px; /* Smaller lock icon */
+}
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+@media (max-width: 1000px) {
+  .checkout-header .checkout-header-middle-section {
+    font-size: 20px;
+  }
+  .checkout-header .return-to-home-link {
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 575px) {
+  .checkout-header {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
   .checkout-header .checkout-header-left-section {
-    width: auto;
+    width: auto; /* Allow shrinking */
   }
 
   .checkout-header .logo {
@@ -59,61 +92,23 @@
 
   .checkout-header .mobile-logo {
     display: inline-block;
-    height: 35px;
-    
+    height: 26px; /* Compact mobile logo */
+    margin-top: 2px;
   }
-}
-
-.checkout-header .checkout-header-middle-section {
-  flex: 1;
-  flex-shrink: 0;
-  text-align: center;
-
-  font-size: 22px;
-  font-weight: 500;
-
-  display: flex;
-  justify-content: center;
-}
-
-.checkout-header .return-to-home-link {
-  color: rgb(25, 135, 84);
-
-  text-decoration: none;
-  cursor: pointer;
-}
-
-@media (max-width: 1000px) {
+  
   .checkout-header .checkout-header-middle-section {
-    font-size: 20px;
-    margin-right: 60px;
+    font-size: 18px; /* Smaller title */
   }
-
+  
   .checkout-header .return-to-home-link {
-    font-size: 20px;
+    font-size: 18px;
   }
-}
-
-@media (max-width: 575px) {
-  .checkout-header .checkout-header-middle-section {
-    margin-right: 5px;
-  }
-}
-
-.checkout-header .checkout-header-right-section {
-  text-align: right;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-
-.checkout-header .checkout-header-right-section img {
-  height: 32px;
-}
-
-@media (max-width: 1000px) {
+  
   .checkout-header .checkout-header-right-section {
-    width: auto;
+    width: auto; 
+  }
+  
+  .checkout-header .checkout-header-right-section img {
+    height: 22px; /* Tiny lock icon */
   }
 }

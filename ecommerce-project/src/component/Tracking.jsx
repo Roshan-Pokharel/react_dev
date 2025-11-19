@@ -10,7 +10,6 @@ import './Tracking.css';
 export function Tracking({ loadCart }) {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get('orderId');
-  // Removed productId dependency
 
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,19 +29,34 @@ export function Tracking({ loadCart }) {
     fetchTrackingData();
   }, [orderId]);
 
-  if (loading) return <div className="tracking-page">Loading...</div>;
-  if (!order) return <div className="tracking-page">Order not found.</div>;
+  if (loading) return (
+    <>
+      <Header loadCart={loadCart} />
+      <div className="tracking-page">
+        <div className="loading-spinner">Loading...</div>
+      </div>
+    </>
+  );
 
-  // Use the first product to determine the arrival date for the whole order
+  if (!order) return (
+    <>
+      <Header loadCart={loadCart} />
+      <div className="tracking-page">
+        <div>Order not found.</div>
+        <a className="back-to-orders-link link-primary" href="/orders">Back to Orders</a>
+      </div>
+    </>
+  );
+
+  // --- STATUS LOGIC ---
   const firstProduct = order.products[0] || {};
   const arrivalDate = firstProduct.estimatedDeliveryTimeMs 
     ? dayjs(firstProduct.estimatedDeliveryTimeMs).format('dddd, MMMM D') 
     : 'Unknown Date';
 
-  // --- STATUS LOGIC ---
   const isCanceled = order.status === 'cancelled';
   let progressPercent = 0;
-  let progressBarColor = 'green'; 
+  let progressBarColor = 'rgb(25, 135, 84)'; // Default green
 
   if (isCanceled) {
     progressPercent = 100;
@@ -62,11 +76,14 @@ export function Tracking({ loadCart }) {
       <div className="tracking-page">
         <div className="order-tracking">
           <a className="back-to-orders-link link-primary" href="/orders">
-            View all orders
+            &larr; View all orders
           </a>
 
           <div className="delivery-date">
-            {isCanceled ? <span style={{ color: '#d9534f' }}>Order Canceled</span> : `Arriving on ${arrivalDate}`}
+            {isCanceled 
+              ? <span style={{ color: '#d9534f' }}>Order Canceled</span> 
+              : `Arriving on ${arrivalDate}`
+            }
           </div>
 
           <div className="progress-labels-container">
@@ -76,9 +93,10 @@ export function Tracking({ loadCart }) {
                </div>
             ) : (
                <>
-                <div className={`progress-label ${progressPercent < 50 ? 'current-status' : ''}`}>Preparing</div>
-                <div className={`progress-label ${progressPercent >= 50 && progressPercent < 100 ? 'current-status' : ''}`}>Shipped</div>
-                <div className={`progress-label ${progressPercent === 100 ? 'current-status' : ''}`}>Delivered</div>
+                {/* Added textAlign center to JSX inline to ensure alignment on flex */}
+                <div className={`progress-label ${progressPercent < 50 ? 'current-status' : ''}`} style={{textAlign: 'left'}}>Preparing</div>
+                <div className={`progress-label ${progressPercent >= 50 && progressPercent < 100 ? 'current-status' : ''}`} style={{textAlign: 'center'}}>Shipped</div>
+                <div className={`progress-label ${progressPercent === 100 ? 'current-status' : ''}`} style={{textAlign: 'right'}}>Delivered</div>
                </>
             )}
           </div>

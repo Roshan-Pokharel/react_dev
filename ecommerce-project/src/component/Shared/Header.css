@@ -25,35 +25,11 @@
 
 .header .left-section .logo {
   height: 40px;
+  margin-top: 5px;
 }
 
 .header .left-section .mobile-logo {
   display: none;
-}
-
-@media (max-width: 675px) {
-  .header .left-section .logo {
-    display: none;
-  }
-
-  .header .left-section .mobile-logo {
-    display: block;
-    height: 26px;
-  }
-}
-
-/* HEADER LINKS */
-.header .header-link {
-  padding: 6px 9.5px;
-  border-radius: 2px;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-  border: 1px solid transparent;
-}
-
-.header .header-link:hover {
-  border: 1px solid white;
 }
 
 /* MIDDLE SECTION — SEARCH BAR */
@@ -73,70 +49,21 @@
   font-size: 16px;
   border: none;
   border-radius: 5px 0 0 5px;
+  outline: none;
 }
 
 .header .search-button {
   background-color: rgb(186, 255, 190);
   border: none;
   width: 45px;
-  height: 40px;
+  height: 40px; /* Matches input height + border illusion */
   border-radius: 0 5px 5px 0;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .header .search-icon {
   height: 20px;
-}
-
-/* RIGHT SECTION - FIXED */
-.header .right-section {
-  display: flex;
-  align-items: center;
-  gap: 15px;   /* space between SignIn / Orders / Cart */
-  white-space: nowrap; 
-  flex-shrink: 0;
-}
-
-/* ORDERS */
-.header .orders-link {
-  display: flex;
-  align-items: center;
-  color: white;
-}
-
-.header .orders-text {
-  font-size: 15px;
-  font-weight: 700;
-}
-
-/* CART */
-.header .cart-link {
-  color: white;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-.header .cart-icon {
-  width: 38px;
-}
-
-.header .cart-text {
-  margin-left: 5px;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.header .cart-quantity {
-  position: absolute;
-  top: 8.5px;
-  right: 46px;
-  width: 26px;
-
-  color: rgb(8,79,45);
-  font-size: 14px;
-  font-weight: 700;
-  text-align: center;
 }
 
 /* SEARCH SUGGESTIONS DROPDOWN */
@@ -144,15 +71,12 @@
   position: absolute;
   top: 40px;
   left: 0;
-
-  width: calc(100% - 50px);
-  background-color: rgba(255, 255, 255, 0.75);
-
+  width: calc(100% - 50px); /* Subtract button width */
+  background-color: white;
   border: 1px solid #ddd;
   border-top: none;
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -166,74 +90,155 @@
   font-size: 14px;
   color: #333;
   cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .search-suggestions li:hover {
-  background-color: #f0f0f0;
+  background-color: #f7f7f7;
 }
 
+/* RIGHT SECTION */
+.header .right-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap; 
+  flex-shrink: 0;
+}
+
+/* HEADER LINKS */
+.header .header-link {
+  padding: 6px 9px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.header .header-link:hover {
+  border: 1px solid white;
+}
+
+/* ORDERS */
+.header .orders-link {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+
+.header .orders-text {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* CART */
+.header .cart-link {
+  color: white;
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+}
+
+.header .cart-icon {
+  width: 38px;
+}
+
+.header .cart-text {
+  margin-left: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+/* Desktop Cart Count */
+.header .cart-quantity {
+  position: absolute;
+  top: 8px;
+  left: 20px; /* Adjusted for desktop alignment */
+  width: 19px;
+  color: rgb(8,79,45);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* --- RESPONSIVE / MOBILE STYLES --- */
+
+@media (max-width: 675px) {
+  .header .left-section .logo { display: none; }
+  .header .left-section .mobile-logo { display: block; height: 26px; }
+}
+
+/* COMPACT MOBILE LAYOUT */
 @media (max-width: 575px) {
-  /* ... (Keep Search Bar ordering styles) ... */
   .header {
-    height: auto;
+    height: auto; /* Allow growth for search bar */
     flex-wrap: wrap;
-    padding: 10px;
+    padding: 8px 10px; /* Reduce padding */
   }
 
-  .header .middle-section {
-    order: 3; 
-    flex-basis: 100%;
-    width: 100%;
-    margin: 10px 0 0 0;
-    z-index: 999;
+  /* 1. Logo Section */
+  .header .left-section { 
+    order: 1; 
   }
-
-  .header .left-section { order: 1; }
-
+  
+  /* 2. Right Section (Cart & Profile) */
   .header .right-section {
     order: 2;
-    margin-left: auto;
-    gap: 15px; 
+    margin-left: auto; /* Push to right */
+    gap: 10px; /* Tighter gap */
   }
 
+  /* 3. Search Bar (Moves to bottom row) */
+  .header .middle-section {
+    order: 3; 
+    flex-basis: 100%; /* Full width */
+    width: 100%;
+    margin: 8px 0 2px 0;
+  }
+  
+  /* Compact Search Bar */
+  .header .search-bar {
+    height: 34px;
+    font-size: 14px;
+  }
+  .header .search-button {
+    height: 36px; /* Match input + border */
+    width: 40px;
+  }
+  .search-suggestions {
+    top: 36px;
+  }
+
+  /* Hide text, keep icons mostly */
+  .header .cart-text { display: none; }
+  
+  /* Make "Orders" text tiny or hide it if you prefer */
   .header .orders-text {
-    display: block; 
-    font-size: 13px;
+    font-size: 12px;
   }
 
-  .header .cart-text {
-    display: none;
-  }
-
-  /* --- UPDATED CART FIX --- */
+  /* CART ICON MOBILE FIX */
   .header .cart-link {
     position: relative;
-    display: flex;
-    justify-content: center; /* Helps align items */
+    width: 40px;
+    justify-content: center;
   }
   
   .header .cart-icon {
-    width: 40px; /* Ensure icon is large enough */
+    width: 34px; /* Smaller Icon */
   }
 
   .header .cart-quantity {
-    /* Centering Logic */
-    position: absolute;
+    /* Center inside the basket icon */
+    top: 8px;
     left: 0;
-    right: 0;       /* Spans full width of the container */
-    top: 10px;      /* Push down to sit INSIDE the basket */
-    width: 100%;
-    text-align: center; /* Centers the text horizontally */
-    
-    font-size: 14px;
-    font-weight: 700;
-    
-    /* Change Color to Dark Green so it shows up on the White Icon */
-    color: rgb(8, 79, 45); 
-    text-shadow: none;
-  }
-
-  .header .search-bar {
-    width: 100%;
+    right: 0;
+    width: 100%; /* Full width of parent to center text */
+    text-align: center;
+    font-size: 12px; /* Smaller number */
   }
 }

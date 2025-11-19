@@ -1,7 +1,6 @@
-/* Existing styles ... */
-
+/* --- USER PROFILE AVATAR --- */
 .user-profile-container {
-  position: relative; /* Needed for the absolute positioning of the modal */
+  position: relative; /* Needed for modal positioning */
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -12,34 +11,41 @@
   height: 35px;
   border-radius: 50%;
   transition: opacity 0.2s;
+  border: 2px solid transparent;
 }
 
 .user-avatar:hover {
   opacity: 0.8;
+  border: 2px solid white;
 }
 
-/* --- New Logout Modal Styles --- */
+.signin-button {
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+}
 
+/* --- LOGOUT CONFIRM MODAL --- */
 .logout-confirm-modal {
   position: absolute;
-  top: 55px; /* Pushes it below the image */
-  right: 0;  /* Aligns to the right edge of the container */
+  top: 50px; /* Just below avatar */
+  right: 0;  /* Align right edge */
   background-color: white;
   border: 1px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   padding: 15px;
   border-radius: 8px;
   width: 200px;
-  z-index: 1000;
+  z-index: 2000; /* High Z-index to sit on top of everything */
   text-align: center;
 }
 
-/* Little arrow pointing up to the image (Optional) */
+/* Little arrow pointing up */
 .logout-confirm-modal::before {
   content: "";
   position: absolute;
   top: -6px;
-  right: 14px;
+  right: 12px;
   width: 12px;
   height: 12px;
   background-color: white;
@@ -50,32 +56,31 @@
 
 .logout-text {
   color: #333;
-  margin: 0 0 12px 0;
+  margin: 0 0 15px 0;
   font-size: 14px;
   font-weight: 500;
+  line-height: 1.4;
 }
 
 .logout-actions {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 10px;
-}
-.signin-button{
-  font-weight: 700;
 }
 
 .logout-btn {
- 
-  padding: 6px 16px;
+  flex: 1;
+  padding: 8px 0;
   border-radius: 4px;
   border: none;
   font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .logout-btn.confirm {
-  background-color: #d9534f; /* Red for logout */
+  background-color: #d9534f; /* Red */
   color: white;
 }
 
@@ -84,10 +89,40 @@
 }
 
 .logout-btn.cancel {
-  background-color: #e0e0e0;
+  background-color: #f0f0f0;
   color: #333;
 }
 
 .logout-btn.cancel:hover {
-  background-color: #d0d0d0;
+  background-color: #e0e0e0;
+}
+
+/* --- MOBILE RESPONSIVE TWEAKS --- */
+@media (max-width: 575px) {
+  .user-avatar {
+    width: 30px; /* Smaller avatar on mobile */
+    height: 30px;
+  }
+
+  .logout-confirm-modal {
+    width: 160px; /* Narrower popup */
+    padding: 10px;
+    top: 45px; /* Pull closer to smaller avatar */
+    right: -5px; /* Shift slightly if near edge */
+  }
+
+  .logout-text {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .logout-btn {
+    font-size: 12px;
+    padding: 6px 0;
+  }
+  
+  /* Adjust arrow for mobile */
+  .logout-confirm-modal::before {
+    right: 10px; 
+  }
 }

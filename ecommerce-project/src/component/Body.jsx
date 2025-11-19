@@ -11,8 +11,10 @@ function Body() {
   const [products, setProducts] = useState([]);
   const [loadCart, setLoadCart] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // --- NEW: Toast State ---
+  const [toast, setToast] = useState(null);
 
-  // This useEffect (with debounce) is still correct
   useEffect(() => {
     const timer = setTimeout(() => {
       axios.get(`/api/products?search=${searchTerm}`).then((response) => {
@@ -29,12 +31,17 @@ function Body() {
     setLoadCart(prevCount => prevCount + 1);
   };
 
-  /**
-   * New handler for when a user clicks a suggestion.
-   * It sets the search term to the product's name.
-   */
   const handleSuggestionClick = (productName) => {
     setSearchTerm(productName);
+  };
+
+  // --- NEW: Helper to show toast ---
+  const showNotification = (message) => {
+    setToast(message);
+    // Auto hide after 3 seconds
+    setTimeout(() => {
+      setToast(null);
+    }, 3000);
   };
 
   return (
@@ -43,9 +50,7 @@ function Body() {
         loadCart={loadCart}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        // Pass the products list as suggestions
         suggestions={products}
-        // Pass the new click handler
         onSuggestionClick={handleSuggestionClick}
       />
 
@@ -57,6 +62,8 @@ function Body() {
                 key={product.id}
                 product={product}
                 loadCart={triggerCartReload}
+                // Pass the notification function down
+                showNotification={showNotification}
               />
             ))
           ) : (
@@ -64,6 +71,14 @@ function Body() {
           )}
         </div>
       </div>
+
+      {/* --- NEW: Render Toast --- */}
+      {toast && (
+        <div className="toast-notification success">
+            <span className="toast-icon">&#10003;</span>
+            {toast}
+        </div>
+      )}
     </>
   );
 }

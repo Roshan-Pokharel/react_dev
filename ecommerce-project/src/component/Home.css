@@ -1,129 +1,105 @@
+/* --- GENERAL LAYOUT --- */
 .home-page {
-  margin-top: 60px;
+  margin-top: 60px; /* Desktop default */
 }
 
 .home-page .products-grid {
   display: grid;
-
-  /* - In CSS Grid, 1fr means a column will take up the
-       remaining space in the grid.
-     - If we write 1fr 1fr ... 1fr; 8 times, this will
-       divide the grid into 8 columns, each taking up an
-       equal amount of the space.
-     - repeat(8, 1fr); is a shortcut for repeating "1fr"
-       8 times (instead of typing out "1fr" 8 times).
-       repeat(...) is a special property that works with
-       display: grid; */
+  /* Default: 8 columns for large desktop screens */
   grid-template-columns: repeat(8, 1fr);
 }
 
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 2000px or less, we
-   will divide the grid into 7 columns instead of 8. */
+/* --- RESPONSIVE GRID BREAKPOINTS --- */
+
 @media (max-width: 2000px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(7, 1fr);
-  }
+  .home-page .products-grid { grid-template-columns: repeat(7, 1fr); }
 }
 
-/* This @media means when the screen width is 1600px or
-   less, we will divide the grid into 6 columns. */
 @media (max-width: 1600px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  .home-page .products-grid { grid-template-columns: repeat(6, 1fr); }
 }
 
 @media (max-width: 1300px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
+  .home-page .products-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
 @media (max-width: 1000px) {
   .home-page .products-grid {
+    /* Force 4 columns on tablet */
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: 800px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 575px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 450px) {
-  .home-page .products-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* --- PRODUCT CARD STYLING (General) --- */
 
 .home-page .product-container {
-  padding-top: 40px;
-  padding-bottom: 25px;
-  padding-left: 25px;
-  padding-right: 25px;
-
+  padding: 15px;
   border-right: 1px solid rgb(240, 240, 240);
   border-bottom: 1px solid rgb(240, 240, 240);
-
   display: flex;
   flex-direction: column;
+  font-size: 14px; 
 }
 
 .home-page .product-image-container {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  height: 180px;
-  margin-bottom: 20px;
+  height: 140px; 
+  margin-bottom: 10px;
 }
 
 .home-page .product-image {
-  /* Images overflow the container by default. To prevent this, set
-     max-width and max-height to 100% to stay inside container. */
   max-width: 100%;
   max-height: 100%;
   border-radius: 5px;
+  object-fit: contain;
 }
 
 .home-page .product-name {
-  height: 40px;
-  margin-bottom: 5px;
+  height: 34px; 
+  margin-bottom: 3px;
+  overflow: hidden;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .home-page .product-rating-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .home-page .product-rating-stars {
-  width: 100px;
-  margin-right: 6px;
+  width: 80px; 
+  margin-right: 5px;
 }
 
 .home-page .product-rating-count {
   color: rgb(25, 135, 84);
   cursor: auto;
-  margin-top: 3px;
+  margin-top: 2px;
+  font-size: 13px;
 }
 
 .home-page .product-price {
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 15px;
 }
 
 .home-page .product-quantity-container {
-  margin-bottom: 17px;
+  margin-bottom: 10px;
+}
+
+.home-page .product-quantity-select {
+  padding: 3px 6px;
+  font-size: 14px; 
+  border-radius: 5px;
+  border: 1px solid #d5d9d9;
+  background-color: #f0f2f2;
+  cursor: pointer;
+  height: 28px;
 }
 
 .home-page .product-spacer {
@@ -132,35 +108,171 @@
 
 .home-page .added-to-cart {
   color: rgb(25, 135, 84);
-  font-size: 16px;
-
+  font-size: 14px;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-
-  /* At first, the "Added to cart" message will
-     be invisible. Use JavaScript to change the
-     opacity and make it visible. */
+  margin-bottom: 5px;
   opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .home-page .added-to-cart img {
-  height: 19px;
-  margin-right: 6px;
+  height: 16px;
+  margin-right: 4px;
 }
 
 .home-page .add-to-cart-button {
   width: 100%;
-  padding: 8px;
-  height: 34px;
-  margin-top: 1px;
+  padding: 6px;
+  height: 32px;
+  margin-top: 5px;
+  font-size: 13px;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(213,217,217,.5);
 }
-/* In Home.css */
+
+.home-page .add-to-cart-button:hover {
+  background-color: #F7CA00;
+}
+
+.home-page .add-to-cart-button:active {
+  transform: translateY(1px);
+}
+
+/* --- MOBILE SPECIFIC OVERRIDES (Max-Width: 575px) --- */
+@media (max-width: 575px) {
+  
+  /* FIX: Push content down further on mobile because the header is taller (search bar wraps) */
+  .home-page {
+    margin-top: 120px; 
+  }
+
+  /* Keep 4 items per row on mobile (as requested previously) */
+  .home-page .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Reduce padding to almost nothing to save space */
+  .home-page .product-container {
+    padding: 4px;
+    padding-top: 10px;
+  }
+
+  /* Shrink Image Height */
+  .home-page .product-image-container {
+    height: 80px;
+    margin-bottom: 5px;
+  }
+
+  /* Tiny Font for Product Name */
+  .home-page .product-name {
+    font-size: 10px;
+    height: 24px; 
+    line-height: 12px;
+    margin-bottom: 2px;
+  }
+
+  /* Adjust Rating Stars Size */
+  .home-page .product-rating-stars {
+    width: 50px;
+  }
+  
+  .home-page .product-rating-count {
+    font-size: 9px;
+  }
+
+  /* Price Font Size */
+  .home-page .product-price {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  /* Shrink Quantity Dropdown */
+  .home-page .product-quantity-select {
+    font-size: 10px;
+    height: 20px;
+    padding: 0 2px;
+  }
+  .home-page .product-quantity-container {
+    margin-bottom: 4px;
+  }
+
+  /* Hide 'Added' text mostly, or make it tiny */
+  .home-page .added-to-cart {
+    font-size: 9px;
+  }
+  .home-page .added-to-cart img {
+    height: 10px;
+  }
+
+  /* Tiny Button */
+  .home-page .add-to-cart-button {
+    font-size: 9px;
+    height: 22px;
+    padding: 0px;
+    border-radius: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
 .no-products-found {
-  /* This makes the message span the entire grid area */
   grid-column: 1 / -1; 
   text-align: center;
   font-size: 18px;
   color: #555;
   margin-top: 40px;
+}
+
+.toast-notification {
+  visibility: visible; 
+  min-width: 250px; 
+  background-color: #333; 
+  color: #fff; 
+  text-align: center; 
+  border-radius: 4px; 
+  padding: 16px; 
+  position: fixed; 
+  z-index: 3000; /* High z-index to sit on top */
+  left: 50%; 
+  bottom: 30px; 
+  transform: translateX(-50%); 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  /* Animation */
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.toast-notification.success {
+  background-color: rgb(25, 135, 84); /* Success Green */
+}
+
+.toast-icon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+/* Mobile Tweak */
+@media (max-width: 575px) {
+  .toast-notification {
+    min-width: 90%;
+    bottom: 60px; /* Higher on mobile to clear navigation bars if any */
+    font-size: 14px;
+  }
 }

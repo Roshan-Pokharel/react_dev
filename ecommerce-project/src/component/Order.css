@@ -1,18 +1,19 @@
-.orders-page .no-orders-message {
-  font-size: 18px;
-  font-weight: 500;
-  text-align: center;
-  padding: 50px;
-}
-
+/* --- GENERAL PAGE LAYOUT --- */
 .orders-page {
   max-width: 850px;
-  margin-top: 90px;
+  width: 100%;
+  
+  /* Desktop Spacing */
+  margin-top: 90px; 
   margin-bottom: 100px;
-  padding-left: 20px;
-  padding-right: 20px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  
+  /* Footer Fix: Forces page to be at least 60% height of screen */
+  min-height: 60vh;
+  box-sizing: border-box;
 }
 
 .orders-page .page-title {
@@ -21,12 +22,22 @@
   margin-bottom: 25px;
 }
 
+.orders-page .no-orders-message {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  padding: 50px;
+  background-color: #f9f9f9; /* Slight background for empty state */
+  border-radius: 8px;
+}
+
 .orders-page .orders-grid {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 50px;
 }
 
+/* --- ORDER HEADER (Gray Box) --- */
 .orders-page .order-header {
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(222, 222, 222);
@@ -34,9 +45,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* NEW: Allows content to wrap if it gets too tight on edge cases */
   flex-wrap: wrap; 
-  gap: 20px; /* Adds vertical space if items wrap */
+  gap: 20px;
 
   padding: 20px 25px;
   border-top-left-radius: 5px;
@@ -122,61 +132,7 @@
   border: 1px solid #2ecc71;
 }
 
-/* --- RESPONSIVENESS FIX --- */
-/* Changed from 575px to 950px to catch tablets and middle-sized screens */
-@media (max-width: 950px) {
-  .orders-page .order-header {
-    flex-direction: column;
-    align-items: flex-start; /* Aligns everything to the left */
-    line-height: 23px;
-    padding: 15px;
-  }
-
-  .orders-page .order-header-left-section {
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 15px; /* Separation between Date/Total and ID/Buttons */
-  }
-
-  .orders-page .order-header-label {
-    margin-right: 5px;
-  }
-
-  .orders-page .order-date,
-  .orders-page .order-total {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    margin-right: 0;
-  }
-
-  /* Stack the right section vertically */
-  .orders-page .order-header-right-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align left to match the rest */
-    gap: 10px;
-    text-align: left;
-  }
-
-  /* Allow buttons to wrap or stack on smaller screens */
-  .orders-page .order-header-actions {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .orders-page .track-package-button,
-  .orders-page .order-status-label {
-    flex: 1;
-    text-align: center;
-    /* Ensure they don't get ridiculously wide on tablets */
-    max-width: 200px; 
-  }
-}
-
-/* --- Product Grid Styles --- */
+/* --- PRODUCT DETAILS GRID --- */
 .orders-page .order-details-grid {
   padding: 40px 25px;
   border: 1px solid rgb(222, 222, 222);
@@ -191,20 +147,6 @@
   align-items: center;
 }
 
-@media (max-width: 800px) {
-  .orders-page .order-details-grid {
-    grid-template-columns: 110px 1fr;
-    row-gap: 0;
-    padding-bottom: 8px;
-  }
-}
-
-@media (max-width: 450px) {
-  .orders-page .order-details-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .orders-page .product-image-container {
   text-align: center;
 }
@@ -212,19 +154,23 @@
 .orders-page .product-image-container img {
   max-width: 110px;
   max-height: 110px;
+  object-fit: contain;
 }
 
 .orders-page .product-name {
   font-weight: 700;
   margin-bottom: 5px;
+  font-size: 16px;
 }
 
 .orders-page .product-delivery-date {
   margin-bottom: 3px;
+  color: #555;
 }
 
 .orders-page .product-quantity {
   margin-bottom: 8px;
+  color: #555;
 }
 
 .orders-page .buy-again-button {
@@ -232,10 +178,10 @@
   width: 140px;
   height: 36px;
   border-radius: 5px;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .orders-page .buy-again-icon {
@@ -247,7 +193,7 @@
   align-self: start;
 }
 
-/* --- Cancel Order Modal Styles --- */
+/* --- CANCEL ORDER MODAL --- */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -258,7 +204,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
   backdrop-filter: blur(3px);
 }
 
@@ -333,43 +279,181 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 800px) {
-  .orders-page .buy-again-button {
-    margin-bottom: 10px;
-  }
-
-  .orders-page .product-actions {
-    grid-column: 2;
-    margin-bottom: 30px;
-  }
+/* --- TOAST NOTIFICATION (Success Popup) --- */
+.toast-notification {
+  visibility: visible; 
+  min-width: 250px; 
+  background-color: #333; 
+  color: #fff; 
+  text-align: center; 
+  border-radius: 4px; 
+  padding: 16px; 
+  position: fixed; 
+  z-index: 3000; 
+  left: 50%; 
+  bottom: 30px; 
+  transform: translateX(-50%); 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-@media (max-width: 450px) {
-  .orders-page .product-image-container {
-    text-align: center;
-    margin-bottom: 25px;
+.toast-notification.success {
+  background-color: rgb(25, 135, 84);
+}
+
+.toast-icon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+/* =========================================
+   RESPONSIVE LAYOUTS
+   ========================================= */
+
+/* --- TABLET LAYOUT (max-width: 950px) --- */
+@media (max-width: 950px) {
+  .orders-page .order-header {
+    flex-direction: column;
+    align-items: flex-start; 
+    line-height: 23px;
+    padding: 15px;
   }
 
-  .orders-page .product-image-container img {
-    max-width: 150px;
-    max-height: 150px;
-  }
-
-  .orders-page .product-name {
-    margin-bottom: 10px;
-  }
-
-  .orders-page .product-quantity {
-    margin-bottom: 15px;
-  }
-
-  .orders-page .buy-again-button {
+  .orders-page .order-header-left-section {
+    flex-direction: column;
     width: 100%;
     margin-bottom: 15px;
   }
 
+  .orders-page .order-date,
+  .orders-page .order-total {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin-right: 0;
+  }
+
+  .orders-page .order-header-right-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .orders-page .order-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .orders-page .track-package-button,
+  .orders-page .order-status-label {
+    flex: 1;
+    text-align: center;
+    max-width: 200px; 
+  }
+
+  .orders-page .order-details-grid {
+    padding: 20px;
+    grid-template-columns: 110px 1fr; /* Remove right column */
+    row-gap: 20px;
+  }
+  
   .orders-page .product-actions {
-    grid-column: auto;
-    margin-bottom: 70px;
+    grid-column: 2; /* Move buttons below text */
+    margin-bottom: 10px;
+  }
+}
+
+/* --- MOBILE LAYOUT (max-width: 575px) --- */
+@media (max-width: 575px) {
+  /* 1. Fix header overlap for double-height mobile header */
+  .orders-page {
+    margin-top: 130px; 
+    margin-bottom: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-height: 50vh;
+  }
+  
+  /* 2. Make Text Smaller */
+  .orders-page .page-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .orders-page .order-header {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .orders-page .order-header-label {
+    font-size: 13px;
+  }
+
+  /* 3. Compact Product Grid */
+  .orders-page .order-details-grid {
+    grid-template-columns: 1fr; /* Stack vertically */
+    padding: 15px;
+    row-gap: 15px;
+  }
+  
+  .orders-page .product-image-container {
+    margin-bottom: 10px;
+    text-align: center; /* Center image in stack */
+  }
+
+  .orders-page .product-image-container img {
+    max-width: 90px; 
+    max-height: 90px;
+  }
+
+  .orders-page .product-name {
+    font-size: 14px;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+
+  .orders-page .product-delivery-date,
+  .orders-page .product-quantity {
+    font-size: 12px;
+  }
+
+  /* 4. Compact Buttons */
+  .orders-page .buy-again-button {
+    width: 100%;
+    height: 36px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  
+  .orders-page .track-package-button,
+  .orders-page .order-status-label {
+    height: 32px;
+    font-size: 12px;
+  }
+
+  /* 5. Toast Notification Mobile */
+  .toast-notification {
+    min-width: 90%;
+    bottom: 20px;
+    font-size: 14px;
   }
 }

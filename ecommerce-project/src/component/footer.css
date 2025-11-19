@@ -2,54 +2,59 @@
 .footer-container {
     background-color: #232f3e; /* Dark Amazon-like blue */
     color: #ffffff;
-    padding-top: 40px;
+    /* COMPACT: Reduced top padding */
+    padding-top: 25px; 
     font-family: Arial, sans-serif;
     border-top: 5px solid #ff9900; /* Orange accent line */
     width: 100%;
 }
 
-/* --- MAIN CONTENT LAYOUT --- */
+/* --- MAIN CONTENT LAYOUT (GRID) --- */
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px 30px 20px;
-    display: flex;
-    flex-wrap: wrap; /* Allows columns to wrap on smaller screens */
-    justify-content: space-between;
-    gap: 30px;
+    padding: 0 20px 20px 20px;
+    
+    /* Switch to Grid for better alignment control */
+    display: grid;
+    /* Desktop: 4 equal columns */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px;
 }
 
 /* --- SECTION HEADINGS & LOGO --- */
 .footer-logo {
-    font-size: 24px;
+    font-size: 20px; /* Slightly smaller */
     font-weight: bold;
     color: #ff9900;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     margin-top: 0;
 }
 
 .company-tagline {
-    font-size: 14px;
+    font-size: 12px; /* Compact text */
     color: #ccc;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     margin-top: 0;
+    line-height: 1.4;
 }
 
 .footer-heading {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-top: 0;
     text-transform: uppercase;
     color: #fff;
-    border-bottom: 2px solid #3d4f64; /* Subtle line under heading */
-    padding-bottom: 5px;
-    display: inline-block; /* Keeps border width tight to text */
+    border-bottom: 1px solid #3d4f64; /* Thinner line */
+    padding-bottom: 4px;
+    display: inline-block;
 }
 
 /* --- LINK COLUMNS --- */
 .footer-section {
-    flex: 1 1 200px; /* Base width of 200px, but flexible */
+    /* Grid handles width, no need for flex-basis */
+    font-size: 13px;
 }
 
 .footer-section ul {
@@ -59,13 +64,13 @@
 }
 
 .footer-section li {
-    margin-bottom: 8px;
+    margin-bottom: 6px; /* Tighter list spacing */
 }
 
 .footer-link {
     color: #ccc;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px; /* Compact font */
     transition: color 0.2s;
 }
 
@@ -77,15 +82,15 @@
 /* --- SOCIAL ICONS --- */
 .social-links {
     display: flex;
-    gap: 15px;
-    margin-top: 15px;
+    gap: 10px; /* Tighter gap */
+    margin-top: 12px;
 }
 
 .social-icon {
     color: #fff;
     transition: color 0.2s, transform 0.2s;
-    height: 24px;
-    width: 24px;
+    height: 20px; /* Smaller icons */
+    width: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,10 +103,10 @@
 
 /* --- COPYRIGHT BAR --- */
 .footer-bottom {
-    background-color: #1a2430; /* Slightly darker bar */
-    padding: 15px 20px;
+    background-color: #1a2430;
+    padding: 10px 20px; /* Thinner bar */
     text-align: center;
-    font-size: 13px;
+    font-size: 11px; /* Smaller text */
     color: #888;
     border-top: 1px solid #3d4f64;
 }
@@ -111,44 +116,59 @@
 }
 
 /* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 768px) {
+
+/* Tablet: 3 Columns? Or just keep it fluid. 
+   Let's go to 2 columns around 800px */
+@media (max-width: 800px) {
     .footer-content {
-        flex-direction: column; /* Stack columns vertically */
-        align-items: center;    /* Center content horizontally */
-        text-align: center;     /* Center text */
+        grid-template-columns: repeat(2, 1fr); /* 2 Columns for tablet */
+    }
+}
+
+/* Mobile: Compact 2 Columns (Similar to your product grid philosophy) */
+@media (max-width: 575px) {
+    .footer-content {
+        /* Still keep 2 columns to save vertical space! 
+           Most footers stack to 1 column, but 2 is more "compact". */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px;
+        padding: 0 15px 20px 15px;
     }
 
     .footer-section {
-        width: 100%;
-        margin-bottom: 30px;
-        /* Ensure flex children (like social icons) align center */
-        display: flex;
-        flex-direction: column;
-        align-items: center; 
-    }
-
-    .footer-section ul {
-        width: 100%;
+        margin-bottom: 10px;
     }
 
     .footer-heading {
-        border-bottom: none; /* Optional: Remove border for cleaner mobile look */
-        text-decoration: underline; /* Replace border with underline or keep border */
+        font-size: 12px;
+        margin-bottom: 8px;
+        border-bottom: none; /* Remove border for cleaner look on small screens */
+        text-decoration: underline;
         text-decoration-color: #3d4f64;
-        margin-bottom: 15px;
     }
 
-    /* Center social icons */
-    .social-links {
-        justify-content: center;
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    /* Increase tap area for links */
     .footer-link {
-        display: block;
-        padding: 8px 0;
-        font-size: 15px;
+        font-size: 11px; /* Tiny, efficient font size */
+        padding: 2px 0;
     }
+
+    .footer-logo {
+        font-size: 18px;
+    }
+    
+    .company-tagline {
+        font-size: 11px;
+    }
+
+    /* Make the "Company Info" section span across both columns 
+       if you want the logo to be bigger/centered on top. 
+       Uncomment below to make the Logo section full width: */
+    /* .footer-section:first-child {
+        grid-column: 1 / -1;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    } 
+    */
 }

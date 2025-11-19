@@ -2,13 +2,14 @@ import apiClient from '../../api';
 import { useState } from 'react';
 import PriceCents from '../../utils/priceCents';
 
-export function Product({ product, loadCart }) {
+// Receive showNotification prop
+export function Product({ product, loadCart, showNotification }) {
   const [quantity, setQuantity] = useState(1);
 
   return (
     <div className="product-container">
       <div className="product-image-container">
-        <img className="product-image" src={product.image} />
+        <img className="product-image" src={product.image} alt={product.name} />
       </div>
 
       <div className="product-name limit-text-to-2-lines">
@@ -19,6 +20,7 @@ export function Product({ product, loadCart }) {
         <img
           className="product-rating-stars"
           src={`images/ratings/rating-${product.rating.stars * 10}.png`}
+          alt={`${product.rating.stars} stars`}
         />
         <div className="product-rating-count link-primary">
           {product.rating.count}
@@ -31,6 +33,7 @@ export function Product({ product, loadCart }) {
 
       <div className="product-quantity-container">
         <select
+          className="product-quantity-select"
           value={quantity}
           onChange={(event) => {
             const quantitySelected = Number(event.target.value);
@@ -47,19 +50,23 @@ export function Product({ product, loadCart }) {
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart">
-        <img src="images/icons/checkmark.png" />
-        Added
-      </div>
-
       <button
         className="add-to-cart-button button-primary"
         onClick={async () => {
-          await apiClient.post('/cart-items', {
-            productId: product.id,
-            quantity,
-          });
-          await loadCart();
+          try {
+            await apiClient.post('/cart-items', {
+              productId: product.id,
+              quantity,
+            });
+            await loadCart();
+            
+            // Trigger the popup in the parent component
+            if (showNotification) {
+                showNotification('Added to Cart');
+            }
+          } catch (error) {
+             console.error("Error adding to cart", error);
+          }
         }}
       >
         Add to Cart

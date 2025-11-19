@@ -13,6 +13,9 @@ export function OrdersList({ loadCart }) {
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [cancelReason, setCancelReason] = useState('');
 
+    // New State for Toast Notification
+    const [toast, setToast] = useState(null); // null = hidden, string = message
+
     const fetchOrders = async () => {
         try {
             const response = await apiClient.get("/orders?expand=products");
@@ -24,13 +27,25 @@ export function OrdersList({ loadCart }) {
 
     useEffect(() => { fetchOrders(); }, []);
 
+    // --- HELPER: SHOW TOAST ---
+    const showNotification = (message) => {
+        setToast(message);
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            setToast(null);
+        }, 3000);
+    };
+
     const buyAgain = async (productId) => {
         try {
             await apiClient.post('/cart-items', { productId: productId, quantity: 1 });
             loadCart();
-            alert('Item added to cart!');
+            // REPLACED alert() WITH showNotification()
+            showNotification('Item added to your cart!'); 
         } catch (error) {
             console.error('Failed', error);
+            // Optional: Show error toast
+            // showNotification('Failed to add item.');
         }
     };
 
@@ -46,6 +61,7 @@ export function OrdersList({ loadCart }) {
         await apiClient.put(`/orders/${selectedOrderId}/cancel`, { reason: cancelReason });
         setIsModalOpen(false);
         fetchOrders();
+        showNotification('Order cancelled successfully.');
       } catch (error) {
         console.error("Cancellation failed", error);
         alert("Failed to cancel order.");
@@ -82,7 +98,6 @@ export function OrdersList({ loadCart }) {
                     <div className="order-header-right-section">
                         <div className="order-header-label">Order ID: {order?.id}</div>
                         
-                        {/* --- GROUPED ACTIONS FOR ALIGNMENT --- */}
                         <div className="order-header-actions">
                             <a href={`/tracking?orderId=${order.id}`}>
                                  <button className="track-package-button button-secondary">
@@ -137,6 +152,14 @@ export function OrdersList({ loadCart }) {
       )}
       </div>
       
+      {/* --- TOAST NOTIFICATION RENDER --- */}
+      {toast && (
+        <div className="toast-notification success">
+            <span className="toast-icon">&#10003;</span> {/* Checkmark Symbol */}
+            {toast}
+        </div>
+      )}
+
       {/* Modal Logic */}
       {isModalOpen && (
         <div className="modal-overlay">
