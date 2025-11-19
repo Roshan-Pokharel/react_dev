@@ -3,9 +3,9 @@ import { Order } from '../models/Order.js';
 import { Product } from '../models/Product.js';
 import { DeliveryOption } from '../models/DeliveryOption.js';
 import { CartItem } from '../models/CartItem.js';
-import { User } from '../models/User.js'; // Import User model
+import { User } from '../models/User.js';
 import { protect } from '../middleware/auth.js';
-import { sendOrderNotification } from '../services/telegramService.js'; // Import the service
+import { sendOrderNotification, sendCancellationNotification } from '../services/telegramService.js'; // Updated import
 
 const router = express.Router();
 
@@ -95,7 +95,7 @@ router.post('/', protect, async (req, res) => {
       };
     }));
 
-    // Apply Tax
+    // Apply Tax (if applicable) or rounding
     totalCostCents = Math.round(totalCostCents);
 
     // 4. Create Order in Database
@@ -103,7 +103,8 @@ router.post('/', protect, async (req, res) => {
       orderTimeMs: Date.now(),
       totalCostCents,
       products,
-      UserId: userId 
+      UserId: userId,
+      status: 'placed' // explicitly set initial status
     });
 
     // 5. Clear User's Cart
@@ -117,6 +118,46 @@ router.post('/', protect, async (req, res) => {
   } catch (error) {
     console.error('Order creation failed:', error);
     res.status(500).json({ error: 'Failed to place order' });
+  }
+});
+
+// --- NEW CANCEL ROUTE ---
+router.put('/:orderId/cancel', protect, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { reason } = req.body;
+    const userId = req.userId;
+
+    // 1. Find the order belonging to this user
+    const order = await Order.findOne({ 
+      where: { id: orderId, UserId: userId } 
+    });
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    // 2. Check if already cancelled
+    if (order.status === 'cancelled') {
+      return res.status(400).json({ error: 'Order is already cancelled' });
+    }
+
+    // 3. Update Status
+    order.status = 'cancelled';
+    order.cancellationReason = reason;
+    await order.save();
+
+    // 4. Get User info for the notification
+    const user = await User.findByPk(userId);
+
+    // 5. Send Telegram Notification
+    await sendCancellationNotification(order, user, reason);
+
+    res.json({ message: 'Order cancelled successfully', order });
+
+  } catch (error) {
+    console.error('Cancel order failed:', error);
+    res.status(500).json({ error: 'Failed to cancel order' });
   }
 });
 

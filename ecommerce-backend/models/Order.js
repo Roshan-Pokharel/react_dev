@@ -7,6 +7,17 @@ export const Order = sequelize.define('Order', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
+  // --- NEW FIELDS START ---
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: 'placed', // Values: 'placed', 'cancelled', 'delivered'
+    allowNull: false
+  },
+  cancellationReason: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  // --- NEW FIELDS END ---
   orderTimeMs: {
     type: DataTypes.BIGINT,
     allowNull: false
@@ -23,7 +34,7 @@ export const Order = sequelize.define('Order', {
     type: DataTypes.INTEGER,
     allowNull: false, 
     references: {
-      model: 'Users', // The table name defined in User.js
+      model: 'Users',
       key: 'id',
     }
   },
