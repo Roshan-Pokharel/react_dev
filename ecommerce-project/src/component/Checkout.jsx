@@ -167,8 +167,8 @@ export function Checkout() {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <a href="/">
-              <img className="logo " src="images/logo.png" alt="Amazon Logo" />
-               <img className="mobile-logo " src="images/mobile-logo.png" alt="Amazon Logo" />
+              <img className="logo " src="images/logo.png" alt="Durga Shop Logo" />
+               <img className="mobile-logo " src="images/mobile-logo.png" alt="Durga Shop Logo" />
             </a>
           </div>
           <div className="checkout-header-middle-section">

@@ -8,7 +8,7 @@ import Tracking from './component/Tracking.jsx';
 import './App.css';
 
 // NEW: Import apiClient for the auth check
-import apiClient from './api'; 
+import apiClient from './api';
 
 export function App() {
   const [products, setProducts] = useState([]);
@@ -40,7 +40,7 @@ export function App() {
         const response = await apiClient.get('/auth/me');
         setUser(response.data); // Set user data if logged in
       } catch (error) {
-        setUser(null); // Set to null if not logged in
+        setUser(null);
       }
       setAuthChecked(true);
     };

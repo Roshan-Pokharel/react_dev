@@ -96,7 +96,7 @@ router.post('/', protect, async (req, res) => {
     }));
 
     // Apply Tax
-    totalCostCents = Math.round(totalCostCents * 1.1);
+    totalCostCents = Math.round(totalCostCents);
 
     // 4. Create Order in Database
     const order = await Order.create({
