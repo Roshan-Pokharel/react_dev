@@ -6,6 +6,7 @@ import { OrdersList } from './component/OrdersList.jsx';
 import { Checkout } from './component/Checkout.jsx';
 import Tracking from './component/Tracking.jsx';
 import './App.css';
+
 // NEW: Import apiClient for the auth check
 import apiClient from './api'; 
 

@@ -1,0 +1,116 @@
+/* --- FOOTER CONTAINER --- */
+.footer-container {
+    background-color: #232f3e; /* Dark Amazon-like blue */
+    color: #ffffff;
+    padding-top: 40px;
+    font-family: Arial, sans-serif;
+    border-top: 5px solid #ff9900; /* Orange accent line */
+}
+
+/* --- MAIN CONTENT LAYOUT --- */
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 30px 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allows columns to wrap on smaller screens */
+    justify-content: space-between;
+    gap: 30px;
+}
+
+/* --- SECTION HEADINGS & LOGO --- */
+.footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff9900;
+    margin-bottom: 10px;
+}
+
+.company-tagline {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.footer-heading {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    border-bottom: 2px solid #3d4f64; /* Subtle line under heading */
+    padding-bottom: 5px;
+}
+
+/* --- LINK COLUMNS --- */
+.footer-section {
+    flex: 1 1 200px; /* Base width of 200px, but flexible */
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section li {
+    margin-bottom: 8px;
+}
+
+.footer-link {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: #ff9900;
+    text-decoration: underline;
+}
+
+/* --- SOCIAL ICONS --- */
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    color: #fff;
+    transition: color 0.2s, transform 0.2s;
+    height: 24px;
+    width: 24px;
+}
+
+.social-icon:hover {
+    color: #ff9900;
+    transform: translateY(-2px);
+}
+
+.social-icon svg {
+    display: block; /* Fixes alignment issues */
+}
+
+/* --- COPYRIGHT BAR --- */
+.footer-bottom {
+    background-color: #1a2430; /* Slightly darker bar */
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-top: 20px;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column; /* Stack columns vertically */
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .footer-section {
+        flex: 1 1 100%; /* Take full width on mobile */
+        margin-bottom: 20px;
+    }
+}
