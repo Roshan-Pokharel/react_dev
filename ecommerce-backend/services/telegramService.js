@@ -1,39 +1,57 @@
 import TelegramBot from 'node-telegram-bot-api';
 import 'dotenv/config';
-// 1. Import Order model to update status
 import { Order } from '../models/Order.js'; 
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const adminChatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
 
-// 2. CHANGE polling TO TRUE (Allows the bot to receive messages)
 const bot = new TelegramBot(token, { polling: true });
 
-// --- NEW: LISTENER FOR INCOMING MESSAGES ---
+// --- LISTENER FOR INCOMING MESSAGES ---
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text ? msg.text.trim() : '';
 
-  // Security check: Only allow the admin to update orders
+  // Security check: Only allow the admin
   if (chatId.toString() !== adminChatId) {
     return;
   }
 
-  // Check if the text looks like a UUID (Order ID)
-  // (UUIDs are usually 36 chars, but we'll just check length to be safe)
-  if (text.length > 20) {
+  // 1. Parse the message into words (split by spaces)
+  const args = text.split(/\s+/);
+
+  // 2. Find the Order ID (Look for a long string, likely the UUID)
+  const orderId = args.find(arg => arg.length > 20);
+
+  // 3. Check for keywords ("ship" or "shipped")
+  const isShipCommand = args.some(arg => arg.toLowerCase().includes('ship'));
+
+  if (orderId) {
     try {
-      const order = await Order.findByPk(text);
+      const order = await Order.findByPk(orderId);
 
       if (order) {
-        // Update the status
-        order.status = 'received';
+        // --- STATUS LOGIC ---
+        // If message contains "ship", set to 'shipped' (Progress Bar: 50%)
+        // If message is just the ID, set to 'received' (Progress Bar: 100% / Delivered)
+        
+        let newStatus = 'received'; 
+        let statusMessage = "✅ Order Delivered (Received)";
+
+        if (isShipCommand) {
+            newStatus = 'shipped';
+            statusMessage = "🚚 Order Shipped";
+        }
+
+        // Update Database
+        order.status = newStatus;
         await order.save();
 
-        // Confirm back to you on Telegram
-        bot.sendMessage(chatId, `✅ Success! Order status changed to 'received'.\nID: ${text}`);
+        // Confirm to Admin
+        bot.sendMessage(chatId, `${statusMessage}!\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
+      
       } else {
-        bot.sendMessage(chatId, `❌ Order not found for ID: ${text}`);
+        bot.sendMessage(chatId, `❌ Order not found for ID: ${orderId}`);
       }
     } catch (error) {
       console.error("Bot Error:", error);
@@ -58,7 +76,6 @@ export const sendOrderNotification = async (order, user, productsList) => {
       productString += `\n**${p.name}**\nQty: ${p.quantity}\nArrives: ${deliveryString}\n`;
     });
 
-    // 3. ADD ORDER ID TO MESSAGE (Wrapped in backticks ` ` for copy-paste)
     const message = `
  **NEW ORDER RECEIVED!**
 
