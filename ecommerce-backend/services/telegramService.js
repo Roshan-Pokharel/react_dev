@@ -45,22 +45,22 @@ bot.on('message', async (msg) => {
         else if (isShipCommand) {
             order.status = 'shipped';
             await order.save();
-            bot.sendMessage(chatId, `🚚 **Order Shipped**\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
+            bot.sendMessage(chatId, `**Order Shipped**\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
         }
 
         // PRIORITY 3: Default (Mark as Received/Delivered if just ID is sent)
         else {
             order.status = 'received';
             await order.save();
-            bot.sendMessage(chatId, `✅ **Order Delivered (Received)**\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
+            bot.sendMessage(chatId, `**Order Delivered (Received)**\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
         }
       
       } else {
-        bot.sendMessage(chatId, `❌ Order not found for ID: ${orderId}`);
+        bot.sendMessage(chatId, `Order not found for ID: ${orderId}`);
       }
     } catch (error) {
       console.error("Bot Error:", error);
-      bot.sendMessage(chatId, `❌ Error updating order.`);
+      bot.sendMessage(chatId, `Error updating order.`);
     }
   }
 });
