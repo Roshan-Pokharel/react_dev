@@ -1,8 +1,8 @@
-import {useEffect, useState, Fragment} from 'react';
-import {Header} from '../component/Shared/Header.jsx';
+import { useEffect, useState, Fragment } from 'react';
+import { Header } from '../component/Shared/Header.jsx';
 import dayjs from 'dayjs';
 import PriceCents from '../utils/priceCents.js';
-import apiClient from '../api';
+import apiClient from '../api'; // Ensure this path matches your project structure
 
 import './Shared/General.css';
 import './Shared/Header.css';
@@ -11,13 +11,15 @@ import './Order.css';
 export function OrdersList({ loadCart }) { 
     const [orders, setOrders] = useState([]);
     
-    // --- 1. NEW STATE FOR MODAL ---
+    // --- State for the Custom Cancel Modal ---
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [cancelReason, setCancelReason] = useState('');
 
+    // Function to fetch orders
     const fetchOrders = async () => {
         try {
+            // Fetch orders, including product details
             const response = await apiClient.get("/orders?expand=products");
             setOrders(response.data);
         } catch (error) {
@@ -25,28 +27,34 @@ export function OrdersList({ loadCart }) {
         }
     };
 
+    // Fetch orders on initial load
     useEffect(() => {
         fetchOrders();
     }, []);
 
+    // Handler: Buy Again (Add to cart)
     const buyAgain = async (productId) => {
         try {
-            await apiClient.post('/cart-items', { productId, quantity: 1 });
+            await apiClient.post('/cart-items', {
+                productId: productId,
+                quantity: 1
+            });
             loadCart();
             alert('Item added to cart!');
         } catch (error) {
-            alert('Failed to add item to cart.');
+            console.error('Failed to add item to cart:', error);
+            alert('Failed to add item to cart. Please ensure you are logged in.');
         }
     };
 
-    // --- 2. OPEN MODAL FUNCTION ---
+    // Handler: Open the Cancel Modal
     const openCancelModal = (orderId) => {
       setSelectedOrderId(orderId);
-      setCancelReason(''); // Reset text
+      setCancelReason(''); // Reset the text area
       setIsModalOpen(true);
     };
 
-    // --- 3. SUBMIT CANCELLATION FUNCTION ---
+    // Handler: Submit the Cancellation
     const submitCancellation = async () => {
       if (!cancelReason.trim()) {
         alert("Please provide a reason.");
@@ -56,7 +64,7 @@ export function OrdersList({ loadCart }) {
       try {
         await apiClient.put(`/orders/${selectedOrderId}/cancel`, { reason: cancelReason });
         setIsModalOpen(false); // Close modal
-        fetchOrders(); // Refresh list
+        fetchOrders(); // Refresh the list to show new status
       } catch (error) {
         console.error("Cancellation failed", error);
         alert("Failed to cancel order.");
@@ -66,7 +74,6 @@ export function OrdersList({ loadCart }) {
   return(
     <>
       <Header loadCart={loadCart} /> 
-      
       <div className="orders-page">
         <div className="page-title">Your Orders</div>
 
@@ -77,74 +84,124 @@ export function OrdersList({ loadCart }) {
             orders.map((order) => { 
                 const orderDate = dayjs(Number(order.orderTimeMs)).format('MMMM D');
                 const orderTotal = PriceCents(order.totalCostCents);
-                const isCancelled = order.status === 'cancelled';
 
                 return(
                 <div key={order?.id} className="order-container">
-                  <div className="order-header">
-                      <div className="order-header-left-section">
-                      <div className="order-date">
-                          Order Placed: <span className="order-header-label">{orderDate}</span>
-                      </div>
-                      <div className="order-total">
-                          Total: <span className="order-header-label">{orderTotal}</span>
-                      </div>
-                      </div>
 
-                      <div className="order-header-right-section">
-                          <div className="order-header-label">Order ID: {order?.id}</div>
-                          
-                          {/* --- 4. BUTTON OPENS MODAL --- */}
-                          {!isCancelled ? (
-                            <button 
-                              onClick={() => openCancelModal(order.id)}
-                              className="track-package-button" // Reuse existing style or add custom
-                              style={{ marginLeft: '15px', backgroundColor: '#d9534f', color: 'white', border: 'none' }}
-                            >
-                              Cancel Order
-                            </button>
-                          ) : (
-                            <span style={{ marginLeft: '15px', color: '#d9534f', fontWeight: 'bold', border: '1px solid #d9534f', padding: '4px 8px', borderRadius: '4px' }}>
-                              CANCELLED
+                <div className="order-header">
+                    <div className="order-header-left-section">
+                    <div className="order-date">
+                        Order Placed:
+                        <span className="order-header-label">{orderDate}</span>
+                    </div>
+                    <div className="order-total">
+                        Total:
+                        <span className="order-header-label">{orderTotal}</span>
+                    </div>
+                    </div>
+
+                    <div className="order-header-right-section">
+                        <div className="order-header-label">Order ID: {order?.id}</div>
+                        
+                        {/* --- STATUS LOGIC --- */}
+
+                        {/* 1. If Cancelled: Show Red Label */}
+                        {order.status === 'cancelled' && (
+                            <span style={{ 
+                                marginLeft: '15px', 
+                                color: '#d9534f', 
+                                fontWeight: 'bold', 
+                                border: '1px solid #d9534f', 
+                                padding: '4px 8px', 
+                                borderRadius: '4px' 
+                            }}>
+                                CANCELLED
                             </span>
-                          )}
-                      </div>
-                  </div>
+                        )}
 
-                  <div className="order-details-grid">
-                      {order.products.map((product) => {
-                          const Product = product.product; 
-                          return(
-                          <Fragment key={product.productId}>
-                              <div className="product-image-container">
-                                  <img src={Product?.image} alt={Product?.name} />
-                              </div>
-                              <div>
-                                  <div className="product-name">{Product?.name}</div>
-                                  <div className="product-delivery-date">
-                                      Arriving on: {dayjs(product?.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
-                                  </div>
-                                  <div className="product-quantity">Quantity: {product?.quantity}</div>
-                                  <button className="buy-again-button button-primary" onClick={() => buyAgain(product.productId)}>
-                                      <img className="buy-again-icon" src="images/icons/buy-again.png" alt="buy again"/>
-                                      <span>Add to Cart</span>
-                                  </button>
-                              </div>
-                              <div className="product-actions">
-                                  <a href={`/tracking?orderId=${order.id}&productId=${product.productId}`}>
-                                      <button className="track-package-button button-secondary">Track package</button>
-                                  </a>
-                              </div>
-                          </Fragment>
-                          )
-                      })}
-                  </div>
+                        {/* 2. If Received: Show Green Label */}
+                        {order.status === 'received' && (
+                            <span style={{ 
+                                marginLeft: '15px', 
+                                color: '#2ecc71', 
+                                fontWeight: 'bold', 
+                                border: '1px solid #2ecc71', 
+                                padding: '4px 8px', 
+                                borderRadius: '4px' 
+                            }}>
+                                ORDER RECEIVED
+                            </span>
+                        )}
+
+                        {/* 3. If Placed (Default): Show Cancel Button */}
+                        {order.status === 'placed' && (
+                            <button 
+                                onClick={() => openCancelModal(order.id)}
+                                className="track-package-button"
+                                style={{ 
+                                    marginLeft: '15px', 
+                                    backgroundColor: '#d9534f', 
+                                    color: 'white', 
+                                    border: 'none',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Cancel Order
+                            </button>
+                        )}
+                        {/* --- END STATUS LOGIC --- */}
+                    </div>
                 </div>
-            )})
+
+                <div className="order-details-grid">
+                    {/* Map through the products */}
+                    {order.products.map((product) => {
+                        const Product = product.product; 
+                        
+                        return(
+                        <Fragment key={product.productId}>
+                            {/* Column 1: Image */}
+                            <div className="product-image-container">
+                                <img src = {Product?.image} alt={Product?.name} />
+                            </div>
+
+                            {/* Column 2: Details */}
+                            <div>
+                                <div className="product-name">
+                                    {Product?.name}
+                                </div>
+                                <div className="product-delivery-date">
+                                    Arriving on: {dayjs(product?.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
+                                </div>
+                                <div className="product-quantity">
+                                    Quantity: {product?.quantity}
+                                </div>
+                                <button className="buy-again-button button-primary" onClick={() => buyAgain(product.productId)}>
+                                    <img className="buy-again-icon" src="images/icons/buy-again.png" alt="buy again" />
+                                    <span>Add to Cart</span>
+                                </button>
+                            </div>
+
+                            {/* Column 3: Actions */}
+                            <div className="product-actions">
+                                <a href={`/tracking?orderId=${order.id}&productId=${product.productId}`}>
+                                    <button className="track-package-button button-secondary">
+                                    Track package
+                                    </button>
+                                </a>
+                            </div>
+                        </Fragment>
+                        )
+                    }
+                    )}
+                </div>
+                </div>
+            )
+        })
           )}
       </div>
 
-      {/* --- 5. THE CUSTOM MODAL UI --- */}
+      {/* --- CUSTOM MODAL POPUP --- */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -169,8 +226,6 @@ export function OrdersList({ loadCart }) {
           </div>
         </div>
       )}
-      {/* --- END MODAL UI --- */}
-
     </div>
     </>
   )
