@@ -1,17 +1,17 @@
 export const defaultDeliveryOptions = [
   {
     id: "1",
-    deliveryDays: 7,
+    deliveryDays: 2,
     priceCents: 0
   },
   {
     id: "2",
-    deliveryDays: 3,
-    priceCents: 499
+    deliveryDays: 1,
+    priceCents: 2000
   },
   {
     id: "3",
-    deliveryDays: 1,
-    priceCents: 999
+    deliveryDays: 0,
+    priceCents: 5000
   }
 ];
