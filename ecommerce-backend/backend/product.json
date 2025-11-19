@@ -1,90 +1,933 @@
 [
   {
-    "id": "80629a98-6d55-442b-b892-23c328e469e7",
-    "image": "images/products/liquid_blue.jpg",
-    "name": "Robin Liquid Blue - 100ml",
+    "id": "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+    "image": "images/products/waiwai.png",
+    "name": "Wai Wai Instant Noodles (Brown) - Chicken Flavor",
     "rating": {
-      "stars": 4.1,
+      "stars": 5,
+      "count": 245
+    },
+    "priceCents": 2000,
+    "keywords": ["noodles", "snacks", "chowchow", "lunch"]
+  },
+  {
+    "id": "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+    "image": "images/products/nun.png",
+    "name": "Aayo Noon (Iodized Salt) - 1kg",
+    "rating": {
+      "stars": 5,
+      "count": 500
+    },
+    "priceCents": 3000,
+    "keywords": ["salt", "grocery", "essentials", "cooking"]
+  },
+  {
+    "id": "8a9d3e45-6c1b-4f92-a28d-b3e18fc789f3",
+    "image": "images/products/maya_oil.jpg",
+    "name": "maya sunflower oil - half Liter",
+    "rating": {
+      "stars": 4.5,
+      "count": 310
+    },
+    "priceCents": 13000,
+    "keywords": ["oil", "cooking", "mustard", "kitchen"]
+  },
+  {
+    "id": "8a9d3e45-6c1b-4f92-a28d-b3e18fc789f2",
+    "image": "images/products/ambe_oil.png",
+    "name": "Ambe sunflower oil - half Liter",
+    "rating": {
+      "stars": 4.5,
+      "count": 310
+    },
+    "priceCents": 12000,
+    "keywords": ["oil", "cooking", "mustard", "kitchen"]
+  },
+  {
+    "id": "9b2f5e67-8d4a-4c53-b19e-c4f29ad890a3", 
+    "image": "images/products/current_noodles.png",
+    "name": "Current Hot & Spicy Noodles",
+    "rating": {
+      "stars": 4.5,
+      "count": 150
+    },
+    "priceCents": 5000,
+    "keywords": ["noodles", "spicy", "snacks", "current"]
+  },
+  {
+    "id": "2c2d1e56-9f5b-4e64-c20f-d5a30be901b4",
+    "image": "images/products/sai_krip_chai.jpg",
+    "name": "Sai Kripa gold Tea - 200g",
+    "rating": {
+      "stars": 4.5,
+      "count": 95
+    },
+    "priceCents": 14000,
+    "keywords": ["tea", "chiya", "beverage", "morning"]
+  },
+  {
+    "id": "2c3d4e56-9f5b-4e64-c20f-d5a30be901b4",
+    "image": "images/products/sai_krip_chai.jpg",
+    "name": "Sai Kripa gold Tea - 50g and 200g",
+    "rating": {
+      "stars": 4.5,
+      "count": 95
+    },
+    "priceCents": 4000,
+    "keywords": ["tea", "chiya", "beverage", "morning"]
+  },
+  {
+    "id": "7e6f5d43-1a2b-3c4d-e5f6-a7b89cc012d5",
+    "image": "images/products/meat_masala.png",
+    "name": "Century Chicken Masala - 50g",
+    "rating": {
+      "stars": 4,
+      "count": 60
+    },
+    "priceCents": 500,
+    "keywords": ["spices", "masala", "meat", "cooking"]
+  },
+  {
+    "id": "4a5b6c7d-8e9f-0a1b-c2d3-e4f56aa789b6",
+    "image": "images/products/NG-White-Beaten-Rice-Seto-Taichin-Chiura.webp",
+    "name": "Taichin Chiura (Beaten Rice) - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 40
+    },
+    "priceCents": 12000,
+    "keywords": ["rice", "chiura", "snacks", "local"]
+  },
+  {
+    "id": "1a2b3c4d-5e6f-7a8b-9c0d-e1f23aa456b7",
+    "image": "images/products/rio_fruit_drink.jpg",
+    "name": "Rio Fruit Juice (Mango) - 250ml",
+    "rating": {
+      "stars": 4.5,
+      "count": 200
+    },
+    "priceCents": 2500,
+    "keywords": ["juice", "drinks", "mango", "summer"]
+  },
+  {
+    "id": "a9b8c7d6-e5f4-a3b2-c1d0-e9f87aa654b3",
+    "image": "images/products/masuro_dal.webp",
+    "name": "Local Masoor Dal (Red Lentil) - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 89
+    },
+    "priceCents": 16000,
+    "keywords": ["dal", "pulses", "grains", "lunch"]
+  },
+  {
+    "id": "c1d2e3f4-a5b6-c7d8-e9f0-a1b23cc456d7",
+    "image": "images/products/lifeBuoy_shop.png",
+    "name": "Lifebuoy Soap (Total 10) - 125g",
+    "rating": {
+      "stars": 4.5,
+      "count": 340
+    },
+    "priceCents": 5000,
+    "keywords": ["soap", "hygiene", "bathroom", "cleaning"]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "image": "images/products/coconut_biscuits.webp",
+    "name": "Nebico Coconut Biscuits",
+    "rating": {
+      "stars": 4.5,
+      "count": 320
+    },
+    "priceCents": 2000,
+    "keywords": ["biscuits", "tea time", "nebico", "snacks"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-678901bcdef1",
+    "image": "images/products/Coca-cola.png",
+    "name": "Coca-Cola - 1.5 Liter",
+    "rating": {
+      "stars": 5,
+      "count": 500
+    },
+    "priceCents": 19000,
+    "keywords": ["drinks", "soda", "coke", "party"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-789012cdef23",
+    "image": "images/products/sugar.webp",
+    "name": "Sugar (Chini) - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 150
+    },
+    "priceCents": 9000,
+    "keywords": ["grocery", "sugar", "baking", "sweet"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890123def345",
+    "image": "images/products/xpert_dishwash_shop.png",
+    "name": "Xpert Dishwash Bar - 76g",
+    "rating": {
+      "stars": 4.5,
+      "count": 210
+    },
+    "priceCents": 1000,
+    "keywords": ["cleaning", "dishwash", "kitchen", "soap"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-901234ef4567",
+    "image": "images/products/sunsilk_stuning_black_shine_shampoo.png",
+    "name": "Sunsilk Black Shine Shampoo X2 piece - 4.5ml",
+    "rating": {
+      "stars": 4.5,
+      "count": 180
+    },
+    "priceCents": 500,
+    "keywords": ["shampoo", "hair care", "beauty", "sunsilk"]
+  },
+  {
+    "id": "89012345-6789-0abc-def1-234567890abc",
+    "image": "images/products/gai_chhap.png",
+    "name": "Gai chhap Detergent Powder - 500g and 1kg",
+    "rating": {
+      "stars": 5,
+      "count": 280
+    },
+    "priceCents": 5000,
+    "keywords": ["washing", "laundry", "detergent", "cleaning"]
+  },
+  {
+    "id": "89021345-6789-0abc-def1-234567890abc",
+    "image": "images/products/gai_chhap.png",
+    "name": "Gai chhap Detergent Powder - 1kg",
+    "rating": {
+      "stars": 5,
+      "count": 280
+    },
+    "priceCents": 10000,
+    "keywords": ["washing", "laundry", "detergent", "cleaning"]
+  },
+  {
+    "id": "90123456-7890-abcd-ef12-34567890abcd",
+    "image": "images/products/brown-poultry-eggs.jpg",
+    "name": "Fresh Eggs (Krat) - 30 Pcs",
+    "rating": {
+      "stars": 4,
+      "count": 60
+    },
+    "priceCents": 55000,
+    "keywords": ["eggs", "protein", "breakfast", "fresh"]
+  },
+  {
+    "id": "12345678-90ab-cdef-1234-567890abcdef",
+    "image": "images/products/devdaha_masala.png",
+    "name": "Devdaha masala Powder - 100g",
+    "rating": {
+      "stars": 5,
+      "count": 110
+    },
+    "priceCents": 3000,
+    "keywords": ["spices", "chili", "bassar","khursani", "haldi","tumeric", "cooking","tarkari" ,"vegetable","hot","masala"]
+  },
+  {
+    "id": "23456789-0abc-def1-2345-67890abcdef1",
+    "image": "images/products/colgate-removebg-preview.png",
+    "name": "Colgate Strong Teeth Toothpaste - 100g",
+    "rating": {
+      "stars": 4.5,
+      "count": 400
+    },
+    "priceCents": 7500,
+    "keywords": ["toothpaste", "hygiene", "dental", "colgate"]
+  },
+  {
+    "id": "34567890-abcd-ef12-3456-7890abcdef12",
+    "image": "images/products/chana.webp",
+    "name": "Big Mart Chana (Whole Chickpeas) - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 75
+    },
+    "priceCents": 17000,
+    "keywords": ["pulses", "chana", "grains", "vegetable"]
+  },
+  {
+    "id": "67890abc-def1-2345-6789-0abcdef12345",
+    "image": "images/products/digestive_biscuits.png",
+    "name": "Digestive Biscuits (Britannia)",
+    "rating": {
+      "stars": 4.5,
+      "count": 180
+    },
+    "priceCents": 2000,
+    "keywords": ["biscuits", "healthy", "snacks", "fiber"]
+  },
+  {
+    "id": "7890abcd-ef12-3456-7890-abcdef123456",
+    "image": "images/products/Champa-Incense-Sticks-Pouch-130g-2-1.webp",
+    "name": "Champa Agarbatti (Incense Sticks)",
+    "rating": {
+      "stars": 5,
+      "count": 300
+    },
+    "priceCents": 10000,
+    "keywords": ["pooja", "incense", "fragrance", "spiritual"]
+  },
+
+   {
+    "id": "23a1059f-d313-41a4-9988-518206d28988",
+    "image": "images/products/gajab-removebg-preview.png",
+    "name": "gajab ko piro chauchau - Noodles",
+    "rating": {
+      "stars": 4,
+      "count": 555
+    },
+    "priceCents": 2000,
+    "keywords": ["noodles", "chauchau", "hot Spicy noodles", "gajab"]
+  },
+  {
+    "id": "1808608d-7132-4148-9f33-69019d0860f7",
+    "image": "images/products/dairy_milk.png",
+    "name": "Cadbury Dairy Milk Chocolate - 20g",
+    "rating": {
+      "stars": 4.5,
+      "count": 785
+    },
+    "priceCents": 2000,
+    "keywords": ["chocolate", "sweets", "snacks", "candy"]
+  },
+  {
+    "id": "31804f56-655f-4d92-b43b-31d044342a77",
+    "image": "images/products/ingredient-bags-full-flour.jpg",
+    "name": "Whole Wheat Atta Flour - 1kg",
+    "rating": {
+      "stars": 5,
+      "count": 425
+    },
+    "priceCents": 14000,
+    "keywords": ["flour", "atta", "baking", "roti", "grocery"]
+  },
+  {
+    "id": "314f8286-8167-4221-a39c-512c1256372b",
+    "image": "images/products/rice_sella.jpg",
+    "name": "Jeera Masino Rice - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 615
+    },
+    "priceCents": 15000,
+    "keywords": ["rice", "grains", "dinner", "essentials"]
+  },
+  {
+    "id": "75389083-0599-4d83-9b48-423521d96b99",
+    "image": "images/products/tooth_brush.jpg",
+    "name": "tooth Brush",
+    "rating": {
+      "stars": 4.5,
+      "count": 295
+    },
+    "priceCents": 4000,
+    "keywords": ["manjan", "brush", "tooth", "colgate"]
+  },
+  {
+    "id": "c1f6b15e-a20c-45a7-96a5-717e436f564f",
+    "image": "images/products/dettol.png",
+    "name": "Dettol Anti-Bacterial Soap - 125g (Pack of 3)",
+    "rating": {
+      "stars": 5,
+      "count": 705
+    },
+    "priceCents": 5000,
+    "keywords": ["soap", "hygiene", "dettol", "bath"]
+  },
+  {
+    "id": "90e66e2c-358b-4b21-8255-b44c20791410",
+    "image": "images/products/Current_sticks.png",
+    "name": "Current hot and spicy sticks",
+    "rating": {
+      "stars": 4.5,
+      "count": 185
+    },
+    "priceCents": 5000,
+    "keywords": ["sticks", "current", "kurkura", "spicy", "current kurkura"]
+  },
+  {
+    "id": "c2494950-8b06-40e1-a6e5-21d784a96b42",
+    "image": "images/products/preeti_noodles-removebg-preview.png",
+    "name": "Preeti Chauchau - Noodels",
+    "rating": {
+      "stars": 5,
+      "count": 915
+    },
+    "priceCents": 1500,
+    "keywords": ["noodles", "food", "breakfast", "cooking","chauchau"]
+  },
+  {
+    "id": "31f4a9b3-463e-4b72-b70d-327c59505504",
+    "image": "images/products/arial_detergent.png",
+    "name": "Arial Detergent Powder - 4kg",
+    "rating": {
+      "stars": 4,
+      "count": 145
+    },
+    "priceCents": 230000,
+    "keywords": ["detergent", "arial powder", "washing", "cloth washing powder", "saraf"]
+  },
+  {
+    "id": "b3e04746-d58e-4a94-b789-70364d0473a2",
+    "image": "images/products/moong_dal.png",
+    "name": "Moong Dal (Split Yellow Lentil) - (15+-2)g",
+    "rating": {
+      "stars": 4.5,
+      "count": 120
+    },
+    "priceCents": 1000,
+    "keywords": ["dal", "pulses", "grains", "cooking"]
+  },
+  {
+    "id": "40203f16-7d17-4828-910a-4632a67e06a5",
+    "image": "images/products/softy_pads.png",
+    "name": "Softy sanitary napkins - XL",
+    "rating": {
+      "stars": 4.5,
+      "count": 355
+    },
+    "priceCents": 10000,
+    "keywords": ["pads", "pad", "sanitary pad", "women"]
+  },
+  {
+    "id": "673273e3-5147-4952-ac01-527e7f7b57b9",
+    "image": "images/products/tender_touch.png",
+    "name": "tender touch diaper - size S,M,L",
+    "rating": {
+      "stars": 4.5,
+      "count": 525
+    },
+    "priceCents": 10000,
+    "keywords": ["diapers", "diaper", "baby diper", "monopoko"]
+  },
+  {
+    "id": "6b9e289c-5e4a-4c22-995a-c5c6439e6c92",
+    "image": "images/products/clinic_Plus_Shampoo.png",
+    "name": "Clinic Plus Shampoo - x2",
+    "rating": {
+      "stars": 4,
+      "count": 225
+    },
+    "priceCents": 500,
+    "keywords": ["shampoo", "hair care", "hygiene"]
+  },
+  {
+    "id": "44246019-3fdd-41f2-8c10-53cc202868ff",
+    "image": "images/products/punjabi_tadka.png",
+    "name": "punjabi tadka snacks",
+    "rating": {
+      "stars": 4.5,
+      "count": 685
+    },
+    "priceCents": 1000,
+    "keywords": ["snacks", "bhujia", "panjabi tadka", "food"]
+  },
+  {
+    "id": "8c09a32c-f685-455a-9351-468f7637841c",
+    "image": "images/products/sprite.png",
+    "name": "Sprite Cola - 1.5 Liter",
+    "rating": {
+      "stars": 4.5,
+      "count": 455
+    },
+    "priceCents": 19000,
+    "keywords": ["drinks", "soda", "sprite", "party","cola", "coca cola"]
+  },
+  {
+    "id": "3127818a-f0f0-466d-8951-4e785501d51c",
+    "image": "images/products/nestcafe.png",
+    "name": "Nestcafe Coffee Powder ",
+    "rating": {
+      "stars": 4.5,
+      "count": 255
+    },
+    "priceCents": 2000,
+    "keywords": ["coffee", "beverage", "morning", "instant"]
+  },
+  {
+    "id": "84897f22-9830-4be6-836e-57b16527b1ee",
+    "image": "images/products/vim_dishwash_liquid.png",
+    "name": "Vim Dishwash Liquid - 250ml",
+    "rating": {
+      "stars": 5,
+      "count": 395
+    },
+    "priceCents": 8000,
+    "keywords": ["cleaning", "dishwash", "kitchen", "liquid"]
+  },
+  {
+    "id": "1802e1c3-c21e-450f-96a9-e8550a27e742",
+    "image": "images/products/Ponds_Moisturizing_Cold_Cream.png",
+    "name": "Ponds Moisturizing Cold Cream - 100ml",
+    "rating": {
+      "stars": 4.5,
+      "count": 315
+    },
+    "priceCents": 30000,
+    "keywords": ["cream", "beauty", "skin care", "winter"]
+  },
+  {
+    "id": "334f664a-251a-4660-8f9f-4318356942c7",
+    "image": "images/products/Harpic.png",
+    "name": "Harpic original Toilet Cleaner - 900ml",
+    "rating": {
+      "stars": 5,
+      "count": 555
+    },
+    "priceCents": 32000,
+    "keywords": ["cleaning", "bathroom", "toilet", "harpic"]
+  },
+  {
+    "id": "7611a3d9-a72a-426b-967b-232f0525381f",
+    "image": "images/products/lumbini_gas.png",
+    "name": "Lumbini Gas Cylinder (Refill)",
+    "rating": {
+      "stars": 4.5,
       "count": 125
     },
-    "priceCents": 5500,
-    "keywords": ["laundry", "cleaning", "blue", "washing"]
+    "priceCents": 200000,
+    "keywords": ["gas", "cooking", "kitchen", "fuel"]
   },
   {
-    "id": "314f1773-1004-45e0-9943-25805562d991",
-    "image": "images/products/mineral_water.png",
-    "name": "Aquafina Mineral Water - 1 Liter",
+    "id": "2781d451-b844-48ff-98a9-4d693f9c646b",
+    "image": "images/products/wai_wai_mini.png",
+    "name": "Wai Wai mini Noodles",
     "rating": {
-      "stars": 4.6,
-      "count": 655
+      "stars": 5,
+      "count": 855
+    },
+    "priceCents": 1000,
+    "keywords": ["noodles", "waiwai", "snacks", "instant","mini"]
+  },
+  {
+    "id": "c3053744-9380-410c-9777-66a9b5145719",
+    "image": "images/products/Rajma.jpg",
+    "name": "Rajma (Kidney Beans) - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 100
+    },
+    "priceCents": 30000,
+    "keywords": ["pulses", "rajma", "grains", "cooking"]
+  },
+  {
+    "id": "92186987-1903-4f10-b6f7-c59828e85c8e",
+    "image": "images/products/mosquito_sticks.jpg",
+    "name": "Mosquito Sticks(1 piece)",
+    "rating": {
+      "stars": 4.5,
+      "count": 165
+    },
+    "priceCents": 2000,
+    "keywords": ["mosquito","stacks", "coil", "insect", "home"]
+  },
+  {
+    "id": "d041c2c3-04e9-4e00-a928-11f87910cc9d",
+    "image": "images/products/eveready.jpg",
+    "name": "Eveready AA Battery - Pack of 2",
+    "rating": {
+      "stars": 4.5,
+      "count": 285
+    },
+    "priceCents": 3000,
+    "keywords": ["battery", "electronics", "household", "power"]
+  },
+ 
+  {
+    "id": "d991b166-7517-48f5-938b-d7373f2a1b1b",
+    "image": "images/products/papad.png",
+    "name": "Local Urad Dal Papad - 200g",
+    "rating": {
+      "stars": 4.5,
+      "count": 110
+    },
+    "priceCents": 11000,
+    "keywords": ["papad", "snacks", "side dish", "fry"]
+  },
+  
+  {
+    "id": "26a267a1-2d79-4592-881c-0c15112185c1",
+    "image": "images/products/marich.jpg",
+    "name": "Black Pepper Whole (Gol Marich)",
+    "rating": {
+      "stars": 4.5,
+      "count": 85
+    },
+    "priceCents": 1000,
+    "keywords": ["spices", "pepper", "cooking", "masala"]
+  },
+ 
+  {
+    "id": "314f1773-1004-45e0-9943-25805562d98d",
+    "image": "images/products/Tiger_Biscuits.png",
+    "name": "Tiger Biscuits - 1 piece",
+    "rating": {
+      "stars": 4,
+      "count": 145
     },
     "priceCents": 3500,
-    "keywords": ["water", "drinks", "mineral", "hydration"]
+    "keywords": ["biscuits", "snacks", "glucose", "tea time"]
+  },
+ 
+  {
+    "id": "060a4f5f-f018-45d6-b184-e9188e734c51",
+    "image": "images/products/safety-matches.webp",
+    "name": "Safety Matchbox - Pack of 10",
+    "rating": {
+      "stars": 4.5,
+      "count": 95
+    },
+    "priceCents": 2000,
+    "keywords": ["matchbox", "fire", "household", "essentials"]
   },
   {
-    "id": "be64e8e8-967b-402f-b413-568d4981e817",
-    "image": "images/products/soy_sauce.jpg",
-    "name": "Ching's Soy Sauce - 200ml",
+    "id": "42302396-980b-41f8-9a67-d748f6d6c38a",
+    "image": "images/products/safety.png",
+    "name": "Safety sanitary pads",
     "rating": {
-      "stars": 4.1,
+      "stars": 4.5,
+      "count": 225
+    },
+    "priceCents": 10000,
+    "keywords": ["sanitary pad", "safety", "pads", "pad"]
+  },
+
+  {
+    "id": "42302396-980b-41f8-9a67-d748f6d6c38b",
+    "image": "images/products/ghee.png",
+    "name": "Local Cow Ghee  - 500ml",
+    "rating": {
+      "stars": 5,
+      "count": 495
+    },
+    "priceCents": 55000,
+    "keywords": ["ghee", "butter", "dairy", "cooking"]
+  },
+  {
+    "id": "0137d6a5-7f91-4d1a-8219-c167814b74a4",
+    "image": "images/products/lux.png",
+    "name": "Lux Beauty Soap",
+    "rating": {
+      "stars": 4.5,
+      "count": 325
+    },
+    "priceCents": 6000,
+    "keywords": ["soap", "beauty", "bath", "hygiene"]
+  },
+  {
+    "id": "92186987-1903-4f10-b6f7-c59828e85c90",
+    "image": "images/products/Parachute_Coconut_Hair_oil-removebg-preview.png",
+    "name": "Parachute Coconut Hair Oil - 200ml",
+    "rating": {
+      "stars": 4.5,
+      "count": 605
+    },
+    "priceCents": 23000,
+    "keywords": ["hair oil", "coconut", "hair care", "beauty"]
+  },
+
+  {
+    "id": "92186987-1903-4f10-b6f7-c59828e85c91",
+    "image": "images/products/Baking_Soda.png",
+    "name": "Baking Soda (Mitho Soda) - 100g",
+    "rating": {
+      "stars": 4.5,
+      "count": 85
+    },
+    "priceCents": 2000,
+    "keywords": ["baking", "soda", "cooking", "ingredient"]
+  },
+  {
+    "id": "80629a98-6d55-442b-b892-23c328e469e6",
+    "image": "images/products/Toothpicks.jpg",
+    "name": "Toothpicks - 1- Pack",
+    "rating": {
+      "stars": 4.5,
+      "count": 95
+    },
+    "priceCents": 17000,
+    "keywords": ["toothpicks", "hygiene", "dental", "kitchen"]
+  },
+  {
+    "id": "314f1773-1004-45e0-9943-25805562d990",
+    "image": "images/products/jali.png",
+    "name": "Jali Stainless Steel Sponges",
+    "rating": {
+      "stars": 4.5,
       "count": 155
     },
-    "priceCents": 9500,
-    "keywords": ["sauce", "chinese", "condiment", "cooking"]
+    "priceCents": 4000,
+    "keywords": ["cleaning", "kitchen", "scrub", "dishwash"]
+  },
+
+  {
+    "id": "0137d6a5-7f91-4d1a-8219-c167814b74a6",
+    "image": "images/products/suji.png",
+    "name": "Suji (Semolina) - 500g",
+    "rating": {
+      "stars": 4,
+      "count": 105
+    },
+    "priceCents": 6500,
+    "keywords": ["suji", "semolina", "baking", "dessert"]
   },
   {
-    "id": "d049d568-d055-4148-9d58-7394628d0985",
-    "image": "images/products/all_purpose_cleaner.png",
-    "name": "Lizol All Purpose Cleaner - 500ml",
+    "id": "92186987-1903-4f10-b6f7-c59828e85c92",
+    "image": "images/products/hit.png",
+    "name": "Hit Mosquito Spray - 300ml",
+    "rating": {
+      "stars": 4.5,
+      "count": 275
+    },
+    "priceCents": 34000,
+    "keywords": ["mosquito", "spray", "insect", "home"]
+  },
+   {
+    "id": "0137d6a5-7f91-4d1a-8219-c167814b74b0",
+    "image": "images/products/container.png",
+    "name": "Plastic Food Storage Container Set - 5 Pcs",
+    "rating": {
+      "stars": 4,
+      "count": 135
+    },
+    "priceCents": 40000,
+    "keywords": ["kitchen", "storage", "container", "household"]
+  },
+  {
+    "id": "92186987-1903-4f10-b6f7-c59828e85c9b",
+    "image": "images/products/rock-salt.png",
+    "name": "Bire Nun (Rock Salt) - 1kg",
+    "rating": {
+      "stars": 4.5,
+      "count": 95
+    },
+    "priceCents": 30000,
+    "keywords": ["salt", "rock salt", "cooking", "healthy", "bire nun"]
+  },
+ 
+ 
+  {
+    "id": "be64e8e8-967b-402f-b413-568d4981e820",
+    "image": "images/products/candle.png",
+    "name": "White Wax Candles - Pack of 10",
+    "rating": {
+      "stars": 4,
+      "count": 65
+    },
+    "priceCents": 10000,
+    "keywords": ["candle", "light", "household", "emergency"]
+  },
+  {
+    "id": "d049d568-d055-4148-9d58-7394628d098e",
+    "image": "images/products/baby-oil.png",
+    "name": "Johnson's Baby Oil - 100ml",
+    "rating": {
+      "stars": 4.5,
+      "count": 305
+    },
+    "priceCents": 22000,
+    "keywords": ["baby", "oil", "care", "johnson's"]
+  },
+  
+  {
+    "id": "0137d6a5-7f91-4d1a-8219-c167814b74b1",
+    "image": "images/products/pasta.png",
+    "name": "Local Pasta- 500g",
+    "rating": {
+      "stars": 4.5,
+      "count": 185
+    },
+    "priceCents": 16000,
+    "keywords": ["pasta", "food", "nasta", "cooking"]
+  },
+  
+  {
+    "id": "80629a98-6d55-442b-b892-23c328e469f1",
+    "image": "images/products/garammasala.jpeg",
+    "name": "Garam Masala- 1-pack",
+    "rating": {
+      "stars": 4.5,
+      "count": 125
+    },
+    "priceCents": 2000,
+    "keywords": ["spices", "cinnamon", "baking", "cooking"]
+  },
+ 
+  {
+    "id": "be64e8e8-967b-402f-b413-568d4981e821",
+    "image": "images/products/xtreme.png",
+    "name": "Xtreme Energy Drink - 250ml",
+    "rating": {
+      "stars": 4,
+      "count": 85
+    },
+    "priceCents": 13000,
+    "keywords": ["drinks", "energy", "xtreme", "beverage"]
+  },
+  {
+    "id": "d049d568-d055-4148-9d58-7394628d098f",
+    "image": "images/products/redbull.png",
+    "name": "Red Bull Energy Drink - 250ml Can",
+    "rating": {
+      "stars": 4.5,
+      "count": 255
+    },
+    "priceCents": 23000,
+    "keywords": ["drinks", "energy", "red bull", "beverage"]
+  },
+ 
+  {
+    "id": "42302396-980b-41f8-9a67-d748f6d6c398",
+    "image": "images/products/almond.jpeg",
+    "name": "California Almonds - 100g",
+    "rating": {
+      "stars": 4.5,
+      "count": 385
+    },
+    "priceCents": 18500,
+    "keywords": ["nuts", "healthy", "almonds", "snacks"]
+  },
+  
+  {
+    "id": "92186987-1903-4f10-b6f7-c59828e85c9d",
+    "image": "images/products/brown_rice.webp",
+    "name": "Organic Brown Rice - 1kg",
+    "rating": {
+      "stars": 4,
+      "count": 105
+    },
+    "priceCents": 16000,
+    "keywords": ["rice", "organic", "healthy", "grains"]
+  },
+
+  {
+    "id": "314f1773-1004-45e0-9943-25805562d99c",
+    "image": "images/products/odomos.png",
+    "name": "Odomos Mosquito Repellent Cream - 100g",
+    "rating": {
+      "stars": 4.5,
+      "count": 285
+    },
+    "priceCents": 20000,
+    "keywords": ["mosquito", "repellent", "cream", "outdoors"]
+  },
+  {
+    "id": "be64e8e8-967b-402f-b413-568d4981e822",
+    "image": "images/products/honey.png",
+    "name": "Local Pure Honey - 1 Liter",
+    "rating": {
+      "stars": 4,
+      "count": 155
+    },
+    "priceCents": 70000,
+    "keywords": ["honey", "bee", "local"]
+  },
+  {
+    "id": "d049d568-d055-4148-9d58-7394628d0990",
+    "image": "images/products/soybean.png",
+    "name": "Natraj Soybean - 100g",
+    "rating": {
+      "stars": 4.5,
+      "count": 185
+    },
+    "priceCents": 4000,
+    "keywords": ["soybean", "vegetable", "beans", "natural"]
+  },
+  {
+    "id": "060a4f5f-f018-45d6-b184-e9188e734c66",
+    "image": "images/products/lollipop.png",
+    "name": "Sweet Lollipop x5",
     "rating": {
       "stars": 5.0,
       "count": 405
     },
+    "priceCents": 2500,
+    "keywords": ["lollipop ", "laundry", "snack", "mithai"]
+  },
+  {
+    "id": "42302396-980b-41f8-9a67-d748f6d6c399",
+    "image": "images/products/fanta.png",
+    "name": "Fanta cold drinks - 1.5L ",
+    "rating": {
+      "stars": 4.5,
+      "count": 305
+    },
+    "priceCents": 18500,
+    "keywords": ["drinks", "coco cola", "fanta", "dove"]
+  },
+  {
+    "id": "80629a98-6d55-442b-b892-23c328e469e7",
+    "image": "images/products/arna.png",
+    "name": "Arna beer - 250ml",
+    "rating": {
+      "stars": 5,
+      "count": 125
+    },
+    "priceCents": 18500,
+    "keywords": ["beverage", "liquid", "drink", "beer"]
+  },
+  {
+    "id": "314f1773-1004-45e0-9943-25805562d991",
+    "image": "images/products/aquawater.png",
+    "name": "Aquafina Mineral Water - 1 Liter",
+    "rating": {
+      "stars": 5,
+      "count": 655
+    },
+    "priceCents": 3000,
+    "keywords": ["water", "drinks", "mineral", "hydration"]
+  },
+  
+  {
+    "id": "d049d568-d055-4148-9d58-7394628d0985",
+    "image": "images/products/khukuri.png",
+    "name": "Khukhuri Cigarette - 20piece",
+    "rating": {
+      "stars": 5,
+      "count": 405
+    },
     "priceCents": 15500,
-    "keywords": ["cleaning", "floor", "disinfectant", "lizol"]
+    "keywords": ["smoking", "cigarette", "khukhuri", "smoke"]
   },
   {
     "id": "060a4f5f-f018-45d6-b184-e9188e734c55",
-    "image": "images/products/sunsilk_conditioner.png",
-    "name": "Sunsilk Conditioner - 80ml",
+    "image": "images/products/surya.png",
+    "name": "Surya cigaratte - 20piece",
     "rating": {
-      "stars": 4.6,
+      "stars": 4.5,
       "count": 205
     },
-    "priceCents": 7500,
-    "keywords": ["conditioner", "hair care", "beauty", "sunsilk"]
+    "priceCents": 27000,
+    "keywords": ["smoking", "cigarette", "surya", "sigar"]
   },
   {
     "id": "42302396-980b-41f8-9a67-d748f6d6c38e",
-    "image": "images/products/bleach.jpg",
-    "name": "Clorox Regular Bleach - 500ml",
+    "image": "images/products/chocofun.png",
+    "name": "Chocofun  - 1Piece",
     "rating": {
-      "stars": 4.1,
+      "stars": 4,
       "count": 105
     },
-    "priceCents": 11500,
-    "keywords": ["cleaning", "laundry", "bleach", "disinfectant"]
+    "priceCents": 500,
+    "keywords": ["chocolate", "chocofun", "mithai", "waffle"]
   },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74a7",
-    "image": "images/products/red_lentil_split.jpg",
-    "name": "Masoor Dal Split (Red Lentil) - 1kg",
-    "rating": {
-      "stars": 4.6,
-      "count": 165
-    },
-    "priceCents": 15500,
-    "keywords": ["dal", "pulses", "grains", "cooking"]
-  },
+  
   {
     "id": "92186987-1903-4f10-b6f7-c59828e85c93",
-    "image": "images/products/garam_masala.png",
+    "image": "images/products/garammasala.png",
     "name": "MDH Garam Masala Powder - 50g",
     "rating": {
       "stars": 5.0,
       "count": 215
     },
-    "priceCents": 8500,
+    "priceCents": 5000,
     "keywords": ["spices", "masala", "cooking", "mdh"]
   },
   {
@@ -92,7 +935,7 @@
     "image": "images/products/mouthwash.png",
     "name": "Listerine Mouthwash - 250ml",
     "rating": {
-      "stars": 4.6,
+      "stars": 4.5,
       "count": 195
     },
     "priceCents": 18500,
@@ -100,65 +943,54 @@
   },
   {
     "id": "314f1773-1004-45e0-9943-25805562d992",
-    "image": "images/products/green_peas.jpg",
+    "image": "images/products/greenpeas.png",
     "name": "Frozen Green Peas - 500g",
     "rating": {
-      "stars": 4.1,
+      "stars": 4,
       "count": 95
     },
-    "priceCents": 15500,
+    "priceCents": 23000,
     "keywords": ["frozen", "vegetable", "peas", "cooking"]
   },
   {
-    "id": "be64e8e8-967b-402f-b413-568d4981e818",
-    "image": "images/products/rice_flakes.jpg",
-    "name": "Health Foods Rice Flakes - 300g",
-    "rating": {
-      "stars": 4.1,
-      "count": 105
-    },
-    "priceCents": 10500,
-    "keywords": ["cereal", "breakfast", "flakes", "healthy"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d0986",
-    "image": "images/products/air_freshener.jpg",
-    "name": "Air Wick Room Air Freshener - Lavender",
-    "rating": {
-      "stars": 4.6,
-      "count": 255
-    },
-    "priceCents": 17500,
-    "keywords": ["fragrance", "home", "air freshener", "lavender"]
-  },
-  {
     "id": "060a4f5f-f018-45d6-b184-e9188e734c56",
-    "image": "images/products/tuna_can.jpg",
-    "name": "Canned Tuna in Oil - 185g",
+    "image": "images/products/prawn.jpg",
+    "name": "Prawn fish - 120gm",
     "rating": {
-      "stars": 4.1,
+      "stars": 4,
       "count": 85
     },
-    "priceCents": 25500,
-    "keywords": ["canned", "fish", "tuna", "protein"]
+    "priceCents": 4000,
+    "keywords": ["canned", "fish", "prawn", "protein"]
   },
   {
     "id": "42302396-980b-41f8-9a67-d748f6d6c38f",
-    "image": "images/products/cling_film.png",
-    "name": "Kitchen Cling Film Wrap - 100m",
+    "image": "images/products/tuborg.png",
+    "name": "Tuborg beer- 250ml",
     "rating": {
-      "stars": 4.6,
+      "stars": 4.5,
       "count": 135
     },
-    "priceCents": 12500,
-    "keywords": ["kitchen", "wrap", "storage", "cling film"]
+    "priceCents": 24000,
+    "keywords": ["beverage", "drink", "alchol", "ocasion"]
+  },
+  {
+    "id": "be64e8e8-967b-402f-b413-568d4981e819",
+    "image": "images/products/gorkha.png",
+    "name": "Gorkha beer- 250ml",
+    "rating": {
+      "stars": 5,
+      "count": 135
+    },
+    "priceCents": 20000,
+    "keywords": ["beverage", "drink", "alchol", "ocasion"]
   },
   {
     "id": "0137d6a5-7f91-4d1a-8219-c167814b74a8",
-    "image": "images/products/tea_biscuits.jpg",
+    "image": "images/products/crispybiscuit.png",
     "name": "Nepali Krispie Tea Biscuits - 100g",
     "rating": {
-      "stars": 4.1,
+      "stars": 4,
       "count": 175
     },
     "priceCents": 4500,
@@ -166,21 +998,21 @@
   },
   {
     "id": "92186987-1903-4f10-b6f7-c59828e85c94",
-    "image": "images/products/detergent_cake.jpg",
-    "name": "Wheel Detergent Soap Bar - 250g",
+    "image": "images/products/wheeldetergent.png",
+    "name": "Wheel Detergent - 250g",
     "rating": {
-      "stars": 4.1,
+      "stars": 4,
       "count": 155
     },
-    "priceCents": 3500,
-    "keywords": ["detergent", "laundry", "soap", "washing"]
+    "priceCents": 5000,
+    "keywords": ["detergent", "laundry", "wheel", "washing"]
   },
   {
     "id": "80629a98-6d55-442b-b892-23c328e469e9",
-    "image": "images/products/cooking_wine.jpg",
-    "name": "Red Wine Vinegar - 500ml",
+    "image": "images/products/vinegar.png",
+    "name": "Druk Vinegar - 700ml",
     "rating": {
-      "stars": 4.1,
+      "stars": 4,
       "count": 65
     },
     "priceCents": 20500,
@@ -188,849 +1020,25 @@
   },
   {
     "id": "314f1773-1004-45e0-9943-25805562d993",
-    "image": "images/products/face_mask_n95.jpg",
+    "image": "images/products/n95.png",
     "name": "N95 Protective Face Mask - Pack of 5",
     "rating": {
-      "stars": 4.6,
+      "stars": 4.5,
       "count": 115
     },
     "priceCents": 8500,
     "keywords": ["mask", "health", "safety", "n95"]
   },
   {
-    "id": "be64e8e8-967b-402f-b413-568d4981e819",
-    "image": "images/products/body_lotion.png",
+    "id": "d049d568-d055-4148-9d58-7394628d0987",
+    "image": "images/products/lotion.png",
     "name": "Nivea Body Lotion - 200ml",
     "rating": {
-      "stars": 4.6,
+      "stars": 4.5,
       "count": 355
     },
     "priceCents": 17500,
     "keywords": ["lotion", "beauty", "skin care", "nivea"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d0987",
-    "image": "images/products/aluminium_foil.png",
-    "name": "Aluminium Foil Roll - 9 Meter",
-    "rating": {
-      "stars": 4.1,
-      "count": 105
-    },
-    "priceCents": 15500,
-    "keywords": ["foil", "kitchen", "baking", "storage"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c57",
-    "image": "images/products/salt_iodized.png",
-    "name": "Tata Iodized Salt - 1kg",
-    "rating": {
-      "stars": 5.0,
-      "count": 605
-    },
-    "priceCents": 4000,
-    "keywords": ["salt", "iodized", "grocery", "essentials"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c390",
-    "image": "images/products/pickle_mango.jpg",
-    "name": "Priya Mango Pickle - 300g",
-    "rating": {
-      "stars": 4.6,
-      "count": 145
-    },
-    "priceCents": 18500,
-    "keywords": ["pickle", "mango", "achar", "spicy"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74a9",
-    "image": "images/products/milk_condensed.jpg",
-    "name": "Amul Mithai Mate Condensed Milk - 400g",
-    "rating": {
-      "stars": 4.6,
-      "count": 215
-    },
-    "priceCents": 14500,
-    "keywords": ["milk", "condensed", "dessert", "baking"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c95",
-    "image": "images/products/lighter_gas.jpg",
-    "name": "Gas Stove Lighter (Refillable)",
-    "rating": {
-      "stars": 4.1,
-      "count": 95
-    },
-    "priceCents": 15500,
-    "keywords": ["kitchen", "lighter", "gas", "cooking"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469ea",
-    "image": "images/products/baby_wipes.png",
-    "name": "Himalaya Baby Wipes - Pack of 72",
-    "rating": {
-      "stars": 4.6,
-      "count": 285
-    },
-    "priceCents": 16500,
-    "keywords": ["baby", "wipes", "care", "hygiene"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d994",
-    "image": "images/products/waiwai_sauce.png",
-    "name": "Wai Wai Hot & Sour Sauce - 100g",
-    "rating": {
-      "stars": 4.1,
-      "count": 135
-    },
-    "priceCents": 4500,
-    "keywords": ["sauce", "hot", "spicy", "noodles"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e81a",
-    "image": "images/products/sunflower_oil.png",
-    "name": "Fortune Sunflower Refined Oil - 1 Liter",
-    "rating": {
-      "stars": 4.6,
-      "count": 455
-    },
-    "priceCents": 26500,
-    "keywords": ["oil", "cooking", "sunflower", "fortune"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d0988",
-    "image": "images/products/rice_kalo_dal.jpg",
-    "name": "Black Gram Split (Kalo Dal) - 500g",
-    "rating": {
-      "stars": 4.1,
-      "count": 95
-    },
-    "priceCents": 10500,
-    "keywords": ["dal", "pulses", "grains", "cooking"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c58",
-    "image": "images/products/pickles_mula.jpg",
-    "name": "Mula ko Achar (Radish Pickle) - 250g",
-    "rating": {
-      "stars": 4.1,
-      "count": 115
-    },
-    "priceCents": 14500,
-    "keywords": ["pickle", "achar", "radish", "local"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c391",
-    "image": "images/products/baking_powder.png",
-    "name": "Baking Powder - 100g",
-    "rating": {
-      "stars": 4.6,
-      "count": 185
-    },
-    "priceCents": 7500,
-    "keywords": ["baking", "powder", "ingredient", "kitchen"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74aa",
-    "image": "images/products/tea_black_label.jpg",
-    "name": "Brooke Bond Red Label Tea - 250g",
-    "rating": {
-      "stars": 4.6,
-      "count": 405
-    },
-    "priceCents": 15500,
-    "keywords": ["tea", "beverage", "red label", "morning"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c96",
-    "image": "images/products/cumin_powder.png",
-    "name": "Jeera Powder (Cumin Powder) - 50g",
-    "rating": {
-      "stars": 4.6,
-      "count": 235
-    },
-    "priceCents": 5500,
-    "keywords": ["spices", "cumin", "jeera", "cooking"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469eb",
-    "image": "images/products/paneer_frozen.jpg",
-    "name": "Frozen Paneer (Cottage Cheese) - 200g",
-    "rating": {
-      "stars": 4.6,
-      "count": 125
-    },
-    "priceCents": 18500,
-    "keywords": ["dairy", "paneer", "frozen", "cheese"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d995",
-    "image": "images/products/soap_dove.png",
-    "name": "Dove Beauty Bar Soap - 100g",
-    "rating": {
-      "stars": 5.0,
-      "count": 555
-    },
-    "priceCents": 6500,
-    "keywords": ["soap", "beauty", "bath", "dove"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e81b",
-    "image": "images/products/laundry_basket.jpg",
-    "name": "Large Plastic Laundry Basket",
-    "rating": {
-      "stars": 4.1,
-      "count": 85
-    },
-    "priceCents": 30500,
-    "keywords": ["household", "laundry", "storage", "basket"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d0989",
-    "image": "images/products/dish_gloves.png",
-    "name": "Rubber Dish Washing Gloves (Medium)",
-    "rating": {
-      "stars": 4.6,
-      "count": 145
-    },
-    "priceCents": 8500,
-    "keywords": ["kitchen", "cleaning", "gloves", "safety"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c59",
-    "image": "images/products/rice_vermicelli.jpg",
-    "name": "Rice Vermicelli (Sevai) - 400g",
-    "rating": {
-      "stars": 4.1,
-      "count": 75
-    },
-    "priceCents": 7500,
-    "keywords": ["vermicelli", "noodles", "dessert", "sevai"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c392",
-    "image": "images/products/facewash_ponds.png",
-    "name": "Ponds Pure White Face Wash - 50g",
-    "rating": {
-      "stars": 4.6,
-      "count": 295
-    },
-    "priceCents": 10500,
-    "keywords": ["face wash", "beauty", "skin care", "ponds"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74ab",
-    "image": "images/products/chocolate_bar_kitkat.png",
-    "name": "Nestle KitKat Chocolate - 4 Finger",
-    "rating": {
-      "stars": 4.6,
-      "count": 455
-    },
-    "priceCents": 3500,
-    "keywords": ["chocolate", "snacks", "candy", "kitkat"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c97",
-    "image": "images/products/tomato_puree.jpg",
-    "name": "Knorr Tomato Puree - 200g",
-    "rating": {
-      "stars": 4.1,
-      "count": 105
-    },
-    "priceCents": 8500,
-    "keywords": ["puree", "tomato", "cooking", "sauce"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469ec",
-    "image": "images/products/baking_cups.jpg",
-    "name": "Silicone Baking Cupcake Molds - Pack of 6",
-    "rating": {
-      "stars": 4.6,
-      "count": 75
-    },
-    "priceCents": 15500,
-    "keywords": ["baking", "kitchen", "molds", "cupcake"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d996",
-    "image": "images/products/tea_masala.png",
-    "name": "Chai Masala Powder - 50g",
-    "rating": {
-      "stars": 4.6,
-      "count": 165
-    },
-    "priceCents": 6500,
-    "keywords": ["tea", "masala", "spices", "beverage"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e81c",
-    "image": "images/products/hand_sanitizer.jpg",
-    "name": "Dettol Hand Sanitizer - 100ml",
-    "rating": {
-      "stars": 5.0,
-      "count": 355
-    },
-    "priceCents": 12500,
-    "keywords": ["sanitizer", "hygiene", "dettol", "health"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d098a",
-    "image": "images/products/batteries_aaa.png",
-    "name": "Eveready AAA Battery - Pack of 4",
-    "rating": {
-      "stars": 4.1,
-      "count": 155
-    },
-    "priceCents": 10500,
-    "keywords": ["battery", "electronics", "household", "power"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c60",
-    "image": "images/products/black_beans.jpg",
-    "name": "Black Beans (Kalo Dal) - 500g",
-    "rating": {
-      "stars": 4.1,
-      "count": 65
-    },
-    "priceCents": 9500,
-    "keywords": ["pulses", "beans", "grains", "cooking"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c393",
-    "image": "images/products/gummies_candy.jpg",
-    "name": "Jelly Belly Fruit Gummies - 100g",
-    "rating": {
-      "stars": 4.6,
-      "count": 195
-    },
-    "priceCents": 7500,
-    "keywords": ["candy", "sweets", "gummies", "snacks"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74ac",
-    "image": "images/products/incense_sticks_long.jpg",
-    "name": "Aastha Premium Incense Sticks - 100 sticks",
-    "rating": {
-      "stars": 5.0,
-      "count": 285
-    },
-    "priceCents": 15500,
-    "keywords": ["pooja", "incense", "fragrance", "spiritual"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c98",
-    "image": "images/products/dry_fruits_mix.jpg",
-    "name": "Mixed Dry Fruits & Nuts - 250g",
-    "rating": {
-      "stars": 4.6,
-      "count": 315
-    },
-    "priceCents": 35500,
-    "keywords": ["dry fruits", "nuts", "healthy", "snacks"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469ed",
-    "image": "images/products/soda_lime.png",
-    "name": "7UP Soft Drink - 1.5 Liter",
-    "rating": {
-      "stars": 4.6,
-      "count": 405
-    },
-    "priceCents": 18500,
-    "keywords": ["drinks", "soda", "lime", "party"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d997",
-    "image": "images/products/noodles_chilli.png",
-    "name": "Current Spicy Chicken Noodles (Large)",
-    "rating": {
-      "stars": 4.6,
-      "count": 225
-    },
-    "priceCents": 5500,
-    "keywords": ["noodles", "spicy", "current", "snacks"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e81d",
-    "image": "images/products/toilet_brush.jpg",
-    "name": "Standard Toilet Cleaning Brush",
-    "rating": {
-      "stars": 4.1,
-      "count": 105
-    },
-    "priceCents": 12500,
-    "keywords": ["cleaning", "bathroom", "brush", "household"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d098b",
-    "image": "images/products/mosquito_net.jpg",
-    "name": "Single Bed Mosquito Net (Pop-up)",
-    "rating": {
-      "stars": 4.6,
-      "count": 155
-    },
-    "priceCents": 80500,
-    "keywords": ["mosquito", "net", "bedding", "home"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c61",
-    "image": "images/products/chocolate_biscuit.png",
-    "name": "Sunfeast Dark Fantasy Choco Fills - 75g",
-    "rating": {
-      "stars": 4.6,
-      "count": 305
-    },
-    "priceCents": 4500,
-    "keywords": ["biscuits", "chocolate", "snacks", "dessert"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c394",
-    "image": "images/products/rice_kheera.jpg",
-    "name": "Kheera (Local Cucumber) - 500g",
-    "rating": {
-      "stars": 4.1,
-      "count": 95
-    },
-    "priceCents": 5500,
-    "keywords": ["vegetable", "fresh", "cucumber", "salad"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74ad",
-    "image": "images/products/garbage_bags.png",
-    "name": "Large Garbage Bags (Disposable) - 30 Pcs",
-    "rating": {
-      "stars": 4.6,
-      "count": 215
-    },
-    "priceCents": 10500,
-    "keywords": ["cleaning", "garbage", "household", "bags"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c99",
-    "image": "images/products/hair_dye.jpg",
-    "name": "Garnier Color Naturals Hair Dye - Black",
-    "rating": {
-      "stars": 4.1,
-      "count": 155
-    },
-    "priceCents": 25500,
-    "keywords": ["hair care", "beauty", "dye", "garnier"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469ee",
-    "image": "images/products/dish_soap_bar.png",
-    "name": "Nirma Dishwash Bar - 150g",
-    "rating": {
-      "stars": 4.1,
-      "count": 185
-    },
-    "priceCents": 4500,
-    "keywords": ["dishwash", "cleaning", "kitchen", "soap"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d998",
-    "image": "images/products/tea_biscuits_marie.png",
-    "name": "Britannia Marie Gold Biscuits - 150g",
-    "rating": {
-      "stars": 4.6,
-      "count": 385
-    },
-    "priceCents": 5500,
-    "keywords": ["biscuits", "tea time", "snacks", "marie"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e81e",
-    "image": "images/products/tea_darjeeling.jpg",
-    "name": "Darjeeling Black Tea Leaves - 200g",
-    "rating": {
-      "stars": 4.6,
-      "count": 115
-    },
-    "priceCents": 25500,
-    "keywords": ["tea", "premium", "darjeeling", "beverage"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d098c",
-    "image": "images/products/sanitary_napkins_maxi.png",
-    "name": "Stayfree Maxi Pad (XL) - Pack of 7",
-    "rating": {
-      "stars": 4.6,
-      "count": 225
-    },
-    "priceCents": 12500,
-    "keywords": ["sanitary", "pads", "hygiene", "feminine care"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c62",
-    "image": "images/products/black_cardamom.png",
-    "name": "Badi Elaichi (Black Cardamom) - 50g",
-    "rating": {
-      "stars": 4.1,
-      "count": 85
-    },
-    "priceCents": 18500,
-    "keywords": ["spices", "cardamom", "masala", "cooking"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c395",
-    "image": "images/products/pasta_macaroni.jpg",
-    "name": "Italian Macaroni Pasta - 500g",
-    "rating": {
-      "stars": 4.1,
-      "count": 135
-    },
-    "priceCents": 15500,
-    "keywords": ["pasta", "italian", "macaroni", "cooking"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74ae",
-    "image": "images/products/dhoop_battis.jpg",
-    "name": "Rose Fragrance Dhoop Sticks - 100g",
-    "rating": {
-      "stars": 4.6,
-      "count": 195
-    },
-    "priceCents": 9500,
-    "keywords": ["pooja", "incense", "fragrance", "spiritual"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c9a",
-    "image": "images/products/canned_sardines.jpg",
-    "name": "Canned Sardines in Tomato Sauce - 125g",
-    "rating": {
-      "stars": 4.1,
-      "count": 55
-    },
-    "priceCents": 14500,
-    "keywords": ["canned", "fish", "sardines", "snacks"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469ef",
-    "image": "images/products/aluminum_pan.jpg",
-    "name": "Medium Aluminum Frying Pan (Non-Stick)",
-    "rating": {
-      "stars": 4.6,
-      "count": 185
-    },
-    "priceCents": 80500,
-    "keywords": ["kitchen", "cookware", "pan", "cooking"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d999",
-    "image": "images/products/salt_peanuts.png",
-    "name": "Salted Peanuts (Singdana) - 200g",
-    "rating": {
-      "stars": 4.6,
-      "count": 255
-    },
-    "priceCents": 6500,
-    "keywords": ["snacks", "peanuts", "nuts", "salty"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e81f",
-    "image": "images/products/detergent_liquid.png",
-    "name": "Tide Plus Liquid Detergent - 500ml",
-    "rating": {
-      "stars": 5.0,
-      "count": 325
-    },
-    "priceCents": 25500,
-    "keywords": ["detergent", "laundry", "liquid", "cleaning"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d098d",
-    "image": "images/products/apple_cider_vinegar.jpg",
-    "name": "Apple Cider Vinegar - 500ml",
-    "rating": {
-      "stars": 4.6,
-      "count": 105
-    },
-    "priceCents": 28500,
-    "keywords": ["vinegar", "healthy", "cooking", "apple cider"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c63",
-    "image": "images/products/surgical_gloves.jpg",
-    "name": "Disposable Surgical Gloves (Medium) - Box of 100",
-    "rating": {
-      "stars": 4.1,
-      "count": 75
-    },
-    "priceCents": 15500,
-    "keywords": ["health", "safety", "gloves", "disposable"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c396",
-    "image": "images/products/sunscreen_lotion.png",
-    "name": "Himalaya Sunscreen Lotion SPF 30 - 100ml",
-    "rating": {
-      "stars": 4.6,
-      "count": 205
-    },
-    "priceCents": 22500,
-    "keywords": ["lotion", "beauty", "skin care", "sunscreen"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74b0",
-    "image": "images/products/food_container_set.png",
-    "name": "Plastic Food Storage Container Set - 5 Pcs",
-    "rating": {
-      "stars": 4.1,
-      "count": 135
-    },
-    "priceCents": 40500,
-    "keywords": ["kitchen", "storage", "container", "household"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c9b",
-    "image": "images/products/rock_salt.jpg",
-    "name": "Sendha Namak (Rock Salt) - 500g",
-    "rating": {
-      "stars": 4.6,
-      "count": 95
-    },
-    "priceCents": 8500,
-    "keywords": ["salt", "rock salt", "cooking", "healthy"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469f0",
-    "image": "images/products/green_chutney.jpg",
-    "name": "Mint & Coriander Chutney - 200g",
-    "rating": {
-      "stars": 4.1,
-      "count": 115
-    },
-    "priceCents": 10500,
-    "keywords": ["chutney", "sauce", "indian", "condiment"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d99a",
-    "image": "images/products/milk_uht.png",
-    "name": "Tetra Pak UHT Milk (Full Cream) - 1 Liter",
-    "rating": {
-      "stars": 4.6,
-      "count": 355
-    },
-    "priceCents": 20500,
-    "keywords": ["milk", "dairy", "uht", "beverage"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e820",
-    "image": "images/products/candle_wax.jpg",
-    "name": "White Wax Candles - Pack of 10",
-    "rating": {
-      "stars": 4.1,
-      "count": 65
-    },
-    "priceCents": 5500,
-    "keywords": ["candle", "light", "household", "emergency"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d098e",
-    "image": "images/products/baby_oil.png",
-    "name": "Johnson's Baby Oil - 200ml",
-    "rating": {
-      "stars": 4.6,
-      "count": 305
-    },
-    "priceCents": 18500,
-    "keywords": ["baby", "oil", "care", "johnson's"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c64",
-    "image": "images/products/instant_soup_mix.jpg",
-    "name": "Knorr Instant Tomato Soup Mix - 4 Pouch",
-    "rating": {
-      "stars": 4.1,
-      "count": 105
-    },
-    "priceCents": 8500,
-    "keywords": ["soup", "instant", "snacks", "knorr"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c397",
-    "image": "images/products/dark_chocolate_bar.png",
-    "name": "Lindt Excellence 70% Dark Chocolate - 100g",
-    "rating": {
-      "stars": 5.0,
-      "count": 455
-    },
-    "priceCents": 35500,
-    "keywords": ["chocolate", "premium", "dark", "gourmet"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74b1",
-    "image": "images/products/pasta_sauce.jpg",
-    "name": "Ragu Old World Style Pasta Sauce - 450g",
-    "rating": {
-      "stars": 4.6,
-      "count": 185
-    },
-    "priceCents": 22500,
-    "keywords": ["pasta", "sauce", "italian", "cooking"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c9c",
-    "image": "images/products/green_olives.jpg",
-    "name": "Green Olives Pitted - 300g Jar",
-    "rating": {
-      "stars": 4.1,
-      "count": 75
-    },
-    "priceCents": 25500,
-    "keywords": ["olives", "canned", "gourmet", "snacks"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469f1",
-    "image": "images/products/cinnamon_sticks.png",
-    "name": "Cinnamon Sticks (Dalchini) - 50g",
-    "rating": {
-      "stars": 4.6,
-      "count": 125
-    },
-    "priceCents": 10500,
-    "keywords": ["spices", "cinnamon", "baking", "cooking"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d99b",
-    "image": "images/products/toothbrush_electric.jpg",
-    "name": "Oral-B Electric Toothbrush - Vitality Model",
-    "rating": {
-      "stars": 4.6,
-      "count": 305
-    },
-    "priceCents": 250500,
-    "keywords": ["toothbrush", "electric", "hygiene", "dental"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e821",
-    "image": "images/products/green_lentils.jpg",
-    "name": "Green Lentils (Hariyo Dal) - 500g",
-    "rating": {
-      "stars": 4.1,
-      "count": 85
-    },
-    "priceCents": 8500,
-    "keywords": ["pulses", "lentils", "grains", "cooking"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d098f",
-    "image": "images/products/energy_drink.jpg",
-    "name": "Red Bull Energy Drink - 250ml Can",
-    "rating": {
-      "stars": 4.6,
-      "count": 255
-    },
-    "priceCents": 15500,
-    "keywords": ["drinks", "energy", "red bull", "beverage"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c65",
-    "image": "images/products/pooja_diya.jpg",
-    "name": "Brass Pooja Diya (Oil Lamp) - Single",
-    "rating": {
-      "stars": 5.0,
-      "count": 155
-    },
-    "priceCents": 40500,
-    "keywords": ["pooja", "spiritual", "diya", "lamp"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c398",
-    "image": "images/products/almonds.jpg",
-    "name": "California Almonds - 250g",
-    "rating": {
-      "stars": 4.6,
-      "count": 385
-    },
-    "priceCents": 40500,
-    "keywords": ["nuts", "healthy", "almonds", "snacks"]
-  },
-  {
-    "id": "0137d6a5-7f91-4d1a-8219-c167814b74b2",
-    "image": "images/products/korean_ramen.jpg",
-    "name": "Samyang Hot Chicken Flavor Ramen - 140g",
-    "rating": {
-      "stars": 4.6,
-      "count": 195
-    },
-    "priceCents": 12500,
-    "keywords": ["noodles", "spicy", "korean", "ramen"]
-  },
-  {
-    "id": "92186987-1903-4f10-b6f7-c59828e85c9d",
-    "image": "images/products/rice_brown.jpg",
-    "name": "Organic Brown Rice - 1kg",
-    "rating": {
-      "stars": 4.1,
-      "count": 105
-    },
-    "priceCents": 18500,
-    "keywords": ["rice", "organic", "healthy", "grains"]
-  },
-  {
-    "id": "80629a98-6d55-442b-b892-23c328e469f2",
-    "image": "images/products/floor_mop.jpg",
-    "name": "Spin Mop with Bucket Set",
-    "rating": {
-      "stars": 4.6,
-      "count": 215
-    },
-    "priceCents": 150500,
-    "keywords": ["cleaning", "floor", "mop", "household"]
-  },
-  {
-    "id": "314f1773-1004-45e0-9943-25805562d99c",
-    "image": "images/products/mosquito_repellent.png",
-    "name": "Odomos Mosquito Repellent Cream - 50g",
-    "rating": {
-      "stars": 4.6,
-      "count": 285
-    },
-    "priceCents": 8500,
-    "keywords": ["mosquito", "repellent", "cream", "outdoors"]
-  },
-  {
-    "id": "be64e8e8-967b-402f-b413-568d4981e822",
-    "image": "images/products/ghee_vegetable.jpg",
-    "name": "Dalda Vegetable Ghee - 1 Liter Tin",
-    "rating": {
-      "stars": 4.1,
-      "count": 155
-    },
-    "priceCents": 25500,
-    "keywords": ["ghee", "vegetable", "cooking", "dalda"]
-  },
-  {
-    "id": "d049d568-d055-4148-9d58-7394628d0990",
-    "image": "images/products/honey_small_bottle.png",
-    "name": "Dabur Honey - 100g",
-    "rating": {
-      "stars": 4.6,
-      "count": 185
-    },
-    "priceCents": 7500,
-    "keywords": ["honey", "sweet", "dabur", "natural"]
-  },
-  {
-    "id": "060a4f5f-f018-45d6-b184-e9188e734c66",
-    "image": "images/products/detergent_surf.png",
-    "name": "Surf Excel Matic Front Load Detergent - 1kg",
-    "rating": {
-      "stars": 5.0,
-      "count": 405
-    },
-    "priceCents": 28500,
-    "keywords": ["detergent", "laundry", "matic", "cleaning"]
-  },
-  {
-    "id": "42302396-980b-41f8-9a67-d748f6d6c399",
-    "image": "images/products/body_wash_dove.png",
-    "name": "Dove Deeply Nourishing Body Wash - 200ml",
-    "rating": {
-      "stars": 4.6,
-      "count": 305
-    },
-    "priceCents": 18500,
-    "keywords": ["body wash", "beauty", "bath", "dove"]
   }
 ]
+ 
