@@ -23,8 +23,9 @@ bot.on('message', async (msg) => {
   // 2. Find the Order ID (Look for a long string, likely the UUID)
   const orderId = args.find(arg => arg.length > 20);
 
-  // 3. Check for keywords ("ship" or "shipped")
+  // 3. Check for keywords
   const isShipCommand = args.some(arg => arg.toLowerCase().includes('ship'));
+  const isCancelCommand = args.some(arg => arg.toLowerCase().includes('cancel')); // <--- ADDED THIS
 
   if (orderId) {
     try {
@@ -32,23 +33,27 @@ bot.on('message', async (msg) => {
 
       if (order) {
         // --- STATUS LOGIC ---
-        // If message contains "ship", set to 'shipped' (Progress Bar: 50%)
-        // If message is just the ID, set to 'received' (Progress Bar: 100% / Delivered)
         
-        let newStatus = 'received'; 
-        let statusMessage = "✅ Order Delivered (Received)";
-
-        if (isShipCommand) {
-            newStatus = 'shipped';
-            statusMessage = "🚚 Order Shipped";
+        // PRIORITY 1: Cancel Order
+        if (isCancelCommand) {
+            order.status = 'cancelled';
+            await order.save();
+            bot.sendMessage(chatId, `🚫 **Order Cancelled**\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
+        }
+        
+        // PRIORITY 2: Ship Order
+        else if (isShipCommand) {
+            order.status = 'shipped';
+            await order.save();
+            bot.sendMessage(chatId, `🚚 **Order Shipped**\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
         }
 
-        // Update Database
-        order.status = newStatus;
-        await order.save();
-
-        // Confirm to Admin
-        bot.sendMessage(chatId, `${statusMessage}!\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
+        // PRIORITY 3: Default (Mark as Received/Delivered if just ID is sent)
+        else {
+            order.status = 'received';
+            await order.save();
+            bot.sendMessage(chatId, `✅ **Order Delivered (Received)**\nID: \`${orderId}\``, { parse_mode: 'Markdown' });
+        }
       
       } else {
         bot.sendMessage(chatId, `❌ Order not found for ID: ${orderId}`);
