@@ -1,13 +1,11 @@
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import PriceCents from '../utils/priceCents'; 
+import PriceCents from '../utils/priceCents.js'; 
 import apiClient from '../api'; 
 import './Shared/General.css';
-import './Checkout-css/Checkout-header.css'
+import './Checkout-css/Checkout-header.css';
 import './Checkout-css/Checkout.css';
-// You might need to add some CSS for the form inputs
-import './Checkout-css/AddressForm.css'; // Create this file or add styles to Checkout.css
 
 //--- Helper Function ---//
 function formatDeliveryDate(deliveryDays) {
@@ -19,13 +17,16 @@ function formatDeliveryDate(deliveryDays) {
 
 export function Checkout() {
   const [checkoutItem, setCheckoutItem] = useState([]);
-  const [selectedOption, setSelectedOption] = useState({}); 
   const [paymentSummary, setPaymentSummary] = useState({});
   const [deliveryOptions, setDeliveryOptions] = useState([]); 
+  
+  // Single delivery option state for the whole order
+  const [selectedDeliveryId, setSelectedDeliveryId] = useState(null);
+
   const [editingProductId, setEditingProductId] = useState(null); 
   const [currentEditQuantity, setCurrentEditQuantity] = useState(1);
   
-  // --- NEW STATE FOR ADDRESS ---
+  // --- STATE FOR ADDRESS ---
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
     phone: '',
@@ -35,7 +36,6 @@ export function Checkout() {
     postalCode: '',
     country: ''
   });
-  // ---------------------------
 
   const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ export function Checkout() {
       const summaryResponse = await apiClient.get('/payment-summary');
       setPaymentSummary(summaryResponse.data);
 
-      // --- NEW: Fetch User Info to Prefill Address ---
+      // Fetch User Info to Prefill Address
       const userResponse = await apiClient.get('/auth/me');
       if (userResponse.data.user) {
         const u = userResponse.data.user;
@@ -64,17 +64,11 @@ export function Checkout() {
           country: u.country || ''
         });
       }
-      // -----------------------------------------------
 
+      // Initialize selected delivery option
       if (cartResponse.data.length > 0) {
-        const initialOptions = cartResponse.data.reduce((acc, item) => {
-          acc[item.productId] = item.deliveryOptionId;
-          return acc;
-        }, {});
-        setSelectedOption(initialOptions);
-      } else {
-        navigate('/');
-      }
+        setSelectedDeliveryId(cartResponse.data[0].deliveryOptionId);
+      } 
     } catch (error) {
       console.error("Failed to fetch checkout data:", error);
     }
@@ -84,15 +78,19 @@ export function Checkout() {
     fetchAllData();
   }, []);
 
-  const updateCartItemDeliveryOption = async (productId, newDeliveryOptionId) => {
-    setSelectedOption(prev => ({ ...prev, [productId]: newDeliveryOptionId }));
+  // --- UPDATE DELIVERY OPTION FOR ALL ITEMS ---
+  const handleGlobalDeliveryChange = async (newOptionId) => {
+    setSelectedDeliveryId(newOptionId); // Optimistic UI update
     try {
-      await apiClient.put(`/cart-items/${productId}`, {
-        deliveryOptionId: newDeliveryOptionId,
-      });
+      const updatePromises = checkoutItem.map(item => 
+        apiClient.put(`/cart-items/${item.productId}`, {
+          deliveryOptionId: newOptionId,
+        })
+      );
+      await Promise.all(updatePromises);
       fetchAllData();
     } catch (error) {
-      console.error('Failed to update delivery option:', error);
+      console.error('Failed to update global delivery option:', error);
     }
   };
 
@@ -130,7 +128,7 @@ export function Checkout() {
     }
   };
 
-  // --- NEW: Handle Form Input Changes ---
+  // --- Handle Address Input Changes ---
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setShippingInfo(prev => ({
@@ -139,21 +137,16 @@ export function Checkout() {
     }));
   };
 
-  // --- UPDATED: Create Order Logic ---
+  // --- Create Order Logic ---
   const createOrder = async () => {
-    // 1. Basic Validation
     if (!shippingInfo.addressLine1 || !shippingInfo.phone || !shippingInfo.city) {
       alert("Please fill in your shipping details (Address, Phone, City).");
       return;
     }
 
     try {
-      // 2. Save the address to the user profile FIRST
       await apiClient.put('/auth/profile', shippingInfo);
-
-      // 3. Create the order
       await apiClient.post('/orders');
-      
       navigate('/orders');
     } catch (error) {
       console.error('Failed to place order:', error);
@@ -167,8 +160,8 @@ export function Checkout() {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <a href="/">
-              <img className="logo " src="images/logo.png" alt="Durga Shop Logo" />
-               <img className="mobile-logo " src="images/mobile-logo.png" alt="Durga Shop Logo" />
+              <img className="logo" src="images/logo.png" alt="Durga Shop Logo" />
+               <img className="mobile-logo" src="images/mobile-logo.png" alt="Durga Shop Logo" />
             </a>
           </div>
           <div className="checkout-header-middle-section">
@@ -186,110 +179,139 @@ export function Checkout() {
         <div className="checkout-grid">
           <div className="order-summary">
 
-            {/* --- NEW: Shipping Address Form --- */}
-            <div className="shipping-section-container" style={{marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '4px', background: 'white'}}>
-              <h3 style={{marginBottom: '10px'}}>Shipping Address</h3>
-              <div className="address-form-grid" style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
+            {/* 1. Shipping Address Form */}
+            <div className="shipping-section-container">
+              <h3 className="delivery-title">Shipping Address</h3>
+              <div className="address-form-grid">
                 
                 <div style={{gridColumn: 'span 2'}}>
-                  <label>Full Name</label>
+                  <label className="input-label">Full Name</label>
                   <input 
                     className="address-input" 
                     type="text" 
                     name="name" 
                     value={shippingInfo.name} 
                     onChange={handleAddressChange} 
-                    style={{width: '100%', padding: '5px'}}
                   />
                 </div>
 
                 <div>
-                  <label>Phone Number</label>
+                  <label className="input-label">Phone Number</label>
                   <input 
                     className="address-input" 
                     type="text" 
                     name="phone" 
                     value={shippingInfo.phone} 
                     onChange={handleAddressChange} 
-                    style={{width: '95%', padding: '5px'}}
                   />
                 </div>
 
                 <div>
-                  <label>Country</label>
+                  <label className="input-label">Country</label>
                   <input 
                     className="address-input" 
                     type="text" 
                     name="country" 
                     value={shippingInfo.country} 
                     onChange={handleAddressChange} 
-                    style={{width: '100%', padding: '5px'}}
                   />
                 </div>
 
                 <div style={{gridColumn: 'span 2'}}>
-                  <label>Address Line 1</label>
+                  <label className="input-label">Address Line 1</label>
                   <input 
                     className="address-input" 
                     type="text" 
                     name="addressLine1" 
                     value={shippingInfo.addressLine1} 
                     onChange={handleAddressChange} 
-                    style={{width: '100%', padding: '5px'}}
                   />
                 </div>
 
                 <div>
-                  <label>City</label>
+                  <label className="input-label">City</label>
                   <input 
                     className="address-input" 
                     type="text" 
                     name="city" 
                     value={shippingInfo.city} 
                     onChange={handleAddressChange} 
-                    style={{width: '95%', padding: '5px'}}
                   />
                 </div>
 
                 <div>
-                  <label>State</label>
+                  <label className="input-label">State</label>
                   <input 
                     className="address-input" 
                     type="text" 
                     name="state" 
                     value={shippingInfo.state} 
                     onChange={handleAddressChange} 
-                    style={{width: '100%', padding: '5px'}}
                   />
                 </div>
 
                 <div>
-                  <label>Postal Code</label>
+                  <label className="input-label">Postal Code</label>
                   <input 
                     className="address-input" 
                     type="text" 
                     name="postalCode" 
                     value={shippingInfo.postalCode} 
                     onChange={handleAddressChange} 
-                    style={{width: '95%', padding: '5px'}}
                   />
                 </div>
               </div>
             </div>
-            {/* ---------------------------------- */}
 
+            {/* 2. Delivery Options Grid */}
+            <div className="delivery-options-container">
+               <div className="delivery-title">
+                  Choose your delivery speed
+               </div>
+               
+               <div className="delivery-grid">
+                 {deliveryOptions.map((option) => {
+                   const isSelected = option.id === selectedDeliveryId;
+                   
+                   return (
+                     <div 
+                       key={option.id} 
+                       className={`delivery-card ${isSelected ? 'selected' : ''}`}
+                       onClick={() => handleGlobalDeliveryChange(option.id)}
+                     >
+                       <input
+                         type="radio"
+                         name="global-delivery-option"
+                         className="hidden-radio"
+                         checked={isSelected}
+                         readOnly
+                       />
+
+                       <div className="custom-radio"></div>
+
+                       <div className="option-info">
+                         <span className="option-date">
+                            {formatDeliveryDate(option.deliveryDays)}
+                         </span>
+                         <span className="option-price">
+                           {option.priceCents === 0 
+                              ? <span className="free-shipping-text">FREE Shipping</span> 
+                              : `${PriceCents(option.priceCents)} - Standard`
+                           }
+                         </span>
+                       </div>
+                     </div>
+                   );
+                 })}
+               </div>
+            </div>
+
+            {/* 3. Cart Items List */}
             {checkoutItem.map((item) => {
               const product = item.product;
-              const currentDeliveryOption = deliveryOptions.find(
-                (option) => option.id === item.deliveryOptionId
-              );
 
               return (
                 <div key={item.productId} className="cart-item-container">
-                  <div className="delivery-date">
-                    Estimated delivery: {formatDeliveryDate(currentDeliveryOption?.deliveryDays)}
-                  </div>
-
                   <div className="cart-item-details-grid">
                     <img className="product-image" src={product?.image} alt={product?.name} />
 
@@ -320,30 +342,6 @@ export function Checkout() {
                         <span className="delete-quantity-link" onClick={() => removeItem(product.id)}>Delete</span>
                       </div>
                     </div>
-
-                    <div className="delivery-options">
-                      <div className="delivery-options-title">Choose a delivery option:</div>
-                      {deliveryOptions.map((option) => {
-                        const isChecked = option.id === item.deliveryOptionId;
-                        return (
-                          <div key={option.id} className="delivery-option">
-                            <input
-                              type="radio"
-                              checked={isChecked}
-                              name={`delivery-option-${product.id}`}
-                              className="delivery-option-input"
-                              onChange={() => updateCartItemDeliveryOption(product.id, option.id)}
-                            />
-                            <div>
-                              <div className="delivery-option-date">{formatDeliveryDate(option.deliveryDays)}</div>
-                              <div className="delivery-option-price">
-                                {option.priceCents === 0 ? 'FREE' : PriceCents(option.priceCents)} Shipping
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
                   </div>
                 </div>
               );
@@ -373,7 +371,6 @@ export function Checkout() {
               <div className="payment-summary-money">{PriceCents(paymentSummary.totalCostCents)}</div>
             </div>
 
-            {/* Call updated createOrder function */}
             <button className="place-order-button button-primary" onClick={createOrder}>
               Place your order
             </button>
