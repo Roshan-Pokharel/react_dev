@@ -169,6 +169,92 @@
   padding: 8px;
 }
 
+/* --- Cancel Order Modal Styles --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Dimmed background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* On top of everything */
+  backdrop-filter: blur(3px); /* Optional: Blur effect */
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease-out;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.modal-textarea {
+  width: 90%;
+  height: 100px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-family: inherit;
+  resize: none; /* Disable manual resizing */
+  font-size: 14px;
+}
+
+.modal-textarea:focus {
+  outline: none;
+  border-color: #e67e22; /* Match your brand orange */
+  box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.modal-btn.cancel-action {
+  background-color: #e74c3c; /* Red */
+  color: white;
+}
+
+.modal-btn.close-action {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.modal-btn:hover {
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 800px) {
   .orders-page .buy-again-button {
     margin-bottom: 10px;
