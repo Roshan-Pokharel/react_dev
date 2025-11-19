@@ -1,16 +1,13 @@
 import apiClient from '../../api';
 import React, { useState, useEffect, useRef } from 'react';
-import { useGoogleLogin, googleLogout } from '@react-oauth/google'; // Import googleLogout
-
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import './login.css';
-import './header.css';
 
-function GoogleLoginButton() {
-  // 1. Create state to hold the user info
+function GoogleLoginButton({ onAuthChange }) {
   const [user, setUser] = useState(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); 
   const isLoggingIn = useRef(false);
 
-  // 2. On Page Load: Check if user is already logged in
   useEffect(() => {
     const storedUser = localStorage.getItem('ecommerce_user');
     const storedToken = localStorage.getItem('ecommerce_token');
@@ -29,14 +26,10 @@ function GoogleLoginButton() {
       })
       .then(res => {
         const { token, user: userData } = res.data;
-
-        // 3. Save Token AND User Data to LocalStorage
         localStorage.setItem('ecommerce_token', token);
         localStorage.setItem('ecommerce_user', JSON.stringify(userData));
-
-        // 4. Update State (this changes the UI immediately)
         setUser(userData);
-        console.log('Login Success:', userData);
+        if (onAuthChange) onAuthChange(); 
       })
       .catch(err => {
         console.error('Google login failed:', err);
@@ -52,35 +45,55 @@ function GoogleLoginButton() {
     onError: (error) => console.log('Login Failed:', error),
   });
 
-  // 5. Handle Logout (Optional: Clicking the profile picture logs you out)
-  const handleLogout = () => {
+  // --- FIXED LOGOUT FUNCTION ---
+  const handleLogout = async () => {
+    try {
+      // 1. Wait for the backend to destroy the session
+      await apiClient.post('/auth/logout'); 
+    } catch (error) {
+      console.error("Logout error", error);
+    }
+
+    // 2. Clean up frontend state
     googleLogout();
     localStorage.removeItem('ecommerce_token');
     localStorage.removeItem('ecommerce_user');
-    setUser(null); // Switches back to the "Signin" button
+    
+    setUser(null);
+    setShowLogoutConfirm(false);
+
+    // 3. NOW notify the header to refresh (Cart will be 0)
+    if (onAuthChange) onAuthChange();
   };
 
-  // 6. Conditional Rendering
   if (user) {
-    // If logged in, show Profile Picture
     return (
       <div className="user-profile-container" title={user.name}>
         <img 
           src={user.picture} 
           alt="profile" 
           className="user-avatar" 
-          onClick={handleLogout} 
+          onClick={() => setShowLogoutConfirm(!showLogoutConfirm)} 
         />
+
+        {showLogoutConfirm && (
+          <div className="logout-confirm-modal">
+            <p className="logout-text">Do you want to logout?</p>
+            <div className="logout-actions">
+              <button className="logout-btn confirm" onClick={handleLogout}>Yes</button>
+              <button className="logout-btn cancel" onClick={() => setShowLogoutConfirm(false)}>No</button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
-  // If NOT logged in, show Signin Button
   return (
     <button 
       onClick={() => login()} 
       className="signin-button orders-link header-link"
-      style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+      style={{background: 'none', border: 'none', cursor: 'pointer'}}
     >
       Signin
     </button>

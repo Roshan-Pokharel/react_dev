@@ -1,10 +1,8 @@
 import apiClient from '../../api';
-import React from 'react'
-import { useEffect, useState } from 'react';
-import  GoogleLoginButton from './login';
+import React, { useEffect, useState } from 'react';
+import GoogleLoginButton from './login';
 import './Header.css';
 
-// Accept new props: suggestions and onSuggestionClick
 export function Header({
   loadCart,
   searchTerm,
@@ -13,30 +11,32 @@ export function Header({
   onSuggestionClick
 }) {
   const [paymentSummary, setPaymentSummary] = useState({});
-  
-  // New state to track if the search bar is focused
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [authUpdate, setAuthUpdate] = useState(0);
 
   useEffect(() => {
-    apiClient.get("/payment-summary").then((response) => {
-      setPaymentSummary(response.data);
-    });
-  }, [loadCart]);
+    apiClient.get("/payment-summary")
+      .then((response) => {
+        setPaymentSummary(response.data);
+      })
+      .catch((err) => {
+        // --- FIX: If fetching fails (e.g. 401 Unauthorized after logout), reset cart ---
+        console.log("Cart fetch failed (likely logged out):", err);
+        setPaymentSummary({ totalItems: 0, totalCostCents: 0 });
+      });
+  }, [loadCart, authUpdate]); // Re-run when authUpdate changes
 
-  // Determine if we should show suggestions
   const showSuggestions = isInputFocused && searchTerm && suggestions.length > 0;
 
   return (
     <div className="header">
       <div className="left-section">
         <a href="/" className="header-link">
-          <img className="logo" src="images/logo-white.png" />
-          <img className="mobile-logo" src="images/mobile-logo-white.png" />
+          <img className="logo" src="images/logo-white.png" alt="logo" />
+          <img className="mobile-logo" src="images/mobile-logo-white.png" alt="logo" />
         </a>
       </div>
 
-      {/* The middle-section now needs to be relative
-          for the absolute positioning of the suggestions */}
       <div className="middle-section">
         <input
           className="search-bar"
@@ -44,23 +44,19 @@ export function Header({
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          // Show suggestions when input is focused
           onFocus={() => setIsInputFocused(true)}
-          // Hide suggestions on blur (with a delay)
           onBlur={() => setTimeout(() => setIsInputFocused(false), 200)}
         />
 
         <button className="search-button">
-          <img className="search-icon" src="images/icons/search-icon.png" />
+          <img className="search-icon" src="images/icons/search-icon.png" alt="search" />
         </button>
 
-        {/* --- New Suggestions Dropdown --- */}
         {showSuggestions && (
           <ul className="search-suggestions">
             {suggestions.map((product) => (
               <li
                 key={product.id}
-                // Use onClick to set the search term
                 onClick={() => onSuggestionClick(product.name)}
               >
                 {product.name}
@@ -68,8 +64,6 @@ export function Header({
             ))}
           </ul>
         )}
-        {/* --- End of Suggestions Dropdown --- */}
-
       </div>
 
       <div className="right-section">
@@ -78,14 +72,17 @@ export function Header({
         </a>
 
         <a className="cart-link header-link" href="checkout">
-          <img className="cart-icon" src="images/icons/cart-icon.png" />
-          <div className="cart-quantity">{paymentSummary.totalItems}</div>
+          <img className="cart-icon" src="images/icons/cart-icon.png" alt="cart" />
+          {/* Fallback to 0 if totalItems is undefined */}
+          <div className="cart-quantity">{paymentSummary.totalItems || 0}</div>
           <div className="cart-text">Cart</div>
         </a>
         
-         <React.Fragment >
-          {<GoogleLoginButton />}
-          </React.Fragment>
+        <React.Fragment>
+          <GoogleLoginButton 
+            onAuthChange={() => setAuthUpdate(prev => prev + 1)} 
+          />
+        </React.Fragment>
        
       </div>
     </div>

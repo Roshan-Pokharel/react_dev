@@ -1,5 +1,5 @@
 export const defaultProducts = [
-  {
+   {
     "id": "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     "image": "images/products/waiwai.png",
     "name": "Wai Wai Instant Noodles (Brown) - Chicken Flavor",
@@ -495,6 +495,7 @@ export const defaultProducts = [
     "priceCents": 200000,
     "keywords": ["gas", "cooking", "kitchen", "fuel"]
   },
+
   {
     "id": "2781d451-b844-48ff-98a9-4d693f9c646b",
     "image": "images/products/wai_wai_mini.png",
