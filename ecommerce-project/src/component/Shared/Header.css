@@ -172,3 +172,68 @@
   background-color: #f0f0f0;
 }
 
+@media (max-width: 575px) {
+  /* ... (Keep Search Bar ordering styles) ... */
+  .header {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .header .middle-section {
+    order: 3; 
+    flex-basis: 100%;
+    width: 100%;
+    margin: 10px 0 0 0;
+    z-index: 999;
+  }
+
+  .header .left-section { order: 1; }
+
+  .header .right-section {
+    order: 2;
+    margin-left: auto;
+    gap: 15px; 
+  }
+
+  .header .orders-text {
+    display: block; 
+    font-size: 13px;
+  }
+
+  .header .cart-text {
+    display: none;
+  }
+
+  /* --- UPDATED CART FIX --- */
+  .header .cart-link {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Helps align items */
+  }
+  
+  .header .cart-icon {
+    width: 40px; /* Ensure icon is large enough */
+  }
+
+  .header .cart-quantity {
+    /* Centering Logic */
+    position: absolute;
+    left: 0;
+    right: 0;       /* Spans full width of the container */
+    top: 10px;      /* Push down to sit INSIDE the basket */
+    width: 100%;
+    text-align: center; /* Centers the text horizontally */
+    
+    font-size: 14px;
+    font-weight: 700;
+    
+    /* Change Color to Dark Green so it shows up on the White Icon */
+    color: rgb(8, 79, 45); 
+    text-shadow: none;
+  }
+
+  .header .search-bar {
+    width: 100%;
+  }
+}

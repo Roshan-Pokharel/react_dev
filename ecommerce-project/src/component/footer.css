@@ -5,6 +5,7 @@
     padding-top: 40px;
     font-family: Arial, sans-serif;
     border-top: 5px solid #ff9900; /* Orange accent line */
+    width: 100%;
 }
 
 /* --- MAIN CONTENT LAYOUT --- */
@@ -24,22 +25,26 @@
     font-weight: bold;
     color: #ff9900;
     margin-bottom: 10px;
+    margin-top: 0;
 }
 
 .company-tagline {
     font-size: 14px;
     color: #ccc;
     margin-bottom: 20px;
+    margin-top: 0;
 }
 
 .footer-heading {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 15px;
+    margin-top: 0;
     text-transform: uppercase;
     color: #fff;
     border-bottom: 2px solid #3d4f64; /* Subtle line under heading */
     padding-bottom: 5px;
+    display: inline-block; /* Keeps border width tight to text */
 }
 
 /* --- LINK COLUMNS --- */
@@ -50,6 +55,7 @@
 .footer-section ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .footer-section li {
@@ -80,15 +86,14 @@
     transition: color 0.2s, transform 0.2s;
     height: 24px;
     width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .social-icon:hover {
     color: #ff9900;
     transform: translateY(-2px);
-}
-
-.social-icon svg {
-    display: block; /* Fixes alignment issues */
 }
 
 /* --- COPYRIGHT BAR --- */
@@ -98,19 +103,52 @@
     text-align: center;
     font-size: 13px;
     color: #888;
-    margin-top: 20px;
+    border-top: 1px solid #3d4f64;
+}
+
+.footer-bottom p {
+    margin: 0;
 }
 
 /* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column; /* Stack columns vertically */
-        padding-left: 15px;
-        padding-right: 15px;
+        align-items: center;    /* Center content horizontally */
+        text-align: center;     /* Center text */
     }
 
     .footer-section {
-        flex: 1 1 100%; /* Take full width on mobile */
-        margin-bottom: 20px;
+        width: 100%;
+        margin-bottom: 30px;
+        /* Ensure flex children (like social icons) align center */
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    .footer-section ul {
+        width: 100%;
+    }
+
+    .footer-heading {
+        border-bottom: none; /* Optional: Remove border for cleaner mobile look */
+        text-decoration: underline; /* Replace border with underline or keep border */
+        text-decoration-color: #3d4f64;
+        margin-bottom: 15px;
+    }
+
+    /* Center social icons */
+    .social-links {
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Increase tap area for links */
+    .footer-link {
+        display: block;
+        padding: 8px 0;
+        font-size: 15px;
     }
 }

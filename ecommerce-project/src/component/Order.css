@@ -34,6 +34,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* NEW: Allows content to wrap if it gets too tight on edge cases */
+  flex-wrap: wrap; 
+  gap: 20px; /* Adds vertical space if items wrap */
 
   padding: 20px 25px;
   border-top-left-radius: 5px;
@@ -55,31 +58,30 @@
   margin-right: 45px;
 }
 
-/* --- Updated Right Section (ID & Buttons) --- */
+/* --- Right Section (ID & Buttons) --- */
 .orders-page .order-header-right-section {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Aligns text and buttons to the right */
-  gap: 5px; /* Space between Order ID and the Buttons */
+  align-items: flex-end;
+  gap: 5px;
   text-align: right;
 }
 
-/* Container for the buttons row */
 .orders-page .order-header-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px; /* Space between Track and Status/Cancel */
+  gap: 10px;
 }
 
-/* Updated Button Styling for consistency */
+/* Button Styling */
 .orders-page .track-package-button {
-  width: auto;
+  text-align: center;
   min-width: 120px;
   padding: 0 16px;
   font-size: 14px;
-  height: 36px; /* Fixed height */
+  height: 36px;
   white-space: nowrap;
   cursor: pointer;
   border-radius: 4px;
@@ -88,7 +90,6 @@
   justify-content: center;
 }
 
-/* Cancel Button Specifics */
 .orders-page .status-cancel-btn {
   background-color: #d9534f;
   color: white;
@@ -99,12 +100,11 @@
   background-color: #c9302c;
 }
 
-/* Status Labels (Received/Cancelled) */
 .orders-page .order-status-label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 36px; /* Matches button height */
+  height: 36px;
   padding: 0 12px;
   font-weight: bold;
   border-radius: 4px;
@@ -122,11 +122,12 @@
   border: 1px solid #2ecc71;
 }
 
-/* --- Mobile Responsiveness for Header --- */
-@media (max-width: 575px) {
+/* --- RESPONSIVENESS FIX --- */
+/* Changed from 575px to 950px to catch tablets and middle-sized screens */
+@media (max-width: 950px) {
   .orders-page .order-header {
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start; /* Aligns everything to the left */
     line-height: 23px;
     padding: 15px;
   }
@@ -134,6 +135,7 @@
   .orders-page .order-header-left-section {
     flex-direction: column;
     width: 100%;
+    margin-bottom: 15px; /* Separation between Date/Total and ID/Buttons */
   }
 
   .orders-page .order-header-label {
@@ -147,18 +149,17 @@
     margin-right: 0;
   }
 
-  /* Stack the right section vertically on mobile */
+  /* Stack the right section vertically */
   .orders-page .order-header-right-section {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align left */
-    margin-top: 15px;
+    align-items: flex-start; /* Align left to match the rest */
     gap: 10px;
     text-align: left;
   }
 
-  /* Allow buttons to wrap or stack on very small screens */
+  /* Allow buttons to wrap or stack on smaller screens */
   .orders-page .order-header-actions {
     width: 100%;
     justify-content: flex-start;
@@ -168,8 +169,10 @@
 
   .orders-page .track-package-button,
   .orders-page .order-status-label {
-    flex: 1; /* Make them full width/equal width */
+    flex: 1;
     text-align: center;
+    /* Ensure they don't get ridiculously wide on tablets */
+    max-width: 200px; 
   }
 }
 
