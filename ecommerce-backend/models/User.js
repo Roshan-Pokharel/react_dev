@@ -1,21 +1,16 @@
-// models/User.js
-
 import { DataTypes } from 'sequelize';
-import { sequelize } from './index.js'; // Assuming you export sequelize from models/index.js
+import { sequelize } from './index.js'; 
 
 export const User = sequelize.define('User', {
-  // Primary Key (Sequelize automatically adds `id` if not specified, 
-  // but it's good practice to be explicit).
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  // The unique identifier from Google
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true, // Crucial: Ensures only one account per email
+    unique: true,
   },
   name: {
     type: DataTypes.STRING,
@@ -25,34 +20,19 @@ export const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  // --- NEW FIELDS FOR SHIPPING ---
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: true
+  // --- BAN STATUS (ADD THIS) ---
+  isBanned: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false, // Everyone starts as NOT banned
+    allowNull: false
   },
-  addressLine1: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  city: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  state: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  postalCode: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  country: {
-    type: DataTypes.STRING,
-    allowNull: true
-  }
-  // -------------------------------
-  // We don't store passwords here since we use Google OAuth
+  // -----------------------------
+  phone: { type: DataTypes.STRING, allowNull: true },
+  addressLine1: { type: DataTypes.STRING, allowNull: true },
+  city: { type: DataTypes.STRING, allowNull: true },
+  state: { type: DataTypes.STRING, allowNull: true },
+  postalCode: { type: DataTypes.STRING, allowNull: true },
+  country: { type: DataTypes.STRING, allowNull: true }
 }, {
-  // Sequelize options
   tableName: 'Users',
 });

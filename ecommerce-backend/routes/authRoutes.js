@@ -73,6 +73,16 @@ router.post('/google', async (req, res, next) => {
     const payload = ticket.getPayload();
     const user = await findOrCreateUser(payload);
     
+    // --- BAN CHECK START ---
+    if (user.isBanned) {
+      console.log(`🚫 Banned user tried to login: ${user.email}`);
+      return res.status(403).json({ 
+        error: 'BANNED',
+        message: "Your account has been banned. You cannot login." 
+      });
+    }
+    // --- BAN CHECK END ---
+
     // --- SESSION LOGIC START ---
     // Store the database ID in the session
     req.session.userId = user.id;
