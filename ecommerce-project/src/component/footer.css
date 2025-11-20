@@ -1,3 +1,16 @@
+/* --- STICKY FOOTER FIX (Add this to the top of the file) --- */
+/* Ensure the root container fills the screen height */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 /* --- FOOTER CONTAINER --- */
 .footer-container {
     background-color: #232f3e; /* Dark Amazon-like blue */
@@ -6,7 +19,10 @@
     padding-top: 25px; 
     font-family: Arial, sans-serif;
     border-top: 5px solid #ff9900; /* Orange accent line */
-    width: 100%;
+    
+    /* FIX: Pushes the footer to the bottom if content is short */
+    margin-top: auto; 
+    width: 100%; /* Ensure it spans full width */
 }
 
 /* --- MAIN CONTENT LAYOUT (GRID) --- */
@@ -159,16 +175,4 @@
     .company-tagline {
         font-size: 11px;
     }
-
-    /* Make the "Company Info" section span across both columns 
-       if you want the logo to be bigger/centered on top. 
-       Uncomment below to make the Logo section full width: */
-    /* .footer-section:first-child {
-        grid-column: 1 / -1;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    } 
-    */
 }

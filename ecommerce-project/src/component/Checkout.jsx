@@ -179,12 +179,12 @@ export function Checkout() {
         <div className="checkout-grid">
           <div className="order-summary">
 
-            {/* 1. Shipping Address Form */}
             <div className="shipping-section-container">
               <h3 className="delivery-title">Shipping Address</h3>
               <div className="address-form-grid">
                 
-                <div style={{gridColumn: 'span 2'}}>
+                {/* FIXED: className="span-two" instead of style={} */}
+                <div className="span-two">
                   <label className="input-label">Full Name</label>
                   <input 
                     className="address-input" 
@@ -217,7 +217,8 @@ export function Checkout() {
                   />
                 </div>
 
-                <div style={{gridColumn: 'span 2'}}>
+                {/* FIXED: className="span-two" instead of style={} */}
+                <div className="span-two">
                   <label className="input-label">Address Line 1</label>
                   <input 
                     className="address-input" 
