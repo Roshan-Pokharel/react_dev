@@ -5,8 +5,8 @@ import './Header.css';
 
 export function Header({
   loadCart,
-  searchTerm,
-  setSearchTerm,
+  searchTerm,      // The search term from the Parent (slow)
+  setSearchTerm,   // The function to update the Parent
   suggestions,
   onSuggestionClick
 }) {
@@ -14,19 +14,56 @@ export function Header({
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [authUpdate, setAuthUpdate] = useState(0);
 
+  // 1. Create a LOCAL state for the input box (Instant updates)
+  const [inputValue, setInputValue] = useState(searchTerm);
+
+  // 2. Sync Local State with Parent State (Debouncing)
+  useEffect(() => {
+    // Set a timer to update the parent after 300ms
+    const delayDebounceFn = setTimeout(() => {
+      setSearchTerm(inputValue);
+    }, 300);
+
+    // Cleanup function: If user types again before 300ms, cancel the previous timer
+    return () => clearTimeout(delayDebounceFn);
+  }, [inputValue, setSearchTerm]);
+
+  // 3. Sync in reverse: If Parent clears search, update local input
+  useEffect(() => {
+    if (searchTerm !== inputValue) {
+        // Only sync if they are different to avoid loops (mostly for clearing search)
+        if (searchTerm === "") setInputValue(""); 
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
+
   useEffect(() => {
     apiClient.get("/payment-summary")
       .then((response) => {
         setPaymentSummary(response.data);
       })
       .catch((err) => {
-        // --- FIX: If fetching fails (e.g. 401 Unauthorized after logout), reset cart ---
-        console.log("Cart fetch failed (likely logged out):", err);
+        console.log("Cart fetch failed:", err);
         setPaymentSummary({ totalItems: 0, totalCostCents: 0 });
       });
-  }, [loadCart, authUpdate]); // Re-run when authUpdate changes
+  }, [loadCart, authUpdate]); 
 
   const showSuggestions = isInputFocused && searchTerm && suggestions.length > 0;
+
+  const handleSearch = () => {
+    // Use inputValue here so it sends exactly what is in the box currently
+    if (inputValue) {
+      onSuggestionClick(inputValue);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+      event.target.blur();
+      setIsInputFocused(false);
+    }
+  };
 
   return (
     <div className="header">
@@ -42,13 +79,17 @@ export function Header({
           className="search-bar"
           type="text"
           placeholder="Search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          
+          // 4. Bind input to LOCAL state (Fast) instead of Parent state (Slow)
+          value={inputValue} 
+          onChange={(e) => setInputValue(e.target.value)}
+          
           onFocus={() => setIsInputFocused(true)}
           onBlur={() => setTimeout(() => setIsInputFocused(false), 200)}
+          onKeyDown={handleKeyDown} 
         />
 
-        <button className="search-button">
+        <button className="search-button" onClick={handleSearch}>
           <img className="search-icon" src="images/icons/search-icon.png" alt="search" />
         </button>
 
@@ -57,7 +98,10 @@ export function Header({
             {suggestions.map((product) => (
               <li
                 key={product.id}
-                onClick={() => onSuggestionClick(product.name)}
+                onClick={() => {
+                    setInputValue(product.name); // Update local input immediately
+                    onSuggestionClick(product.name);
+                }}
               >
                 {product.name}
               </li>
@@ -73,7 +117,6 @@ export function Header({
 
         <a className="cart-link header-link" href="checkout">
           <img className="cart-icon" src="images/icons/cart-icon.png" alt="cart" />
-          {/* Fallback to 0 if totalItems is undefined */}
           <div className="cart-quantity">{paymentSummary.totalItems || 0}</div>
           <div className="cart-text">Cart</div>
         </a>

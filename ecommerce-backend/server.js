@@ -19,6 +19,7 @@ import { defaultProducts } from './defaultData/defaultProducts.js';
 import { defaultDeliveryOptions } from './defaultData/defaultDeliveryOptions.js';
 import { defaultCart } from './defaultData/defaultCart.js';
 import { defaultOrders } from './defaultData/defaultOrders.js';
+import adminRoutes from './routes/adminRoutes.js';
 import fs from 'fs';
 import authRoutes from './routes/authRoutes.js';
 import { User } from './models/User.js'; 
@@ -71,6 +72,7 @@ app.use('/api/reset', resetRoutes);
 app.use('/api/payment-summary', paymentSummaryRoutes);
 // FIX 1: Corrected authentication route path
 app.use('/api/auth', authRoutes); 
+app.use('/api/admin', adminRoutes);
 
 // Serve static files from the dist folder
 app.use(express.static(path.join(__dirname, 'dist')));

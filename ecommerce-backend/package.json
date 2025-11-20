@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",
     "node-telegram-bot-api": "^0.66.0",
+    "nodemailer": "^7.0.10",
     "patch-package": "8.0.0",
     "pg": "^8.16.0",
     "sequelize": "^6.6.5",

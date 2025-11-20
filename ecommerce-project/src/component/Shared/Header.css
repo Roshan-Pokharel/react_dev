@@ -106,18 +106,25 @@
   flex-shrink: 0;
 }
 
-/* HEADER LINKS */
+/* --- HEADER LINKS (FIXED SECTION) --- */
 .header .header-link {
   padding: 6px 9px;
   border-radius: 2px;
   cursor: pointer;
   text-decoration: none;
   color: white;
-  border: 1px solid transparent;
+  
+  /* FIX: Removes the border and the click outline */
+  border: none;
+  outline: none;
 }
 
 .header .header-link:hover {
-  border: 1px solid white;
+  /* FIX: Removed the white border on hover */
+  border: none;
+  
+  /* Optional: Slight opacity change to show it is clickable without a box */
+  opacity: 0.85; 
 }
 
 /* ORDERS */
