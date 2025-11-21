@@ -5,7 +5,11 @@ import './login.css';
 
 function GoogleLoginButton({ onAuthChange }) {
   const [user, setUser] = useState(null);
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); 
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  
+  // --- NEW: State for Error Popup ---
+  const [loginError, setLoginError] = useState(null);
+  
   const isLoggingIn = useRef(false);
 
   useEffect(() => {
@@ -14,12 +18,30 @@ function GoogleLoginButton({ onAuthChange }) {
     
     if (storedUser && storedToken) {
       setUser(JSON.parse(storedUser));
+
+      apiClient.get('/auth/me')
+        .then(res => {
+            if(res.data.user) {
+                setUser(res.data.user);
+                localStorage.setItem('ecommerce_user', JSON.stringify(res.data.user));
+            }
+        })
+        .catch(err => {
+            console.log("Session verification failed:", err);
+            localStorage.removeItem('ecommerce_token');
+            localStorage.removeItem('ecommerce_user');
+            setUser(null);
+            if (onAuthChange) onAuthChange();
+        });
     }
-  }, []);
+  }, [onAuthChange]);
 
   const sendCodeToBackend = (codeResponse) => {
     if (isLoggingIn.current) return;
     isLoggingIn.current = true;
+    
+    // Clear any previous errors when trying again
+    setLoginError(null); 
 
     apiClient.post('/auth/google', {
         code: codeResponse.code,
@@ -33,6 +55,23 @@ function GoogleLoginButton({ onAuthChange }) {
       })
       .catch(err => {
         console.error('Google login failed:', err);
+
+        // --- NEW: DYNAMIC ERROR HANDLING ---
+        if (err.response && err.response.status === 403) {
+             const msg = err.response.data.message || "Account Banned";
+             
+             // Set the error message to state
+             setLoginError(msg);
+
+             // Automatically hide the popup after 5 seconds
+             setTimeout(() => {
+                setLoginError(null);
+             }, 5000);
+        } else {
+            // Generic error
+            setLoginError("Login failed. Please try again.");
+            setTimeout(() => setLoginError(null), 3000);
+        }
       })
       .finally(() => {
         isLoggingIn.current = false;
@@ -45,24 +84,21 @@ function GoogleLoginButton({ onAuthChange }) {
     onError: (error) => console.log('Login Failed:', error),
   });
 
-  // --- FIXED LOGOUT FUNCTION ---
   const handleLogout = async () => {
     try {
-      // 1. Wait for the backend to destroy the session
       await apiClient.post('/auth/logout'); 
     } catch (error) {
       console.error("Logout error", error);
     }
 
-    // 2. Clean up frontend state
     googleLogout();
     localStorage.removeItem('ecommerce_token');
     localStorage.removeItem('ecommerce_user');
     
     setUser(null);
     setShowLogoutConfirm(false);
+    setLoginError(null); // Clear errors on logout
 
-    // 3. NOW notify the header to refresh (Cart will be 0)
     if (onAuthChange) onAuthChange();
   };
 
@@ -89,14 +125,30 @@ function GoogleLoginButton({ onAuthChange }) {
     );
   }
 
+  // --- UPDATED RETURN FOR SIGNIN BUTTON ---
   return (
-    <button 
-      onClick={() => login()} 
-      className="signin-button orders-link header-link"
-      style={{background: 'none', border: 'none', cursor: 'pointer'}}
-    >
-      Signin
-    </button>
+    <div className="login-container">
+        <button 
+          onClick={() => login()} 
+          className="signin-button orders-link header-link"
+          style={{background: 'none', border: 'none', cursor: 'pointer'}}
+        >
+          Signin
+        </button>
+
+        {/* Render the Error Popup if loginError exists */}
+        {loginError && (
+            <div className="login-error-popup">
+                <div className="error-title">
+                    <span className="error-icon">🚫</span> 
+                    Access Denied
+                </div>
+                <div className="error-message">
+                    {loginError}
+                </div>
+            </div>
+        )}
+    </div>
   );
 }
 

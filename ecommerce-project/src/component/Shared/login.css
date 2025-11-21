@@ -1,6 +1,6 @@
 /* --- USER PROFILE AVATAR --- */
 .user-profile-container {
-  position: relative; /* Needed for modal positioning */
+  position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -25,22 +25,84 @@
   color: white;
 }
 
+/* --- LOGIN CONTAINER --- */
+.login-container {
+  position: relative; 
+  display: flex;
+  align-items: center;
+}
+
+/* --- ERROR POPUP (Desktop Default) --- */
+.login-error-popup {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #d9534f; /* Red Border */
+  border-left: 4px solid #d9534f;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 12px 15px;
+  border-radius: 6px;
+  width: 260px; /* Standard width */
+  z-index: 3000; /* Very high to overlap header/products */
+  text-align: left;
+  animation: slideDownFade 0.3s ease-out;
+}
+
+/* Little arrow pointing up */
+.login-error-popup::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-left: 1px solid #d9534f;
+  border-top: 1px solid #d9534f;
+  transform: rotate(45deg);
+}
+
+.error-title {
+  display: flex;
+  align-items: center;
+  color: #d9534f;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.error-icon {
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+.error-message {
+  color: #555;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* --- LOGOUT CONFIRM MODAL --- */
 .logout-confirm-modal {
   position: absolute;
-  top: 50px; /* Just below avatar */
-  right: 0;  /* Align right edge */
+  top: 50px;
+  right: 0;
   background-color: white;
   border: 1px solid #ddd;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   padding: 15px;
   border-radius: 8px;
   width: 200px;
-  z-index: 2000; /* High Z-index to sit on top of everything */
+  z-index: 2000;
   text-align: center;
 }
 
-/* Little arrow pointing up */
 .logout-confirm-modal::before {
   content: "";
   position: absolute;
@@ -59,7 +121,6 @@
   margin: 0 0 15px 0;
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.4;
 }
 
 .logout-actions {
@@ -76,39 +137,56 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.logout-btn.confirm {
-  background-color: #d9534f; /* Red */
-  color: white;
-}
+.logout-btn.confirm { background-color: #d9534f; color: white; }
+.logout-btn.cancel { background-color: #f0f0f0; color: #333; }
 
-.logout-btn.confirm:hover {
-  background-color: #c9302c;
-}
-
-.logout-btn.cancel {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.logout-btn.cancel:hover {
-  background-color: #e0e0e0;
-}
-
-/* --- MOBILE RESPONSIVE TWEAKS --- */
+/* --- MOBILE RESPONSIVE (Max-Width: 575px) --- */
 @media (max-width: 575px) {
+  
+  /* 1. Avatar & Button Scaling */
   .user-avatar {
-    width: 30px; /* Smaller avatar on mobile */
+    width: 30px;
     height: 30px;
   }
+  
+  .signin-button {
+    font-size: 12px; /* Smaller text */
+  }
 
+  /* 2. Error Popup Adjustments */
+  .login-error-popup {
+    width:200px;      /* Narrower width to fit screen */
+    top: 35px;         /* Closer to the button */
+    right: -5px;       /* Shift slightly right to align with edge */
+    padding: 10px;     /* Less padding */
+    border-left-width: 3px;
+  }
+
+  .login-error-popup::before {
+    right: 10px;       /* Adjust arrow to point to button center */
+  }
+
+  .error-title {
+    font-size: 12px;   /* Smaller title */
+    margin-bottom: 2px;
+  }
+  
+  .error-icon {
+    font-size: 14px;
+  }
+
+  .error-message {
+    font-size: 11px;   /* Smaller message text */
+  }
+
+  /* 3. Logout Modal Adjustments */
   .logout-confirm-modal {
-    width: 160px; /* Narrower popup */
+    width: 160px;
     padding: 10px;
-    top: 45px; /* Pull closer to smaller avatar */
-    right: -5px; /* Shift slightly if near edge */
+    top: 45px;
+    right: -5px;
   }
 
   .logout-text {
@@ -117,12 +195,7 @@
   }
 
   .logout-btn {
-    font-size: 12px;
-    padding: 6px 0;
-  }
-  
-  /* Adjust arrow for mobile */
-  .logout-confirm-modal::before {
-    right: 10px; 
+    font-size: 11px;
+    padding: 5px 0;
   }
 }

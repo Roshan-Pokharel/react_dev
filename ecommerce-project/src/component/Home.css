@@ -252,6 +252,11 @@
   background-color: rgb(25, 135, 84); /* Success Green */
 }
 
+.toast-notification.error {
+  background-color: #d9534f; /* Red */
+}
+
+
 .toast-icon {
   font-size: 20px;
   font-weight: bold;
@@ -276,3 +281,7 @@
     font-size: 14px;
   }
 }
+
+
+
+

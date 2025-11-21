@@ -2,7 +2,6 @@ import apiClient from '../../api';
 import { useState } from 'react';
 import PriceCents from '../../utils/priceCents';
 
-// Receive showNotification prop
 export function Product({ product, loadCart, showNotification }) {
   const [quantity, setQuantity] = useState(1);
 
@@ -60,12 +59,37 @@ export function Product({ product, loadCart, showNotification }) {
             });
             await loadCart();
             
-            // Trigger the popup in the parent component
             if (showNotification) {
-                showNotification('Added to Cart');
+                showNotification('Added to Cart', 'success');
             }
           } catch (error) {
              console.error("Error adding to cart", error);
+
+             if (showNotification && error.response) {
+                // CASE 1: User is not logged in (401)
+                if (error.response.status === 401) {
+                    showNotification('Please Login to add items', 'error');
+                } 
+                // CASE 2: User is Banned (403)
+                else if (error.response.status === 403) {
+                    const msg = error.response.data.message || 'Your account is banned.';
+                    
+                    // 1. Show the Red Toast
+                    showNotification(`${msg}`, 'error');
+
+                    // 2. Wait 2 seconds, then RELOAD the page.
+                    // This forces the Header to switch back to "Sign In".
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } 
+                // CASE 3: Other errors
+                else {
+                    showNotification('Failed to add item.', 'error');
+                }
+             } else if (showNotification) {
+                showNotification('Network error.', 'error');
+             }
           }
         }}
       >

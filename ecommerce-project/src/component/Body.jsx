@@ -12,8 +12,9 @@ function Body() {
   const [loadCart, setLoadCart] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   
-  // --- NEW: Toast State ---
+  // --- UPDATED: State for Message AND Type ---
   const [toast, setToast] = useState(null);
+  const [toastType, setToastType] = useState('success'); // 'success' or 'error'
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,10 +36,11 @@ function Body() {
     setSearchTerm(productName);
   };
 
-  // --- NEW: Helper to show toast ---
-  const showNotification = (message) => {
+  // --- UPDATED: Helper now accepts a type (default is success) ---
+  const showNotification = (message, type = 'success') => {
     setToast(message);
-    // Auto hide after 3 seconds
+    setToastType(type); // Set the type (green or red)
+    
     setTimeout(() => {
       setToast(null);
     }, 3000);
@@ -62,7 +64,6 @@ function Body() {
                 key={product.id}
                 product={product}
                 loadCart={triggerCartReload}
-                // Pass the notification function down
                 showNotification={showNotification}
               />
             ))
@@ -72,10 +73,13 @@ function Body() {
         </div>
       </div>
 
-      {/* --- NEW: Render Toast --- */}
+      {/* --- UPDATED: Conditional Rendering for Icon and Color --- */}
       {toast && (
-        <div className="toast-notification success">
-            <span className="toast-icon">&#10003;</span>
+        <div className={`toast-notification ${toastType}`}>
+            {/* Show Tick if Success, Show X if Error */}
+            <span className="toast-icon">
+              {toastType === 'success' ? '\u2713' : '\u2715'} 
+            </span>
             {toast}
         </div>
       )}
