@@ -5,52 +5,43 @@ import Body from './component/Body.jsx';
 import { OrdersList } from './component/OrdersList.jsx';
 import { Checkout } from './component/Checkout.jsx';
 import Tracking from './component/Tracking.jsx';
+import Footer from './component/footer'; // Imported Footer here
 import './App.css';
 
-// NEW: Import apiClient for the auth check
 import apiClient from './api';
 
 export function App() {
   const [products, setProducts] = useState([]);
-  // NEW STATE: User authentication status
   const [user, setUser] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
-  const [cartTrigger, setCartTrigger] = useState(0); // Used to force data reloads
+  const [cartTrigger, setCartTrigger] = useState(0); 
 
-  // Function to reload products (as it was in original App.jsx)
   const loadProducts = async () => {
     const response = await axios.get("/api/products");
     setProducts(response.data);
   };
   
-  // Function to trigger cart reload (passed to all components that add to cart)
   const triggerCartReload = () => {
-      // Increment the trigger to force App.jsx to re-run the useEffect
       setCartTrigger(prev => prev + 1);
   };
 
-  // THE MAIN EFFECT: Runs once on mount, and again whenever cartTrigger changes
   useEffect(() => {
-    loadProducts(); // Initial product load
+    loadProducts(); 
     
-    // Auth Check function
     const checkAuth = async () => {
       try {
-        // Check if the user is currently authenticated
         const response = await apiClient.get('/auth/me');
-        setUser(response.data); // Set user data if logged in
+        setUser(response.data); 
       } catch (error) {
         setUser(null);
       }
       setAuthChecked(true);
     };
     checkAuth();
-  }, [cartTrigger]); // Re-run auth check whenever the trigger changes (e.g., after login)
+  }, [cartTrigger]);
 
-  // Calculate login status once
   const isLoggedIn = !!user;
 
-  // Render a loading state while auth is being checked
   if (!authChecked) {
       return <div>Loading application...</div>;
   }
@@ -59,14 +50,13 @@ export function App() {
     <>
       <Router>
         <Routes>
-          {/* PASS NEW PROPS: isLoggedIn and the cart trigger function */}
           <Route 
             path="/" 
             element={
               <Body 
                 products={products} 
                 loadCart={triggerCartReload} 
-                isLoggedIn={isLoggedIn} // <-- New Prop
+                isLoggedIn={isLoggedIn} 
               />
             } 
           />
@@ -74,6 +64,9 @@ export function App() {
           <Route path="checkout" element={<Checkout products={products} />} />
           <Route path="tracking" element={<Tracking />} />
         </Routes>
+        
+        {/* Footer moved here so it is inside the Router context */}
+        <Footer />
       </Router>
     </>
   );

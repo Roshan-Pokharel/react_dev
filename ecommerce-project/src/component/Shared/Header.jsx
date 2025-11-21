@@ -1,40 +1,32 @@
 import apiClient from '../../api';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Imported Link
 import GoogleLoginButton from './login';
 import './Header.css';
 
 export function Header({
   loadCart,
-  searchTerm,      // The search term from the Parent (slow)
-  setSearchTerm,   // The function to update the Parent
+  searchTerm,
+  setSearchTerm,
   suggestions,
   onSuggestionClick
 }) {
   const [paymentSummary, setPaymentSummary] = useState({});
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [authUpdate, setAuthUpdate] = useState(0);
-
-  // 1. Create a LOCAL state for the input box (Instant updates)
   const [inputValue, setInputValue] = useState(searchTerm);
 
-  // 2. Sync Local State with Parent State (Debouncing)
   useEffect(() => {
-    // Set a timer to update the parent after 300ms
     const delayDebounceFn = setTimeout(() => {
       setSearchTerm(inputValue);
     }, 300);
-
-    // Cleanup function: If user types again before 300ms, cancel the previous timer
     return () => clearTimeout(delayDebounceFn);
   }, [inputValue, setSearchTerm]);
 
-  // 3. Sync in reverse: If Parent clears search, update local input
   useEffect(() => {
     if (searchTerm !== inputValue) {
-        // Only sync if they are different to avoid loops (mostly for clearing search)
         if (searchTerm === "") setInputValue(""); 
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
   useEffect(() => {
@@ -51,7 +43,6 @@ export function Header({
   const showSuggestions = isInputFocused && searchTerm && suggestions.length > 0;
 
   const handleSearch = () => {
-    // Use inputValue here so it sends exactly what is in the box currently
     if (inputValue) {
       onSuggestionClick(inputValue);
     }
@@ -68,10 +59,11 @@ export function Header({
   return (
     <div className="header">
       <div className="left-section">
-        <a href="/" className="header-link">
+        {/* Changed a href to Link to */}
+        <Link to="/" className="header-link">
           <img className="logo" src="images/logo-white.png" alt="logo" />
           <img className="mobile-logo" src="images/mobile-logo-white.png" alt="logo" />
-        </a>
+        </Link>
       </div>
 
       <div className="middle-section">
@@ -79,11 +71,8 @@ export function Header({
           className="search-bar"
           type="text"
           placeholder="Search"
-          
-          // 4. Bind input to LOCAL state (Fast) instead of Parent state (Slow)
           value={inputValue} 
           onChange={(e) => setInputValue(e.target.value)}
-          
           onFocus={() => setIsInputFocused(true)}
           onBlur={() => setTimeout(() => setIsInputFocused(false), 200)}
           onKeyDown={handleKeyDown} 
@@ -99,7 +88,7 @@ export function Header({
               <li
                 key={product.id}
                 onClick={() => {
-                    setInputValue(product.name); // Update local input immediately
+                    setInputValue(product.name); 
                     onSuggestionClick(product.name);
                 }}
               >
@@ -111,15 +100,17 @@ export function Header({
       </div>
 
       <div className="right-section">
-        <a className="orders-link header-link" href="orders">
+        {/* Changed a href to Link to */}
+        <Link className="orders-link header-link" to="/orders">
           <span className="orders-text">Orders</span>
-        </a>
+        </Link>
 
-        <a className="cart-link header-link" href="checkout">
+        {/* Changed a href to Link to */}
+        <Link className="cart-link header-link" to="/checkout">
           <img className="cart-icon" src="images/icons/cart-icon.png" alt="cart" />
           <div className="cart-quantity">{paymentSummary.totalItems || 0}</div>
           <div className="cart-text">Cart</div>
-        </a>
+        </Link>
         
         <React.Fragment>
           <GoogleLoginButton 

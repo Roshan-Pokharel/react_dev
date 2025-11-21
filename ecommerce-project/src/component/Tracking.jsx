@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom'; // Imported Link
 import dayjs from 'dayjs';
 import apiClient from '../api';
 import { Header } from '../component/Shared/Header.jsx';
@@ -43,12 +43,12 @@ export function Tracking({ loadCart }) {
       <Header loadCart={loadCart} />
       <div className="tracking-page">
         <div>Order not found.</div>
-        <a className="back-to-orders-link link-primary" href="/orders">Back to Orders</a>
+        {/* Changed a href to Link to */}
+        <Link className="back-to-orders-link link-primary" to="/orders">Back to Orders</Link>
       </div>
     </>
   );
 
-  // --- STATUS LOGIC ---
   const firstProduct = order.products[0] || {};
   const arrivalDate = firstProduct.estimatedDeliveryTimeMs 
     ? dayjs(firstProduct.estimatedDeliveryTimeMs).format('dddd, MMMM D') 
@@ -56,7 +56,7 @@ export function Tracking({ loadCart }) {
 
   const isCanceled = order.status === 'cancelled';
   let progressPercent = 0;
-  let progressBarColor = 'rgb(25, 135, 84)'; // Default green
+  let progressBarColor = 'rgb(25, 135, 84)'; 
 
   if (isCanceled) {
     progressPercent = 100;
@@ -66,7 +66,7 @@ export function Tracking({ loadCart }) {
   } else if (order.status === 'shipped') {
     progressPercent = 50;
   } else {
-    progressPercent = 15; // Preparing
+    progressPercent = 15; 
   }
 
   return (
@@ -75,9 +75,10 @@ export function Tracking({ loadCart }) {
 
       <div className="tracking-page">
         <div className="order-tracking">
-          <a className="back-to-orders-link link-primary" href="/orders">
+          {/* Changed a href to Link to */}
+          <Link className="back-to-orders-link link-primary" to="/orders">
             &larr; View all orders
-          </a>
+          </Link>
 
           <div className="delivery-date">
             {isCanceled 
@@ -93,7 +94,6 @@ export function Tracking({ loadCart }) {
                </div>
             ) : (
                <>
-                {/* Added textAlign center to JSX inline to ensure alignment on flex */}
                 <div className={`progress-label ${progressPercent < 50 ? 'current-status' : ''}`} style={{textAlign: 'left'}}>Preparing</div>
                 <div className={`progress-label ${progressPercent >= 50 && progressPercent < 100 ? 'current-status' : ''}`} style={{textAlign: 'center'}}>Shipped</div>
                 <div className={`progress-label ${progressPercent === 100 ? 'current-status' : ''}`} style={{textAlign: 'right'}}>Delivered</div>

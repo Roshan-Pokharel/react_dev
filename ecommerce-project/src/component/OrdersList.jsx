@@ -1,4 +1,5 @@
 import { useEffect, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom'; // Imported Link
 import { Header } from '../component/Shared/Header.jsx';
 import dayjs from 'dayjs';
 import PriceCents from '../utils/priceCents.js';
@@ -12,9 +13,7 @@ export function OrdersList({ loadCart }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [cancelReason, setCancelReason] = useState('');
-
-    // New State for Toast Notification
-    const [toast, setToast] = useState(null); // null = hidden, string = message
+    const [toast, setToast] = useState(null);
 
     const fetchOrders = async () => {
         try {
@@ -27,10 +26,8 @@ export function OrdersList({ loadCart }) {
 
     useEffect(() => { fetchOrders(); }, []);
 
-    // --- HELPER: SHOW TOAST ---
     const showNotification = (message) => {
         setToast(message);
-        // Auto-hide after 3 seconds
         setTimeout(() => {
             setToast(null);
         }, 3000);
@@ -40,12 +37,9 @@ export function OrdersList({ loadCart }) {
         try {
             await apiClient.post('/cart-items', { productId: productId, quantity: 1 });
             loadCart();
-            // REPLACED alert() WITH showNotification()
             showNotification('Item added to your cart!'); 
         } catch (error) {
             console.error('Failed', error);
-            // Optional: Show error toast
-            // showNotification('Failed to add item.');
         }
     };
 
@@ -99,11 +93,12 @@ export function OrdersList({ loadCart }) {
                         <div className="order-header-label">Order ID: {order?.id}</div>
                         
                         <div className="order-header-actions">
-                            <a href={`/tracking?orderId=${order.id}`}>
+                            {/* Changed a href to Link to */}
+                            <Link to={`/tracking?orderId=${order.id}`}>
                                  <button className="track-package-button button-secondary">
                                     Track Order
                                  </button>
-                            </a>
+                            </Link>
 
                             {order.status === 'cancelled' && (
                                 <span className="order-status-label status-cancelled">CANCELLED</span>
@@ -152,15 +147,13 @@ export function OrdersList({ loadCart }) {
       )}
       </div>
       
-      {/* --- TOAST NOTIFICATION RENDER --- */}
       {toast && (
         <div className="toast-notification success">
-            <span className="toast-icon">&#10003;</span> {/* Checkmark Symbol */}
+            <span className="toast-icon">&#10003;</span>
             {toast}
         </div>
       )}
 
-      {/* Modal Logic */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">

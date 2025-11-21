@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Imported Link
 import dayjs from 'dayjs';
 import PriceCents from '../utils/priceCents.js'; 
 import apiClient from '../api'; 
@@ -7,7 +7,6 @@ import './Shared/General.css';
 import './Checkout-css/Checkout-header.css';
 import './Checkout-css/Checkout.css';
 
-//--- Helper Function ---//
 function formatDeliveryDate(deliveryDays) {
   if (deliveryDays === undefined) {
     return 'Select an option';
@@ -19,14 +18,10 @@ export function Checkout() {
   const [checkoutItem, setCheckoutItem] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState({});
   const [deliveryOptions, setDeliveryOptions] = useState([]); 
-  
-  // Single delivery option state for the whole order
   const [selectedDeliveryId, setSelectedDeliveryId] = useState(null);
-
   const [editingProductId, setEditingProductId] = useState(null); 
   const [currentEditQuantity, setCurrentEditQuantity] = useState(1);
   
-  // --- STATE FOR ADDRESS ---
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
     phone: '',
@@ -50,7 +45,6 @@ export function Checkout() {
       const summaryResponse = await apiClient.get('/payment-summary');
       setPaymentSummary(summaryResponse.data);
 
-      // Fetch User Info to Prefill Address
       const userResponse = await apiClient.get('/auth/me');
       if (userResponse.data.user) {
         const u = userResponse.data.user;
@@ -65,7 +59,6 @@ export function Checkout() {
         });
       }
 
-      // Initialize selected delivery option
       if (cartResponse.data.length > 0) {
         setSelectedDeliveryId(cartResponse.data[0].deliveryOptionId);
       } 
@@ -78,9 +71,8 @@ export function Checkout() {
     fetchAllData();
   }, []);
 
-  // --- UPDATE DELIVERY OPTION FOR ALL ITEMS ---
   const handleGlobalDeliveryChange = async (newOptionId) => {
-    setSelectedDeliveryId(newOptionId); // Optimistic UI update
+    setSelectedDeliveryId(newOptionId); 
     try {
       const updatePromises = checkoutItem.map(item => 
         apiClient.put(`/cart-items/${item.productId}`, {
@@ -128,7 +120,6 @@ export function Checkout() {
     }
   };
 
-  // --- Handle Address Input Changes ---
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setShippingInfo(prev => ({
@@ -137,7 +128,6 @@ export function Checkout() {
     }));
   };
 
-  // --- Create Order Logic ---
   const createOrder = async () => {
     if (!shippingInfo.addressLine1 || !shippingInfo.phone || !shippingInfo.city) {
       alert("Please fill in your shipping details (Address, Phone, City).");
@@ -159,10 +149,11 @@ export function Checkout() {
       <div className="checkout-header">
         <div className="header-content">
           <div className="checkout-header-left-section">
-            <a href="/">
+            {/* Changed a href to Link to */}
+            <Link to="/">
               <img className="logo" src="images/logo.png" alt="Durga Shop Logo" />
                <img className="mobile-logo" src="images/mobile-logo.png" alt="Durga Shop Logo" />
-            </a>
+            </Link>
           </div>
           <div className="checkout-header-middle-section">
             Checkout ({paymentSummary.totalItems || 0} items)
@@ -183,7 +174,6 @@ export function Checkout() {
               <h3 className="delivery-title">Shipping Address</h3>
               <div className="address-form-grid">
                 
-                {/* FIXED: className="span-two" instead of style={} */}
                 <div className="span-two">
                   <label className="input-label">Full Name</label>
                   <input 
@@ -217,7 +207,6 @@ export function Checkout() {
                   />
                 </div>
 
-                {/* FIXED: className="span-two" instead of style={} */}
                 <div className="span-two">
                   <label className="input-label">Address Line 1</label>
                   <input 
@@ -264,7 +253,6 @@ export function Checkout() {
               </div>
             </div>
 
-            {/* 2. Delivery Options Grid */}
             <div className="delivery-options-container">
                <div className="delivery-title">
                   Choose your delivery speed
@@ -307,7 +295,6 @@ export function Checkout() {
                </div>
             </div>
 
-            {/* 3. Cart Items List */}
             {checkoutItem.map((item) => {
               const product = item.product;
 

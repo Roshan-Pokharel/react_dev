@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Imported Link
 import './footer.css';
 
 const Footer = () => {
-  // Inline SVG icons for social media (simplified)
   const socialIcons = [
     { name: 'Facebook', path: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z' },
     { name: 'Twitter', path: 'M22 4.02c-.746.33-1.556.556-2.385.672.862-.516 1.52-1.33 1.83-2.302-.8.47-1.68.81-2.61.99-1.85-1.95-4.83-1.95-6.68 0-1.39 1.46-1.5 3.63-.3 5.27-.08.01-.16.03-.25.04-3.23-.3-6.09-1.93-7.98-4.57-.42.71-.65 1.54-.65 2.45 0 1.7 0 3.3.62 4.7-.62-.12-1.25-.33-1.85-.62-.25.8-.4 1.63-.4 2.5 0 2.27 1.15 4.3 2.9 5.4-1.12.04-2.18-.3-3.1-.85 0 2.48 1.77 4.54 4.08 5-1.15.3-2.37.47-3.6.47-.2 0-.4 0-.6 0 2.3 4.2 6.7 6.8 11.5 6.8 13.8 0 21.3-11.4 21.3-21.3 0-.32 0-.64-.02-.95.82-.6 1.54-1.3 2.1-2.1' },
@@ -15,7 +15,6 @@ const Footer = () => {
     <footer className="footer-container">
       <div className="footer-content">
         
-        {/* Company & Social Section */}
         <div className="footer-section company-info">
           <h3 className="footer-logo">Durga Grocery Store</h3>
           <p className="company-tagline">Your trusted source for quality goods.</p>
@@ -35,18 +34,17 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Quick Links Section */}
         <div className="footer-section links-col">
           <h4 className="footer-heading">Quick Links</h4>
           <ul>
-            <li><a href="/" className="footer-link">Home</a></li>
-            <li><a href="/checkout" className="footer-link">Cart</a></li>
-            <li><a href="/orders" className="footer-link">Orders</a></li>
+            {/* Changed Internal Pages to Link */}
+            <li><Link to="/" className="footer-link">Home</Link></li>
+            <li><Link to="/checkout" className="footer-link">Cart</Link></li>
+            <li><Link to="/orders" className="footer-link">Orders</Link></li>
             <li><a href="#contact" className="footer-link">Contact</a></li>
           </ul>
         </div>
 
-        {/* Customer Service Section */}
         <div className="footer-section links-col">
           <h4 className="footer-heading">Customer Service</h4>
           <ul>
@@ -57,7 +55,6 @@ const Footer = () => {
           </ul>
         </div>
         
-        {/* Contact Info Section (Mobile-friendly: stacks last) */}
         <div className="footer-section contact-info-col">
           <h4 className="footer-heading">Contact Us</h4>
           <p>Bardaghat, Nepal 44600</p>
@@ -67,7 +64,6 @@ const Footer = () => {
 
       </div>
 
-      {/* Copyright Bar */}
       <div className="footer-bottom">
         <p>&copy; {currentYear} Durga Grocery Shop. All rights reserved.</p>
       </div>
