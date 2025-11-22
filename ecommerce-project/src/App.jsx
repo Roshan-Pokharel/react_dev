@@ -34,6 +34,7 @@ export function App() {
         setUser(response.data); 
       } catch (error) {
         setUser(null);
+        console.error(error);
       }
       setAuthChecked(true);
     };
