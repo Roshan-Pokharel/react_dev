@@ -1,0 +1,92 @@
+
+#root, body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f9;
+}
+
+.body-part {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+    color: #333;
+    text-align: center;
+}
+
+
+
+.Head-part {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 100%;
+    margin-bottom: 20px;
+    padding-top: 20px;
+}
+
+.InputValue {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    width: 70%;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the search icon */
+.Head-part img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+    
+}
+
+.body-part h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.body-part div p {
+    font-size: 18px;
+    margin: 5px 0 20px 0;
+}
+
+
+.sub-section {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.wind-section,
+.temp-section {
+    padding: 10px 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    flex-grow: 1; 
+    margin: 0 10px;
+}
+
+.wind-section p,
+.temp-section p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: #004d99;
+}
