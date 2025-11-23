@@ -22,7 +22,6 @@
 /* Grid layout for the inputs - Desktop Default */
 .address-form-grid {
   display: grid;
-  /* Default: 2 columns */
   grid-template-columns: 1fr 1fr; 
   gap: 20px 20px;
 }
@@ -49,15 +48,16 @@
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
-  font-size: 14px;
+  
+  /* FIXED: Changed from 14px to 16px */
+  font-size: 16px; 
+  
   color: #333;
   line-height: normal;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   
-  /* FIX: Use 100% width to fill the column */
   width: 100%; 
-  /* FIX: Ensure padding doesn't break the layout */
   box-sizing: border-box; 
 }
 
@@ -80,12 +80,10 @@
   }
 
   .address-form-grid {
-    /* Force 1 column layout */
     grid-template-columns: 1fr; 
     gap: 15px;
   }
   
-  /* Reset the span-two class so it only spans 1 column (full width of the mobile grid) */
   .span-two {
     grid-column: span 1;
   }

@@ -56,7 +56,7 @@
   background-color: rgb(186, 255, 190);
   border: none;
   width: 45px;
-  height: 40px; /* Matches input height + border illusion */
+  height: 40px; 
   border-radius: 0 5px 5px 0;
   flex-shrink: 0;
   cursor: pointer;
@@ -71,7 +71,7 @@
   position: absolute;
   top: 40px;
   left: 0;
-  width: calc(100% - 50px); /* Subtract button width */
+  width: calc(100% - 50px);
   background-color: white;
   border: 1px solid #ddd;
   border-top: none;
@@ -106,24 +106,19 @@
   flex-shrink: 0;
 }
 
-/* --- HEADER LINKS (FIXED SECTION) --- */
+/* --- HEADER LINKS --- */
 .header .header-link {
   padding: 6px 9px;
   border-radius: 2px;
   cursor: pointer;
   text-decoration: none;
   color: white;
-  
-  /* FIX: Removes the border and the click outline */
   border: none;
   outline: none;
 }
 
 .header .header-link:hover {
-  /* FIX: Removed the white border on hover */
   border: none;
-  
-  /* Optional: Slight opacity change to show it is clickable without a box */
   opacity: 0.85; 
 }
 
@@ -157,14 +152,13 @@
   margin-left: 5px;
   font-size: 15px;
   font-weight: 700;
-  margin-top: 10px;
+  
 }
 
-/* Desktop Cart Count */
 .header .cart-quantity {
   position: absolute;
   top: 8px;
-  left: 20px; /* Adjusted for desktop alignment */
+  left: 20px; 
   width: 19px;
   color: rgb(8,79,45);
   font-size: 14px;
@@ -182,9 +176,9 @@
 /* COMPACT MOBILE LAYOUT */
 @media (max-width: 575px) {
   .header {
-    height: auto; /* Allow growth for search bar */
+    height: auto; 
     flex-wrap: wrap;
-    padding: 8px 10px; /* Reduce padding */
+    padding: 8px 10px; 
   }
 
   /* 1. Logo Section */
@@ -195,40 +189,37 @@
   /* 2. Right Section (Cart & Profile) */
   .header .right-section {
     order: 2;
-    margin-left: auto; /* Push to right */
-    gap: 10px; /* Tighter gap */
+    margin-left: auto; 
+    gap: 10px; 
   }
 
   /* 3. Search Bar (Moves to bottom row) */
   .header .middle-section {
     order: 3; 
-    flex-basis: 100%; /* Full width */
+    flex-basis: 100%; 
     width: 100%;
     margin: 8px 0 2px 0;
   }
   
-  /* Compact Search Bar */
+  /* Compact Search Bar - FIXED FONT SIZE HERE */
   .header .search-bar {
     height: 34px;
-    font-size: 14px;
+    font-size: 16px; /* Changed from 14px to 16px to stop zooming */
   }
   .header .search-button {
-    height: 36px; /* Match input + border */
+    height: 36px;
     width: 40px;
   }
   .search-suggestions {
     top: 36px;
   }
 
-  /* Hide text, keep icons mostly */
   .header .cart-text { display: none; }
   
-  /* Make "Orders" text tiny or hide it if you prefer */
   .header .orders-text {
     font-size: 12px;
   }
 
-  /* CART ICON MOBILE FIX */
   .header .cart-link {
     position: relative;
     width: 40px;
@@ -236,16 +227,15 @@
   }
   
   .header .cart-icon {
-    width: 34px; /* Smaller Icon */
+    width: 34px; 
   }
 
   .header .cart-quantity {
-    /* Center inside the basket icon */
     top: 8px;
     left: 0;
     right: 0;
-    width: 100%; /* Full width of parent to center text */
+    width: 100%; 
     text-align: center;
-    font-size: 12px; /* Smaller number */
+    font-size: 12px; 
   }
 }

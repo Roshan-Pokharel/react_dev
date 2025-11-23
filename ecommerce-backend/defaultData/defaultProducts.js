@@ -1,5 +1,5 @@
-export const defaultProducts = [
-   {
+export const defaultProducts =[
+  {
     "id": "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     "image": "images/products/waiwai.png",
     "name": "Wai Wai Instant Noodles (Brown) - Chicken Flavor",
@@ -495,7 +495,6 @@ export const defaultProducts = [
     "priceCents": 200000,
     "keywords": ["gas", "cooking", "kitchen", "fuel"]
   },
-
   {
     "id": "2781d451-b844-48ff-98a9-4d693f9c646b",
     "image": "images/products/wai_wai_mini.png",
@@ -647,7 +646,7 @@ export const defaultProducts = [
   },
   {
     "id": "80629a98-6d55-442b-b892-23c328e469e6",
-    "image": "images/products/Toothpicks.jpg",
+    "image": "images/products/toothpicks.jpg",
     "name": "Toothpicks - 1- Pack",
     "rating": {
       "stars": 4.5,
@@ -763,7 +762,7 @@ export const defaultProducts = [
  
   {
     "id": "be64e8e8-967b-402f-b413-568d4981e821",
-    "image": "images/products/xtreme.png",
+    "image": "images/products/Xtreme.png",
     "name": "Xtreme Energy Drink - 250ml",
     "rating": {
       "stars": 4,
@@ -843,7 +842,7 @@ export const defaultProducts = [
   },
   {
     "id": "060a4f5f-f018-45d6-b184-e9188e734c66",
-    "image": "images/products/lollipop.png",
+    "image": "images/products/Lollipop.png",
     "name": "Sweet Lollipop x5",
     "rating": {
       "stars": 5.0,
@@ -955,7 +954,7 @@ export const defaultProducts = [
   },
   {
     "id": "060a4f5f-f018-45d6-b184-e9188e734c56",
-    "image": "images/products/prawn.jpg",
+    "image": "images/products/Prawn.jpg",
     "name": "Prawn fish - 120gm",
     "rating": {
       "stars": 4,
@@ -988,7 +987,7 @@ export const defaultProducts = [
   },
   {
     "id": "0137d6a5-7f91-4d1a-8219-c167814b74a8",
-    "image": "images/products/crispybiscuit.png",
+    "image": "images/products/Crispybiscuit.png",
     "name": "Nepali Krispie Tea Biscuits - 100g",
     "rating": {
       "stars": 4,
