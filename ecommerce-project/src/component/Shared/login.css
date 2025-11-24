@@ -147,29 +147,31 @@
   
   /* 1. Avatar & Button Scaling */
   .user-avatar {
-    width: 30px;
+    width: 30px; /* Match cart icon size */
     height: 30px;
+    margin-left: 4px;
   }
   
   .signin-button {
-    font-size: 12px; /* Smaller text */
+    font-size: 12px; 
+    padding: 4px 8px;
   }
 
   /* 2. Error Popup Adjustments */
   .login-error-popup {
-    width:200px;      /* Narrower width to fit screen */
-    top: 35px;         /* Closer to the button */
-    right: -5px;       /* Shift slightly right to align with edge */
-    padding: 10px;     /* Less padding */
+    width: 200px;      
+    top: 40px;         
+    right: 0px;       
+    padding: 10px;     
     border-left-width: 3px;
   }
 
   .login-error-popup::before {
-    right: 10px;       /* Adjust arrow to point to button center */
+    right: 10px;       
   }
 
   .error-title {
-    font-size: 12px;   /* Smaller title */
+    font-size: 12px;   
     margin-bottom: 2px;
   }
   
@@ -178,7 +180,7 @@
   }
 
   .error-message {
-    font-size: 11px;   /* Smaller message text */
+    font-size: 11px;   
   }
 
   /* 3. Logout Modal Adjustments */

@@ -1,8 +1,15 @@
 import apiClient from '../../api';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; // Imported Link
+import { Link } from 'react-router-dom';
 import GoogleLoginButton from './login';
 import './Header.css';
+
+// --- NEW: Import images directly ---
+// Adjust the path '../images/...' based on where you moved your folder inside src
+import logoWhite from '../../../public/logo-white.png';
+import mobileLogoWhite from '../../../public/mobile-logo-white.png';
+import searchIconImg from '../../../public/search-icon.png';
+import cartIconImg from '../../../public/cart-icon.png';
 
 export function Header({
   loadCart,
@@ -59,10 +66,10 @@ export function Header({
   return (
     <div className="header">
       <div className="left-section">
-        {/* Changed a href to Link to */}
         <Link to="/" className="header-link">
-          <img className="logo" src="images/logo-white.png" alt="logo" />
-          <img className="mobile-logo" src="images/mobile-logo-white.png" alt="logo" />
+          {/* USE IMPORTED VARIABLES HERE */}
+          <img className="logo" src={logoWhite} alt="logo" />
+          <img className="mobile-logo" src={mobileLogoWhite} alt="logo" />
         </Link>
       </div>
 
@@ -79,7 +86,8 @@ export function Header({
         />
 
         <button className="search-button" onClick={handleSearch}>
-          <img className="search-icon" src="images/icons/search-icon.png" alt="search" />
+          {/* USE IMPORTED VARIABLE HERE */}
+          <img className="search-icon" src={searchIconImg} alt="search" />
         </button>
 
         {showSuggestions && (
@@ -100,14 +108,13 @@ export function Header({
       </div>
 
       <div className="right-section">
-        {/* Changed a href to Link to */}
         <Link className="orders-link header-link" to="/orders">
           <span className="orders-text">Orders</span>
         </Link>
 
-        {/* Changed a href to Link to */}
         <Link className="cart-link header-link" to="/checkout">
-          <img className="cart-icon" src="images/icons/cart-icon.png" alt="cart" />
+          {/* USE IMPORTED VARIABLE HERE */}
+          <img className="cart-icon" src={cartIconImg} alt="cart" />
           <div className="cart-quantity">{paymentSummary.totalItems || 0}</div>
           <div className="cart-text">Cart</div>
         </Link>

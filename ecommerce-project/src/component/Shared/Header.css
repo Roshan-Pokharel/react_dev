@@ -184,13 +184,15 @@
   /* 1. Logo Section */
   .header .left-section { 
     order: 1; 
+    flex-shrink: 0; /* Prevent logo from shrinking */
   }
   
   /* 2. Right Section (Cart & Profile) */
   .header .right-section {
     order: 2;
     margin-left: auto; 
-    gap: 10px; 
+    gap: 8px; /* Tighter gap for small screens */
+    justify-content: flex-end;
   }
 
   /* 3. Search Bar (Moves to bottom row) */
@@ -201,41 +203,47 @@
     margin: 8px 0 2px 0;
   }
   
-  /* Compact Search Bar - FIXED FONT SIZE HERE */
+  /* Compact Search Bar */
   .header .search-bar {
-    height: 34px;
-    font-size: 16px; /* Changed from 14px to 16px to stop zooming */
+    height: 36px; /* Slightly taller for tapping */
+    font-size: 16px; 
   }
   .header .search-button {
-    height: 36px;
+    height: 38px; /* Match input border */
     width: 40px;
   }
   .search-suggestions {
-    top: 36px;
+    top: 38px;
   }
 
   .header .cart-text { display: none; }
   
   .header .orders-text {
     font-size: 12px;
+    padding: 0 2px; 
   }
 
   .header .cart-link {
     position: relative;
-    width: 40px;
+    width: auto; 
+    padding: 0 4px;
     justify-content: center;
   }
   
   .header .cart-icon {
-    width: 34px; 
+    width: 30px; /* Smaller icon */
   }
 
   .header .cart-quantity {
-    top: 8px;
-    left: 0;
-    right: 0;
-    width: 100%; 
+    top: 6px; 
+    left: 12px; 
+    width: auto; 
+    min-width: 14px;
     text-align: center;
-    font-size: 12px; 
+    font-size: 11px; 
+    background: white; 
+    border-radius: 50%;
+    padding: 1px;
+    line-height: 1;
   }
 }

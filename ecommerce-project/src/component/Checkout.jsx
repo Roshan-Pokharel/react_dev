@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Imported Link
+import { useNavigate, Link } from 'react-router-dom'; 
 import dayjs from 'dayjs';
 import PriceCents from '../utils/priceCents.js'; 
 import apiClient from '../api'; 
 import './Shared/General.css';
 import './Checkout-css/Checkout-header.css';
 import './Checkout-css/Checkout.css';
+
+/* --- NEW: Import images for instant loading --- */
+/* Ensure your images are located in src/images/ */
+import logoImg from '../../public/logo.png';
+import mobileLogoImg from '../../public/mobile-logo.png';
+import lockIconImg from '../../public/checkout-lock-icon.png';
 
 function formatDeliveryDate(deliveryDays) {
   if (deliveryDays === undefined) {
@@ -149,17 +155,18 @@ export function Checkout() {
       <div className="checkout-header">
         <div className="header-content">
           <div className="checkout-header-left-section">
-            {/* Changed a href to Link to */}
             <Link to="/">
-              <img className="logo" src="images/logo.png" alt="Durga Shop Logo" />
-               <img className="mobile-logo" src="images/mobile-logo.png" alt="Durga Shop Logo" />
+              {/* UPDATED: Using imported image variables */}
+              <img className="logo" src={logoImg} alt="Durga Shop Logo" />
+              <img className="mobile-logo" src={mobileLogoImg} alt="Durga Shop Logo" />
             </Link>
           </div>
           <div className="checkout-header-middle-section">
             Checkout ({paymentSummary.totalItems || 0} items)
           </div>
           <div className="checkout-header-right-section">
-            <img src="images/icons/checkout-lock-icon.png" alt="Lock Icon" />
+            {/* UPDATED: Using imported image variable */}
+            <img src={lockIconImg} alt="Lock Icon" />
           </div>
         </div>
       </div>
