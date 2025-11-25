@@ -1,7 +1,13 @@
-const http = require('http');
+import express from 'express'
 
-const server = http.createServer(function(req, res, ){
-    res.end('hello this is server');
+const app = express()
+
+app.get('/', (req, res) => {
+  res.send('this is main page')
 })
 
-server.listen(3000);
+app.get('/profile', (req, res) => {
+  res.send('Hello World')
+})
+
+app.listen(3000)
