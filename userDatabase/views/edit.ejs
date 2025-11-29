@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styleSheet/update.css">
+  <title>Create User</title>
+</head>
+<body>
+  
+  <form action="/update/<%=user._id%>" method="post">
+    <a href="/">Go Back</a>
+    <h2 style="text-align: center; margin-top: 0; color: #333;">Edit Account</h2>
+    
+    <input placeholder="User Name" name="name" value="<%=user.name %>">
+    <input placeholder="Email" name="email" type="email" value="<%=user.email %>">
+    <input placeholder="Image URL" name="image" value="<%=user.image %>">
+    <input type="submit" value="Edit User">
+  </form>
+
+</body> 
+</html>

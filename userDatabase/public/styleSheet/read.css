@@ -1,0 +1,124 @@
+/* /styleSheet/read.css */
+
+/* 1. Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #1877f2;
+    margin-bottom: 40px;
+}
+
+/* 2. Grid Container */
+.user-part {
+    display: grid;
+    /* Responsive columns: at least 250px wide */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 3. Card Style */
+.card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;    /* Center items horizontally */
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 4. Image Style */
+.card-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* Prevents image distortion */
+    border-radius: 50%; /* Circle shape */
+    border: 3px solid #1877f2;
+    margin-bottom: 15px;
+}
+
+/* 5. Text Styles */
+.card h3 {
+    margin: 5px 0;
+    font-size: 1.25rem;
+    color: #222;
+}
+
+.card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    word-break: break-all; /* Handles long emails */
+}
+
+/* 6. Button/Link Styles */
+.card a {
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 5px; /* Space between buttons */
+    transition: background-color 0.2s;
+    width: 100%;       /* Make buttons full width */
+    text-align: center;
+    max-width: 200px;  /* But not too wide */
+}
+
+/* Style for the 'Edit' button (Default link style) */
+.card a[href*="edit"] {
+    background-color: #e4e6eb;
+    color: #050505;
+}
+
+.card a[href*="edit"]:hover {
+    background-color: #d8dadf;
+}
+
+/* Style for the 'Delete' button */
+.card a[href*="delete"] {
+    background-color: #ffcccc;
+    color: #d32f2f;
+}
+
+.card a[href*="delete"]:hover {
+    background-color: #ffb3b3;
+    color: #b71c1c;
+}
+
+/* Styling for the simple "Go Back" link */
+a[href="/"] {
+    /* Display & Layout */
+    display: block; /* Makes it take up its own line */
+    margin: 20px 0; /* Space above and below the link */
+    
+    /* Appearance */
+    text-decoration: none; /* Removes the default underline */
+    color: #1877f2; /* Sets the text color to the accent blue */
+    font-size: 1rem;
+    font-weight: 500;
+    
+    /* Interaction */
+    transition: color 0.2s ease-in-out, text-decoration 0.2s;
+}
+
+/* Hover State */
+a[href="/"]:hover {
+    color: #004d99; /* Darker blue on hover */
+    text-decoration: underline; /* Add underline only on hover for feedback */
+}

@@ -1,0 +1,84 @@
+/* /styleSheet/create.css */
+
+/* 1. Page Layout - Centers the form perfectly on the screen */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 2. The Form Container */
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px; /* Prevents it from getting too wide on desktop */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stacks inputs vertically */
+    gap: 15px; /* Adds space between every input */
+}
+
+/* 3. Text Input Fields */
+/* Targets inputs that have a name attribute (name, email, image) */
+input:not([type="submit"]) {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    outline: none;
+    background-color: #fafafa;
+}
+
+/* Highlight border when clicking inside an input */
+input:not([type="submit"]):focus {
+    border-color: #1877f2;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+}
+
+/* 4. Submit Button */
+input[type="submit"] {
+    background-color: #1877f2;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Extra space above button */
+}
+
+input[type="submit"]:hover {
+    background-color: #1465c9; /* Slightly darker blue on hover */
+}
+
+/* Styling for the simple "Go Back" link */
+a[href="/read"] {
+    /* Display & Layout */
+    display: block; /* Makes it take up its own line */
+    margin: 20px 0; /* Space above and below the link */
+    
+    /* Appearance */
+    text-decoration: none; /* Removes the default underline */
+    color: #1877f2; /* Sets the text color to the accent blue */
+    font-size: 1rem;
+    font-weight: 500;
+    
+    /* Interaction */
+    transition: color 0.2s ease-in-out, text-decoration 0.2s;
+}
+
+/* Hover State */
+a[href="/read"]:hover {
+    color: #004d99; /* Darker blue on hover */
+    text-decoration: underline; /* Add underline only on hover for feedback */
+}

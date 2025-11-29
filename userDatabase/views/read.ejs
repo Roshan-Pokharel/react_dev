@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styleSheet/read.css">
+  <title>Document</title>
+</head>
+<body>
+  <a href="/">Go Back</a>
+  <h1>read section</h1>
+  <div class="user-part">
+  <% users.forEach((user)=>{ %>
+    <div class="card"> <img src="<%= user.image %>" alt="<%= user.name %>" class="card-img"> 
+      <h3><%= user.name %></h3>
+      <p><%= user.email %></p>
+      <a href="/edit/<%=user._id%>">edit</a>
+      <a href="/delete/<%=user._id%>" >Delete</a>
+    </div>
+  <% }) %>
+</div>
+   
+  </div>
+   
+</body>
+</html>
